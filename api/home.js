@@ -3,7 +3,9 @@ var userModel=require('../mysqlLib/mysql')
 var path=require('path')
 var fs=require('fs')
 router.get('/', async (ctx,next)=>{
-    ctx.body=`<div>123</div>`
+    ctx.body=`<div>
+        <img src='../upload/2018-11-25-9-23-14.jpg'/>
+    </div>`
 })
 router.post('/addUser',async (ctx,next)=>{
     let { name, password,avator  } = ctx.request.body
@@ -41,13 +43,13 @@ router.post('/uploadfiles', async (ctx, next) => {
       // 获取上传文件扩展名
       let date=new Date();
       var FileExt = file.name.replace(/.+\./, "").toLowerCase();   //正则表达式获取后缀
-      let fileName=`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`
-      let filePath = path.join(__dirname, '../upload/') + `/${fileName}.${FileExt}`;
+      let fileName=`${date.getFullYear()}${date.getMonth()}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`
+      let filePath = path.join(__dirname, '../static/upload/') + `/${fileName}.${FileExt}`;
       // 创建可写流
       const upStream = fs.createWriteStream(filePath);
       // 可读流通过管道写入可写流
       reader.pipe(upStream);
-      arr.push('/upload/'+fileName)
+      arr.push(`/upload/${fileName}.${FileExt}`)
     
    return ctx.body ={
        code:1,
