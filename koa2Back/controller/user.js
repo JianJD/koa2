@@ -1,7 +1,6 @@
-// var router = require('koa-router')();
-// var query = require('../mysqlLib/pool')
-var request = require('request')
-var userMoel=require('../model/user')
+var request = require('request');
+var userMoel=require('../model/user');
+var time=require('../utils/dateFormat')
 const wxConfig = {
     APPID: 'wxb68699ee0229042e',
     SECRET: 'ca82d62e5efc42192dedeff50be56a9e'
@@ -15,17 +14,25 @@ exports.login= async(ctx)=>{
     })
     if(isHasUser.length==0)
     {
-        let date=new Date();
-        let time=`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}` ;
+        let time=time.timeFormat() ;
         let value=[userInfo.openid,userName,header,time]
-        await userMoel.addUeer(value).then(res=>{
+        let returnData={}
+        delete userInfo.session_key;
+        returnData.openId=userInfo.openid;
+        returnData.userName=userName;
+        returnData.header=header
+        await userMoel.addUser(value).then(res=>{
+            console.log('新增会员成功')
+        })
+        await userMoel.findUserById(userInfo.openid).then(res=>{
             ctx.body={
                 code:1,
-                Date:userInfo,
+                Data:res,
                 msg:'注册成功'
             }
         })
     }else{
+   
         ctx.body={
             code:1,
             Date:isHasUser,

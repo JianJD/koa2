@@ -7,9 +7,11 @@ const koaBody = require('koa-body');
 var path=require('path')
 // koa静态资源托管
 const static = require('koa-static')
-var router=require('koa-router')
+// var router=require('koa-router')
 var user=require('./routers/user')
+var product=require('./routers/product')
 var upload=require('./controller/upload')
+var sql=require('./mysqlLib/mysql')
 // 访问的时候不需要加static文件夹名称
 var staticPath='./static'
 app.use(static(path.join(__dirname, staticPath)))
@@ -24,7 +26,7 @@ app.use(bodyParser())
 // 使用路由
 app.use(upload.routes())
 app.use(user.routes())
-
+app.use(product.routes())
 
 
 

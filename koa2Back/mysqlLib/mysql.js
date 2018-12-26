@@ -6,7 +6,7 @@ let newUser =
      userId INT NOT NULL AUTO_INCREMENT,
      openId VARCHAR(100) DEFAULT NULL COMMENT '微信openid',
      userName VARCHAR(100) NOT NULL COMMENT '用户名',
-     header VARCHAR(100) NULL COMMENT '头像',
+     header VARCHAR(255) NULL COMMENT '头像',
      registerTime VARCHAR(100) NOT NULL COMMENT '注册时间',
      PRIMARY KEY ( userId )
     );`
@@ -32,13 +32,15 @@ let order =
   let production=
   `create table if not exists production(
     productId INT NOT NULL AUTO_INCREMENT COMMENT '商品id',
+    classId CHAR(10) DEFAULT NULL COMMENT '商品类别ID',
+    isForSale INT DEFAULT 1 COMMENT '是否上架',
     productTitle VARCHAR(20) NOT NULL COMMENT '商品标题',
     swiperImg VARCHAR(255) NOT NULL COMMENT '商品轮播图',
     memberPrice DOUBLE NOT NULL COMMENT '商品会员价格',
     price DOUBLE NOT NULL COMMENT '商品原价',
     childrenProduct VARCHAR(255) NOT NULL COMMENT '多规格',
     productDetail TEXT NOT NULL COMMENT '商品详情',
-    saleNUm INT DEFAULT 0 COMMENT '销量',
+    saleNum INT DEFAULT 0 COMMENT '销量',
     sendMoney DOUBLE  DEFAULT NULL  COMMENT '运费',
     stock INT NOT NULL COMMENT '库存',
     video VARCHAR(100) DEFAULT NULL COMMENT '商品视频介绍',
@@ -58,6 +60,13 @@ let order =
     isDefault TINYINT DEFAULT 0 COMMENT '是否是默认地址',
     PRIMARY KEY ( addressId )
   )`;
+  // 创建商品分类表
+  let classTable=
+  `create table if not exists productClass(
+    classId INT NOT NULL AUTO_INCREMENT,
+    className CHAR(12) NOT NULL COMMENT '类别名称',
+    PRIMARY KEY (classId)
+  );`;
 let createTable = (sql) => {
   return query(sql, []).then(res => {
   }).catch(err => {
@@ -70,11 +79,3 @@ createTable(newUser)
 createTable(order)
 createTable(production)
 createTable(addressReceive)
-exports.addUser = function (value) {
-  let _sql = "insert into users set name=?,pass=?,avator=?,moment=?;"
-  return query(_sql, value).then(res => {
-
-  }).catch(err => {
-
-  })
-}
