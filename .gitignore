@@ -1,2 +1,2 @@
-/node_modules/*
+/koa2Back/node_modules/*
 /koa2Back/static/upload/*
