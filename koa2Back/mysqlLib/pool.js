@@ -16,9 +16,11 @@ var pool = mysql.createPool({
         } else {
           connection.query(sql, values, (err, rows) => {
             if (err) {
+            console.log(err)
               reject(err)
             } else {
               resolve(rows)
+              
             }
             connection.release()
           })

@@ -16,25 +16,7 @@ Page({
     })
   },
   onLoad: function () {
-    wx.login({
-      success(res){
-        wx.request({
-          url: "http://127.0.0.1:3001/wxlogin",
-          data: {
-            code: res.code,
-            userName:'jjd',
-            header:'123'
-          },
-          header:{
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          },
-          method:'post',
-          success(res){
-            console.log(res)
-          }
-        }) 
-      }
-    })
+   
    
     if (app.globalData.userInfo) {
       this.setData({
@@ -80,11 +62,31 @@ Page({
     })
   },
   getUserInfo: function(e) {
+    let that=this;
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+    wx.login({
+      success(res) {
+        wx.request({
+          url: "http://127.0.0.1:3001/wxlogin",
+          data: {
+            code: res.code,
+            userName: that.data.userInfo.nickName,
+            header: that.data.userInfo.avatarUrl
+          },
+          header: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          },
+          method: 'post',
+          success(res) {
+            console.log(res)
+          }
+        })
+      }
     })
   }
 })
