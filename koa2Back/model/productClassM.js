@@ -2,11 +2,11 @@ var query=require('../mysqlLib/pool')
 exports.addOrEditClass=function(value,Type){
     if(Type==0)
     {
-        let sql=`INSERT INTO productClass SET className=?,createAt=?,updateAt=?;`
+        let sql=`INSERT INTO productClass SET className=?,createAt=Now(),updateAt=Now();`
         return query(sql,value)
     }else
     {
-        let sql=`UPDATE productClass SET  className=?,updateAt=? WHERE classId=?;`
+        let sql=`UPDATE productClass SET  className=?,updateAt=Now() WHERE classId=?;`
         return query(sql,value)  
     }
     

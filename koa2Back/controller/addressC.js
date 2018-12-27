@@ -44,12 +44,10 @@ exports.createAddress=async (ctx)=>{
         receiverArea,
         receiverAddress,
         isDefault,
-        time,
-        time
+        
     ]
     if(Type==1)
     {
-        value.splice(value.length-1,1)
         if(!addressId)
         {
             return ctx.body=response.reponseData(1,null,'addressId不能为空')   

@@ -12,6 +12,7 @@ var product=require('./routers/productionR')
 var upload=require('./controller/upload')
 var productClassR=require('./routers/productClassR')
 var addressR=require('./routers/addressR')
+var orderR=require('./routers/orderR')
 var sql=require('./mysqlLib/mysql')
 // 访问的时候不需要加static文件夹名称
 var staticPath='./static'
@@ -30,7 +31,7 @@ app.use(user.routes())
 app.use(product.routes())
 app.use(productClassR.routes())
 app.use(addressR.routes())
-
+app.use(orderR.routes())
 app.listen(3001,function(){
     console.log('this server is running at localhost:3001')
 })

@@ -43,7 +43,6 @@ exports.addOrEditProduct= async (ctx)=>{
     if(Type==undefined||Type==null){
         ctx.body=response.reponseData(0,null,'请选择操作类型')
     }
-    let time=response.timeFormat()
     let value=[
         classId ,
         isForSale,
@@ -56,12 +55,14 @@ exports.addOrEditProduct= async (ctx)=>{
         sendMoney,
         stock,
         video,
-        time,
-        time
+    
     ]
     if(Type==1)
     {
-        value.splice(value.length-2,1) 
+        if(!ctx.request.body.productId)
+        {
+            return ctx.body=response.reponseData(0,null,'商品Id不能为空')
+        }
         value.push(ctx.request.body.productId)
         
     }

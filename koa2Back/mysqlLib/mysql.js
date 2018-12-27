@@ -16,8 +16,10 @@ let order =
   `create table if not exists orderTable(
     orderId INT NOT NULL AUTO_INCREMENT,
     userId VARCHAR(100) NOT NULL COMMENT '用户ID',
+    productId VARCHAR(100) NOT NULL COMMENT '商品id',
+    addressInfo TEXT NOT NULL COMMENT '地址信息',
     orderSatus INT DEFAULT 0 COMMENT '订单状态 0 未付款 1已付款 2待发货  3已完成',
-    orderDetail TEXT(0) DEFAULT NULL COMMENT '商品内容',
+    productInfo TEXT(0) DEFAULT NULL COMMENT '商品内容',
     creatAt DATETIME  NULL DEFAULT CURRENT_TIMESTAMP COMMENT  '创建时间',
     payAt VARCHAR(100) DEFAULT NULL  COMMENT '付款时间',
     sendAt VARCHAR(100) DEFAULT NULL  COMMENT '发货时间',
@@ -74,6 +76,15 @@ let order =
     updateAt DATETIME  DEFAULT CURRENT_TIMESTAMP COMMENT '类别更新时间',
     PRIMARY KEY (classId)
   );`;
+  let  shopCar=
+  `create table if not exists shopcar(
+    shopCarId INT NOT NULL AUTO_INCREMENT COMMENT '购物车主键id',
+    userId VARCHAR(10) NOT NULL COMMENT '用户id',
+    num INT NOT NULL COMMENT '商品数量',
+    productId VARCHAR(255) NOT NULL COMMENT '商品id',
+    createAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    PRIMARY KEY (shopCarId)
+  );`;
 let createTable = (sql) => {
   return query(sql, []).then(res => {
   }).catch(err => {
@@ -87,3 +98,4 @@ createTable(order)
 createTable(production)
 createTable(addressReceive)
 createTable(classTable)
+createTable(shopCar)

@@ -18,8 +18,7 @@ exports.addOrEditClass=async(ctx)=>{
     {
         if(Type==0)
         {
-            let time=response.timeFormat()
-            let value=[className,time,time];
+            let value=[className];
             await proClassModel.addOrEditClass(value,Type).then(res=>{
                 ctx.body=response.reponseData(1,null,'保存成功')
             }).catch(err=>{
@@ -28,7 +27,7 @@ exports.addOrEditClass=async(ctx)=>{
         }
         else if(Type==1)
         {
-            let value=[className,response.timeFormat(),classId];
+            let value=[className,classId];
             await proClassModel.addOrEditClass(value,Type).then(res=>{
                 ctx.body=response.reponseData(1,null,'修改成功')
             }).catch(err=>{
