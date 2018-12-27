@@ -7,10 +7,11 @@ const koaBody = require('koa-body');
 var path=require('path')
 // koa静态资源托管
 const static = require('koa-static')
-// var router=require('koa-router')
-var user=require('./routers/user')
-var product=require('./routers/product')
+var user=require('./routers/userR')
+var product=require('./routers/productionR')
 var upload=require('./controller/upload')
+var productClassR=require('./routers/productClassR')
+var addressR=require('./routers/addressR')
 var sql=require('./mysqlLib/mysql')
 // 访问的时候不需要加static文件夹名称
 var staticPath='./static'
@@ -27,8 +28,8 @@ app.use(bodyParser())
 app.use(upload.routes())
 app.use(user.routes())
 app.use(product.routes())
-
-
+app.use(productClassR.routes())
+app.use(addressR.routes())
 
 app.listen(3001,function(){
     console.log('this server is running at localhost:3001')

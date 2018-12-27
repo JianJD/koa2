@@ -1,4 +1,3 @@
-var router = require('koa-router')();
 var query = require('../mysqlLib/pool')
 var request = require('request')
 exports.findUserById=(value)=>{

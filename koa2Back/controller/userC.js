@@ -1,5 +1,5 @@
 var request = require('request');
-var userMoel=require('../model/user');
+var userMoel=require('../model/userM');
 var time=require('../utils/dateFormat')
 const wxConfig = {
     APPID: 'wxb68699ee0229042e',

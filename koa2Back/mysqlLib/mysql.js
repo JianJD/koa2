@@ -1,5 +1,6 @@
 var mysql = require('mysql');
-var query=require('./pool')
+var query=require('./pool');
+
 //   创建user表
 let newUser =
   `create table if not exists usersShop(
@@ -44,6 +45,8 @@ let order =
     sendMoney DOUBLE  DEFAULT NULL  COMMENT '运费',
     stock INT NOT NULL COMMENT '库存',
     video VARCHAR(100) DEFAULT NULL COMMENT '商品视频介绍',
+    creatAt DATETIME  NOT NULL   COMMENT '商品创建时间',
+    updateAt DATETIME   DEFAULT CURRENT_TIMESTAMP COMMENT '商品更新时间',
     PRIMARY KEY ( productId )
   );`;
   //收货地址表
@@ -57,6 +60,8 @@ let order =
     receiverCity VARCHAR(20) NOT NULL COMMENT '收件人市',
     receiverArea VARCHAR(20) NOT NULL COMMENT '收件人区',
     receiverAddress VARCHAR(255) NOT NULL COMMENT '收件人具体地址',
+    createAt DATETIME NOT NULL  COMMENT '地址创建时间',
+    updateAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '地址更新时间',
     isDefault TINYINT DEFAULT 0 COMMENT '是否是默认地址',
     PRIMARY KEY ( addressId )
   )`;
@@ -65,6 +70,8 @@ let order =
   `create table if not exists productClass(
     classId INT NOT NULL AUTO_INCREMENT,
     className CHAR(12) NOT NULL COMMENT '类别名称',
+    createAt DATETIME NOT NULL  COMMENT '类别创建时间',
+    updateAt DATETIME  DEFAULT CURRENT_TIMESTAMP COMMENT '类别更新时间',
     PRIMARY KEY (classId)
   );`;
 let createTable = (sql) => {
@@ -79,3 +86,4 @@ createTable(newUser)
 createTable(order)
 createTable(production)
 createTable(addressReceive)
+createTable(classTable)
