@@ -1,3 +1,4 @@
 /koa2Back/node_modules/*
+/shopadmin/node_modules/*
 /koa2Back/static/upload/*
 .lock
