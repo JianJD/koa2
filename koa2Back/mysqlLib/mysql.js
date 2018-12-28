@@ -28,6 +28,9 @@ let order =
     exPressCompany CHAR(20) DEFAULT NULL  COMMENT '快递公司',
     orderMoney DOUBLE DEFAULT NULL  COMMENT '商品金额',
     sendMoney DOUBLE DEFAULT NULL  COMMENT '运费',
+    wxOrderId VARCHAR(255) DEFAULT NULL COMMENT '微信订单id',
+    isApplyRefund INT DEFAULT 0 COMMENT '是否已经申请退款 0 否 1是',
+    isRefund INT DEFAULT 0 COMMENT '是否已经退款',
     totalMoney DOUBLE DEFAULT NULL  COMMENT '订单总金额',
     PRIMARY KEY ( orderId )
         );`

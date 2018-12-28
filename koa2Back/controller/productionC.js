@@ -1,5 +1,5 @@
 var productModel=require('../model/productionM');
-var response=require('../utils/dateFormat')
+var response=require('../utils/public')
 
 let Data={
     code:1,

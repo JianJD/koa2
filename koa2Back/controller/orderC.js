@@ -1,5 +1,5 @@
 var orderM=require('../model/orderM');
-var response=require('../utils/dateFormat');
+var response=require('../utils/public');
 var proModel=require('../model/productionM');
 var addressModel=require('../model/addressM')
 exports.createOrder=async(ctx)=>{
@@ -85,7 +85,7 @@ exports.delOrder=async(ctx)=>{
         return ctx.body=response.reponseData(1,null,'删除成功')
     })
 }
-// 查询订单
+// 查询订单信息
 exports.findOrderInfoByOrderId=async(ctx)=>{
     let {orderId} = ctx.request.body;
     if(!orderId)
@@ -100,6 +100,30 @@ exports.findOrderInfoByOrderId=async(ctx)=>{
         Data.addressInfo=JSON.parse(Data.addressInfo)
         Data.productInfo=JSON.parse(Data.productInfo)
         return ctx.body=response.reponseData(1,Data,'获取成功')
+    })
+}
+// 查看订单列表
+exports.orderList=async(ctx)=>{
+    let {userId,orderStatus=0,pageIndex=0,pageSize=10}=ctx.request.body;
+    if(!userId)
+    {
+        return ctx.body=response.responseData(0,null,'userId不能为空')
+    }
+    let totalItems;
+    await orderM.totalItems([userId,orderStatus]).then(res=>{
+        totalItems=res[0].totalItems
+    })
+    if(totalItems==0)
+    {
+        return ctx.body=response.responseData(0,[],'成功')
+    }
+    await orderM.orderList([userId,orderStatus,parseInt(pageIndex)-1,parseInt(pageSize)]).then(res=>{
+        let Data={
+            totalItems,
+            totalPage: totalItems/ pageSize,
+            List:res
+        }
+        return ctx.body=response.reponseData(1,Data,'成功');
     })
 }
 

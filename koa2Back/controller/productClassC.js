@@ -1,5 +1,5 @@
 var proClassModel=require('../model/productClassM');
-var response=require('../utils/dateFormat')
+var response=require('../utils/public')
 exports.addOrEditClass=async(ctx)=>{
     let {className,Type,classId}=ctx.request.body;
     if(!className)
