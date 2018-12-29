@@ -7,9 +7,9 @@ exports.timeFormat = function () {
     let time = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${h}:${m}:${s}`;
     return time
 }
-exports.reponseData = function (code, Data, msg) {
+exports.reponseData = function (Code, Data, msg) {
     return {
-        code,
+        Code,
         Data,
         msg
     }

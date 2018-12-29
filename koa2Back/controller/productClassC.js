@@ -50,3 +50,8 @@ exports.delClass=async (ctx)=>{
         })
     }
 }
+exports.getClassList=async (ctx)=>{
+    await proClassModel.getClassList().then(res=>{
+        return ctx.body=response.reponseData(1,res,'获取成功')
+    })
+}

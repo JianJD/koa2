@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import home from '@/view/home'
 import layout from '@/components/layout'
 import createProduct from '@/view/createProduct'
+import productList from '@/view/productList'
 Vue.use(Router)
 
 export default new Router({
@@ -13,14 +14,21 @@ export default new Router({
       component: layout,
       children:[
         {
-          path: '/',
-          name: 'productManage',
+          path: '/productList',
+          name: 'productList',
+          component: productList,
+          meta:{
+            title:'商品管理'
+          }
+        },
+        {
+          path: '/createProduct',
+          name: 'createProduct',
           component: createProduct,
           meta:{
             title:'发布商品'
           }
         },
-
       ]
     },
   ]

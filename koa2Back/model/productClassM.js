@@ -21,3 +21,7 @@ exports.hasClassName=function(name){
     let sql=`SELECT * FROM productClass WHERE className='${name}';`
     return query(sql) 
 }
+exports.getClassList=function(name){
+    let sql=`SELECT * FROM productClass;`
+    return query(sql) 
+}

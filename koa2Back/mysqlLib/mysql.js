@@ -44,7 +44,7 @@ let order =
     swiperImg VARCHAR(255) NOT NULL COMMENT '商品轮播图',
     memberPrice DOUBLE NOT NULL COMMENT '商品会员价格',
     price DOUBLE NOT NULL COMMENT '商品原价',
-    childrenProduct VARCHAR(255) NOT NULL COMMENT '多规格',
+    childrenProduct VARCHAR(255) DEFAULT NULL COMMENT '多规格',
     productDetail TEXT NOT NULL COMMENT '商品详情',
     saleNum INT DEFAULT 0 COMMENT '销量',
     sendMoney DOUBLE  DEFAULT NULL  COMMENT '运费',

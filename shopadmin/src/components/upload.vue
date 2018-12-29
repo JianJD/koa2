@@ -1,16 +1,14 @@
 <template>
     <div>
     <div class="demo-upload-list" v-for="(item,index) in uploadList" :key='index'>
-        <template v-if="item.status === 'finished'">
-            <img :src="item.url">
+        <template >
+            <img :src="imgUrl+item.url">
             <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
+                <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
                 <Icon type="ios-trash-outline" @click.native="handleRemove(index)"></Icon>
             </div>
         </template>
-        <template v-else>
-            <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-        </template>
+        
     </div>
     <Upload
         ref="upload"
@@ -19,40 +17,46 @@
         :on-success="handleSuccess"
         :format="['jpg','jpeg','png']"
         type="drag"
-        action="//jsonplaceholder.typicode.com/posts/"
+        :action="action"
         style="display: inline-block;width:58px;">
         <div style="width: 58px;height:58px;line-height: 58px;">
             <Icon type="ios-camera" size="20"></Icon>
         </div>
     </Upload>
     <Modal title="View Image" v-model="visible">
-        <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
+        <img :src="imgUrl + url + '/large'" v-if="visible" style="width: 100%">
     </Modal>
     </div>
 </template>
 <script>
     export default {
+        props:{
+            uploadList:{
+                type:Array,
+                default:[]
+            }
+        },
         data () {
             return {
-               
-                imgName: '',
+                url: '',
                 visible: false,
-                uploadList: []
+                imgUrl:this.imgUrl,
+                action:this.upLoadUrl
             }
         },
         methods: {
             handleView (name) {
-                this.imgName = name;
+                this.url = name;
                 this.visible = true;
             },
             handleRemove (index) {
                this.uploadList.splice(index,1)
             },
             handleSuccess (res, file) {
-                console.log(res)
+                console.log(res.Data)
                 this.uploadList.push({
                     name:'pic',
-                    url:res.data.Data
+                    url:res.Data
                 })
                 this.$emit('success',this.uploadList)
             },

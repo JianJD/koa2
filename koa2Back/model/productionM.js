@@ -23,3 +23,33 @@ exports.findProductByProductId=(productId)=>{
     console.log(sql)
     return query(sql) 
 }
+exports.getProductList=(value)=>{
+    let sql=''
+    if(value[0]==0)
+    {
+        sql=`SELECT a.*,b.className FROM production as a left join productClass as b on a.classId=b.classId where a.isForSale=${value[3]} order by a.productId desc limit ${value[1]} , ${value[2]};`;
+    }else
+    {
+        sql=`SELECT a.*,b.className FROM production as a left join productClass as b on a.classId=b.classId where a.isForSale=${value[3]} and a.classId=${value[0]} order by a.productId desc limit ${value[1]} , ${value[2]};`;
+
+    }
+    return query(sql,value)
+}
+// 查询商品总个数
+exports.totalItems=(value)=>{
+    let sql=''
+    if(value[0]==0)
+    {
+        sql=`SELECT a.*,b.className FROM production as a left join productClass as b on a.classId=b.classId where a.isForSale=${value[3]} order by a.productId desc ;`;
+    }else
+    {
+        sql=`SELECT a.*,b.className FROM production as a left join productClass as b on a.classId=b.classId where a.isForSale=${value[3]} and a.classId=${value[0]} order by a.productId desc ;`;
+
+    }
+    return query(sql,value)
+}
+// 商品上下架
+exports.upAndDown=(value)=>{
+    let sql=`update production set isForSale=? where productId=?;`;
+    return query(sql,value)
+}

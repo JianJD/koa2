@@ -105,3 +105,46 @@ exports.findProductById= async (ctx)=>{
         }
     })
 }
+exports.getProductList=async (ctx)=>{
+    let {classId=0,pageIndex=1,pageSize=10,isForSale=1}=ctx.request.body
+    let value=[
+        classId,
+        pageIndex-1, 
+        pageSize,
+        isForSale,
+    ]
+    let totalItems;
+    await productModel.totalItems(value).then(res=>{
+        totalItems=res.length
+    })
+    if(totalItems==0)
+    {
+        return ctx.body=response.reponseData(1,[],'获取成功')
+    }
+    await productModel.getProductList(value).then(res=>{
+        let Data={
+            List:res,
+            totalItems,
+            totalPages:parseInt(totalItems/pageSize)+1 
+        }
+        return ctx.body=response.reponseData(1,Data,'获取成功')
+    }).catch(()=>{
+        return ctx.body=response.reponseData(1,null,'异常啦')
+    })
+}
+exports.upAndDown=async(ctx)=>{
+    let {productId,Type}=ctx.request.body;
+    if(!productId)
+    {
+        return ctx.body=response.reponseData(0,null,'商品id不能为空')
+    }
+    let value=[
+        Type,
+        productId
+    ]
+    await productModel.upAndDown(value).then(res=>{
+        return ctx.body=response.reponseData(1,null,'操作成功')
+    }).catch(()=>{
+        ctx.body=response.reponseData(0,null,'异常啦')
+    })
+}
