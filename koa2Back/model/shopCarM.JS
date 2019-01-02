@@ -12,13 +12,9 @@ exports.delShopCar=function(value){
 // 修改购物车数量
 exports.changeShopCarNum=function(value,Type){
     let sql='';
-    if(Type==0)
-    {
-        sql= `UPDATE shopcar SET num=num+1 WHERE shopCarId=?;`;
-    }else
-    {
-        sql= `UPDATE shopcar SET num=num-1 WHERE shopCarId=?;`;
-    }
+   
+        sql= `UPDATE shopcar SET num=? WHERE shopCarId=?;`;
+    
     return query(sql,value)
 }
 // 查询购物车列表
@@ -27,7 +23,8 @@ exports.shopCarListForPage=function(value){
     let sql = `SELECT
 	a.shopCarId,
 	a.userId,
-	a.productId,
+    a.productId,
+    a.num,
 	b.classId,
 	b.isForSale,
 	b.productTitle,
@@ -61,4 +58,9 @@ exports.findTotalItems=function(value){
                 ORDER BY
                 a.shopCarId DESC;`;
      return query(sql,value)
+}
+// 根据商品id查数据
+exports.findByProductId=(value)=>{
+    let sql=`select shopCarId from shopcar where productId=? AND userId=?;`
+    return query(sql,value)
 }

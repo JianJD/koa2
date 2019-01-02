@@ -35,7 +35,7 @@ exports.login= async(ctx)=>{
    
         ctx.body={
             code:1,
-            Date:isHasUser,
+            Data:isHasUser,
             msg:'登录成功'
         }
     }

@@ -1,0 +1,25 @@
+<view class='btn'>
+  <van-button size="mini" type='primary' bind:click='toggle'>管理</van-button>
+
+</view>
+<view class='pd20'>
+  <van-checkbox-group value="{{ result }}" bind:change="onChange">
+    <van-checkbox wx:for="{{ list }}" wx:key="index" name="{{ item.shopCarId }}" checked-color="{{checkColor}}">
+      <view class='flexCls-align pd20'>
+        <image src='{{imgUrl}}{{item.swiperImg[0].url}}' class='proImg'></image>
+        <view class='flexCls-1 flexCls-C'>
+          <view class='fz24 text2'>{{item.productTitle}}</view>
+          <view class='colred fz24 flexCls-align'>
+            <view class='flexCls-1'>￥{{item.memberPrice}}</view>
+            <van-stepper value="{{ item.num }}" bind:change="changeNum" data-idx="{{index}}" />
+          </view>
+        </view>
+      </view>
+    </van-checkbox>
+  </van-checkbox-group>
+</view>
+<van-submit-bar price="{{isDel?'':1.5}}" button-text='{{isDel?"删除":"提交订单"}}' bind:submit="onClickButton">
+  <view class='pdl20'>
+    <van-checkbox value="{{ checked }}" bind:change="isCheck" checked-color="{{checkColor}}">全选</van-checkbox>
+  </view>
+</van-submit-bar>

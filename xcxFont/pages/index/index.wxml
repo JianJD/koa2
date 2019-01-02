@@ -1,11 +1,8 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button  open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
- 
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
-</view>
-<view catchtap='upload'>upload</view>
+<van-tabs active="{{ active }}" bind:change="onChange">
+  <van-tab title="{{item.className}}" wx:for="{{classList}}">
+    <productlist list="{{list}}" bind:go='go' />
+  </van-tab>
+  
+</van-tabs>
+<login />

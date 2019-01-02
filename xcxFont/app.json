@@ -1,12 +1,45 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/productDetail/productDetail",
+    "pages/my/my",
+    "pages/shopCar/shopCar"
+
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "black"
+  },
+  "usingComponents": {
+    "van-toast": "./pages/compoents/toast/index"
+  },
+  "tabBar": {
+    "color": "#333",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/sj.png",
+        "selectedIconPath": "images/sjV.png",
+        "text": "商城"
+      },
+      {
+        "pagePath": "pages/shopCar/shopCar",
+        "iconPath": "images/gwc.png",
+        "selectedIconPath": "images/gwc.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "images/wd.png",
+        "selectedIconPath": "images/wdV.png",
+        "text": "我的"
+      }
+    ],
+    "selectedColor": "#eb454f",
+    "backgroundColor": "#fff",
+    "borderStyle": "black"
   }
 }

@@ -1,1 +1,9 @@
-{}
+{
+  "navigationBarTitleText": "首页",
+  "usingComponents":{
+    "login":"../login/login",
+    "van-tab": "../compoents/tab/index",
+    "van-tabs": "../compoents/tabs/index",
+    "productlist":"../productList/productList"
+  }
+}

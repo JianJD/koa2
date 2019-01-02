@@ -1,0 +1,8 @@
+<!--pages/productList/productList.wxml-->
+<view class='flexCls-align' wx:for="{{list}}" wx:key="{{index}}" catchtap='go' data-index='{{index}}'>
+  <image src='{{imgUrl}}{{item.swiperImg[0].url}}' mode='aspectFill' class='proImg'></image>
+  <view class='flexCls-1 flexCls-C'>
+    <view class='fz24 text2'>{{item.productTitle}}</view>
+    <view class='colred fz24'>￥ {{item.memberPrice}}</view>
+  </view>
+</view>

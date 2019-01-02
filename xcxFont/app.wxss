@@ -1,4 +1,5 @@
 /**app.wxss**/
+
 .container {
   height: 100%;
   display: flex;
@@ -7,4 +8,52 @@
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-} 
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  opacity: 0.5;
+}
+
+.mgt20 {
+  margin-top: 20rpx;
+}
+
+.col999 {
+  color: #999;
+}
+
+.txt-left {
+  text-align: left;
+}
+
+.mgt10 {
+  margin-top: 10rpx;
+}
+
+.pd20 {
+  padding: 20rpx;
+}
+
+.colMoney {
+  color: #ff5101;
+}
+
+.flexCls-align {
+  display: flex;
+  align-items: center;
+}
+.flexCls-1{
+  flex: 1;
+}
+.fz30{
+  font-size: 30rpx;
+}
+.fz24{font-size: 24rpx;}
+.txt-right{text-align: right;}
+.txt-center{text-align: center;}

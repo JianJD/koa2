@@ -82,7 +82,7 @@ let order =
   let  shopCar=
   `create table if not exists shopcar(
     shopCarId INT NOT NULL AUTO_INCREMENT COMMENT '购物车主键id',
-    userId VARCHAR(10) NOT NULL COMMENT '用户id',
+    userId VARCHAR(255) NOT NULL COMMENT '用户id',
     num INT NOT NULL COMMENT '商品数量',
     productId VARCHAR(255) NOT NULL COMMENT '商品id',
     createAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

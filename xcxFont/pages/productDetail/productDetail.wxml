@@ -1,0 +1,43 @@
+<!--pages/productDetail/productDetail.wxml-->
+<swiper class='imgs' autoplay  circular>
+  <swiper-item wx:for="{{productInfo.swiperImg}}">
+    <image src='{{imgUrl}}{{item.url}}' mode='aspectFill'></image>
+  </swiper-item>
+</swiper>
+<view class='pd20'>
+  <view class='fz30 colMoney'>￥{{productInfo.memberPrice}}</view>
+  <view class='mgt20 fz24'>{{productInfo.productTitle}}</view>
+  <view class='flexCls-align fz24 col999 mgt10'>
+    <view class='flexCls-1 '>库存：{{productInfo.stock}}</view>
+    <view class='flexCls-1 txt-center'>月销量：{{productInfo.saleNum}}</view>
+    <view class='flexCls-1 txt-right'>运费：{{productInfo.sendMoney?'￥'+productInfo.sendMoney:'包邮'}}</view>
+  </view>
+</view>
+<view class='pd20 fz30 col999 txt-center line'>商品详情</view>
+  <import src="/wxParse/wxParse.wxml" />
+  <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+<van-goods-action>
+  <van-goods-action-icon
+    icon="chat-o"
+    text="客服"
+    open-type='contact'
+  />
+  <van-goods-action-icon
+    icon="cart-o"
+    text="购物车"
+    bind:click="onClickIcon"
+    info='{{num}}'
+
+  />
+  <van-goods-action-button
+    text="加入购物车"
+    type="warning"
+    bind:click="addShopCar"
+   
+  />
+  <van-goods-action-button
+    text="立即购买"
+    bind:click="createOrder"
+  />
+</van-goods-action>
+<van-toast id="van-toast" />

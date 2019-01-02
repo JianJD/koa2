@@ -1,0 +1,11 @@
+<!--pages/login/login.wxml-->
+<view  class='mask' wx:if="{{showPop}}"></view>
+<view class='pop'  wx:if="{{showPop}}">
+    <view class='logo'>
+    <image mode='aspectFill' src='../../images/logo.png'></image>
+  </view>
+  <view class='fz24 col999 mgt20'>云小链</view>
+  <view class='fz26 txt-left mgt20'>该小程序将获取一下授权</view>
+  <view class='txt-left mgt10 col999 fz24'>获得您的公开信息 （昵称、头像等）</view>
+  <button open-type='getUserInfo' bindgetuserinfo='getUserInfo' class='aloow'>允许</button>
+</view>
