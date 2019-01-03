@@ -120,7 +120,7 @@ exports.orderList=async(ctx)=>{
     await orderM.orderList([userId,orderStatus,parseInt(pageIndex)-1,parseInt(pageSize)]).then(res=>{
         let Data={
             totalItems,
-            totalPage: totalItems/ pageSize,
+            totalPage: parseInt(totalItems/ pageSize)+1,
             List:res
         }
         return ctx.body=response.reponseData(1,Data,'成功');

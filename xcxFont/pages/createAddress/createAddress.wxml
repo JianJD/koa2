@@ -1,0 +1,18 @@
+<!--pages/createAddress/createAddress.wxml-->
+<van-cell-group>
+  <van-field value="{{ receiver }}" bind:change='receiver' required clearable label="收件人" placeholder="请输入收件人" />
+
+  <van-field value="{{ receiverPhone }}" bind:change='receiverPhone' type="number" maxlength='11' label="联系电话" placeholder="请输入手机号码" required />
+  <van-field value="{{ area }}" label="所在地区" required use-button-slot disabled value="{{receiverProvince}} {{receiverCity}} {{receiverArea}}">
+    <van-button slot="button" size="small" type="primary" bind:click='show'>选择地址</van-button>
+  </van-field>
+  <van-field value="{{ receiverAddress }}" bind:change='receiverAddress'  required clearable label="详细地址" placeholder="请输入详细地址" />
+</van-cell-group>
+<van-switch-cell title="设为默认地址" checked="{{ isDefault }}" bind:change="isDefault" size='20px'/>
+<van-popup show="{{ show }}" bind:close="onClose" position="bottom">
+  <van-area area-list="{{ areaList }}" bind:cancel='cancel' bind:confirm='confirm' />
+</van-popup>
+<view class='pd20 txt-center'>
+  <van-button size="small" block  round type='danger' bind:click='save'>保存</van-button>
+</view>
+<van-notify id="van-notify" />

@@ -23,3 +23,19 @@ exports.findAddressById=(addressId)=>{
     let sql=`SELECT * FROM addressReceive WHERE addressId='${addressId}';`
     return query(sql)
 }
+exports.changeDefaultTrue=(addressId)=>{
+    let sql=`update addressReceive set isDefault=1 where addressId='${addressId}';`
+    return query(sql)
+}
+exports.changeDefaultFalse=(addressId)=>{
+    let sql='';
+    if(addressId!='')
+    {
+         sql=`update addressReceive set isDefault=0 where addressId<>'${addressId}';` 
+    }else
+    {
+         sql=`update addressReceive set isDefault=0;`
+    }
+    
+    return query(sql)
+}

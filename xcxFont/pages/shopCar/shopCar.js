@@ -1,5 +1,6 @@
 // pages/shopCar/shopCar.js
 var that;
+import Toast from '../compoents/toast/toast';
 Page({
 
   /**
@@ -13,7 +14,7 @@ Page({
     checked:false,
     checkColor:'#4b0',
     isDel:false,
-    
+    money:0
   },
 
   /**
@@ -27,7 +28,6 @@ Page({
     that.setData({
       isDel: !that.data.isDel,
       checkColor: that.data.isDel?"#4b0":"#ff5101",
-      
     })
   },
   getShopCar(){
@@ -56,20 +56,104 @@ Page({
     },res=>{
       if(res.data.Code==1)
       {
+        that.data.list[e.currentTarget.dataset.idx].num=e.detail
         console.log(res)
+        countMoney()
       }
     })
   },
-  onChange(event){
-    console.log(event)
-    this.setData({
-      result: event.detail
-    });
+  boxChange(e){
+   let idx=e.currentTarget.dataset.idx
+    that.data.list[idx].check=!that.data.list[idx].check;
+    that.setData({
+      list:that.data.list
+    })
+    countMoney()
   },
   isCheck(e){
-    console.log(e)
     that.setData({
       checked:e.detail
     })
+    if (e.detail)
+    {
+      for (let item of that.data.list) {
+        item.check = true
+      }
+      that.setData({
+        list: that.data.list
+      })
+    }else
+    {
+      for (let item of that.data.list) {
+        item.check = false
+      }
+      that.setData({
+        list: that.data.list
+      })
+    }
+    countMoney()
+  },
+  submit(){
+    let arr = []
+    for (let item of that.data.list) {
+      if (item.check) {
+        arr.push(item.shopCarId)
+      }
+    }
+    if(arr.length==0)
+    {
+      Toast('请先选择商品')
+      return
+    }
+    if(that.data.isDel)
+    {
+      
+      getApp().ajaxResetS('/delShopCar',{shopCarId:arr.toString()},res=>{
+        if(res.data.Code==1)
+        {
+          Toast('删除成功')
+          let arr1=that.data.list.filter(item=>{return item.check==false})
+          that.setData({
+            list:arr1
+          })
+          if(that.data.list.length==0)
+          {
+            that.data.pageIndex=1;
+            that.getShopCar()
+          }
+        }
+      })
+    }else
+    {
+     
+    }
+  },
+  submit(){
+    let arr=that.data.list.filter(item=>{return item.check})
+    if(arr.length==0)
+    {
+      Toast('请先选择商品')
+      return
+    }
+    wx.setStorage({
+      key: 'productInfo',
+      data: arr,
+    })
+    wx.navigateTo({
+      url: '/pages/createOrder/createOrder',
+    })
   }
 })
+function countMoney(){
+  let money=0;
+  for(let item of that.data.list )
+  {
+    if(item.check)
+    {
+      money+=item.memberPrice*item.num
+    }
+  }
+  that.setData({
+    money:money*100
+  })
+}

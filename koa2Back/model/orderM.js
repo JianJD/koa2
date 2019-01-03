@@ -35,7 +35,7 @@ exports.orderList=(value)=>{
                     orderTable 
                 WHERE
                     userId =? 
-                    AND orderStastus =? 
+                    AND orderStatus =? 
                 ORDER BY
                     orderId DESC limit ?,?;`;
     return query(sql,value)
@@ -48,6 +48,6 @@ exports.totalItems=(value)=>{
                     orderTable 
                 WHERE
                     userId =? 
-                    AND orderStastus =? ;`;
+                    AND orderStatus =? ;`;
     return query(sql,value)
 }

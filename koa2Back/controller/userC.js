@@ -14,8 +14,8 @@ exports.login= async(ctx)=>{
     })
     if(isHasUser.length==0)
     {
-        let time=time.timeFormat() ;
-        let value=[userInfo.openid,userName,header,time]
+        let time1=time.timeFormat() ;
+        let value=[userInfo.openid,userName,header,time1]
         let returnData={}
         delete userInfo.session_key;
         returnData.openId=userInfo.openid;

@@ -1,5 +1,5 @@
 /**app.wxss**/
-
+view{font-size: 24rpx;}
 .container {
   height: 100%;
   display: flex;
@@ -57,3 +57,44 @@
 .fz24{font-size: 24rpx;}
 .txt-right{text-align: right;}
 .txt-center{text-align: center;}
+.col-fff{color: #fff;}
+/*地址公用*/
+
+.addressCls {
+  padding: 20rpx 40rpx;
+  position: relative;
+  background: #fff;
+  align-items: center;
+  margin: 40rpx 20rpx;
+  border: 1px solid #e5e5e5;
+  border-radius: 10rpx;
+}
+
+.addressCls.clickCls {
+  border: 1px solid #f90;
+}
+
+.addressCls:after, .addressCls:before {
+  content: '';
+  height: 20rpx;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  background-size: auto 10rpx;
+}
+
+.addressCls:after {
+  top: 0;
+}
+
+.addressCls:before {
+  bottom: 0;
+}
+
+.addressCls .flexCls-1>view {
+  padding: 10rpx 0;
+}
+.flexCls{display: flex;}
+.mgl20{margin-left: 20rpx}
+.col90{color: #f90}
+.coleb454f{color: #eb454f}

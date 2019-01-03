@@ -1,10 +1,9 @@
 <view class='btn'>
-  <van-button size="mini" type='primary' bind:click='toggle'>管理</van-button>
+  <van-button size="mini" type='primary' bind:click='toggle'>{{isDel?"完成":"管理"}}</van-button>
 
 </view>
 <view class='pd20'>
-  <van-checkbox-group value="{{ result }}" bind:change="onChange">
-    <van-checkbox wx:for="{{ list }}" wx:key="index" name="{{ item.shopCarId }}" checked-color="{{checkColor}}">
+    <van-checkbox wx:for="{{ list }}" value='{{item.check}}' data-idx='{{index}}' wx:key="index" name="{{ item.shopCarId }}" checked-color="{{checkColor}}" label-disabled bind:change="boxChange">
       <view class='flexCls-align pd20'>
         <image src='{{imgUrl}}{{item.swiperImg[0].url}}' class='proImg'></image>
         <view class='flexCls-1 flexCls-C'>
@@ -16,10 +15,14 @@
         </view>
       </view>
     </van-checkbox>
-  </van-checkbox-group>
 </view>
-<van-submit-bar price="{{isDel?'':1.5}}" button-text='{{isDel?"删除":"提交订单"}}' bind:submit="onClickButton">
+<van-submit-bar price="{{isDel?'':money}}" button-text='{{isDel?"删除":"提交订单"}}' bind:submit="submit">
   <view class='pdl20'>
     <van-checkbox value="{{ checked }}" bind:change="isCheck" checked-color="{{checkColor}}">全选</van-checkbox>
   </view>
 </van-submit-bar>
+<view class='mgt20 txt-center' wx:if="{{list.length==0}}">
+    <view class='col999 fz20'>您的购物车空空如也</view>
+    <navigator open-type='switchTab' class='gg' url='/pages/index/index'>去逛逛</navigator>
+</view>
+<van-toast id="van-toast" />

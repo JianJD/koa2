@@ -58,7 +58,7 @@ exports.delShopCar=async(ctx)=>{
     }
     
     await shopCarModel.delShopCar(shopCarId).then(res=>{
-        return response.reponseData(1,null,'删除成功');
+        return ctx.body= response.reponseData(1,null,'删除成功');
     }).catch(()=>{
         ctx.body=response.reponseData(1,null,'存储过程异常')  
     })

@@ -1,4 +1,6 @@
 //app.js
+import Toast from './pages/compoents/toast/toast';
+
 App({
   onLaunch: function () {
 
@@ -20,9 +22,12 @@ App({
   },
   globalData: {
     isCanGetUserInfo: 0,
-    ajaxUrl: 'http://127.0.0.1:3001',
+    ajaxUrl: 'http://192.168.2.59:3001',
     userInfo: '',
-    userId:''
+    userId:'',
+  },
+  Toast(txt){
+    Toast(txt)
   },
   ajaxResetS(url, data, successCallBack) {
     wx.request({

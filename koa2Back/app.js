@@ -34,6 +34,6 @@ app.use(productClassR.routes())
 app.use(addressR.routes())
 app.use(shopCarR.routes())
 app.use(orderR.routes())
-app.listen(3001,function(){
+app.listen('3001','192.168.2.59',function(){
     console.log('this server is running at localhost:3001')
 })

@@ -1,0 +1,2 @@
+/* pages/createAddress/createAddress.wxss */
+.van-switch__node{font-size: inherit;}

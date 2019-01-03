@@ -66,16 +66,20 @@ Page({
     })
   },
   createOrder(){
-    getApp().ajaxResetS('/createOrder',{
-      userId:getApp().globalData.userId,
-      productId: that.data.productInfo.productId,
-      addressId:1,
-      proNum:1
-    },res=>{
-      if(res.data.Code==1)
-      {
-        Toast('提交订单成功')
-      }
+    let data=JSON.parse(JSON.stringify(that.data.productInfo))
+    data.num=1
+    wx.setStorage({
+      key: 'productInfo',
+      data: [data],
     })
-  }
+    wx.navigateTo({
+      url: '/pages/createOrder/createOrder',
+    })
+    return
+
+    
+  },
+ 
+   
+  
 })

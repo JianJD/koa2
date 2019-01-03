@@ -1,0 +1,12 @@
+/* pages/public/address/address.wxss */
+Page{padding-bottom: 40rpx;background: #fff;height: 100%;}
+.add{position:fixed;
+right:20rpx;
+bottom:57rpx;
+width:80rpx;
+height:80rpx;
+border-radius:50%;
+text-align:center;
+line-height:80rpx}
+
+

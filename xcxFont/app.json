@@ -4,12 +4,15 @@
     "pages/logs/logs",
     "pages/productDetail/productDetail",
     "pages/my/my",
-    "pages/shopCar/shopCar"
-
+    "pages/shopCar/shopCar",
+    "pages/address/address",
+    "pages/createAddress/createAddress",
+    "pages/createOrder/createOrder",
+    "pages/myOrder/myOrder"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#f1f1f1",
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "black"
   },

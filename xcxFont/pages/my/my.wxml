@@ -1,2 +1,9 @@
-<!--pages/my/my.wxml-->
-<text>pages/my/my.wxml</text>
+<view class='myTop flexCls-align'>
+  <image src='https://www1.zaiyunli.com/upload/2018-11/6edf435c4b57468685d9ea2428ee507f/CRM/ProductImg/20181211162707779001558725991.jpg' class='bg'></image>
+  <view class='center txt-center'>
+    <image src='{{wxUserPic}}' mode='aspectFill' class='headpic'></image>
+    <view class='mgt10 col-fff fz20'>{{wxUserName}}</view>
+  </view>
+</view>
+<van-cell   icon="location-o" title="收货地址" is-link url='/pages/address/address' />
+<van-cell   icon="bag-o" title="我的订单" is-link url='/pages/myOrder/myOrder'/>

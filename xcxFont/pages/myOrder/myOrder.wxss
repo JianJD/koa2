@@ -1,0 +1,4 @@
+/* pages/myOrder/myOrder.wxss */
+page{background: #f1f1f1;}
+.bg-fff{background: #fff;}
+.footer{border-top: 1px solid #e8e8e8;padding-top: 10rpx;color: #666;}

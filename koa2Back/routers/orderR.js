@@ -5,4 +5,6 @@ router.post('/orderComplete',orderController.orderComplete)
 router.post('/sendForOrder',orderController.sendForOrder)
 router.post('/delOrder',orderController.delOrder)
 router.post('/findOrderInfoByOrderId',orderController.findOrderInfoByOrderId)
+router.post('/orderList',orderController.orderList)
+
 module.exports=router

@@ -54,9 +54,17 @@ exports.createAddress=async (ctx)=>{
         }
         value.push(addressId)
     }
+    if(isDefault==1)
+    {
+      await  addressModel.changeDefaultFalse(addressId?addressId:'').then(()=>{
+
+        })
+    }
     await addressModel.createdAddress(value,Type).then(res=>{
+       
         if(Type==0)
         {
+           
             return ctx.body=response.reponseData(1,null,'新增成功')
         }else
         {
@@ -87,4 +95,16 @@ exports.findAddress=async (ctx)=>{
             ctx.body=response.reponseData(0,res,'获取失败')
         })
     }
+}
+exports.changeDefaultTrue=async (ctx)=>{
+    let {addressId}=ctx.request.body
+    if(!addressId)
+    {
+        return ctx.body=response.reponseData(0,null,'地址id不能为空')
+    }
+    await addressModel.changeDefaultTrue(addressId).then(res=>{
+        ctx.body=response.reponseData(1,null,'修改成功')
+        
+    })
+    await addressModel.changeDefaultFalse(addressId).then(()=>{})
 }

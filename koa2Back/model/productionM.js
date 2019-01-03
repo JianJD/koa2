@@ -20,7 +20,6 @@ exports.delProduct=(productId)=>{
 // 查询商品
 exports.findProductByProductId=(productId)=>{
     let sql=`SELECT * FROM production WHERE productId in (${productId});`
-    console.log(sql)
     return query(sql) 
 }
 exports.getProductList=(value)=>{

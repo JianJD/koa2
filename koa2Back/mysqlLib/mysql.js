@@ -18,7 +18,7 @@ let order =
     userId VARCHAR(100) NOT NULL COMMENT '用户ID',
     productId VARCHAR(100) NOT NULL COMMENT '商品id',
     addressInfo TEXT NOT NULL COMMENT '地址信息',
-    orderSatus INT DEFAULT 0 COMMENT '订单状态 0 未付款 1已付款 2待发货  3已完成',
+    orderStatus INT DEFAULT 0 COMMENT '订单状态 0 未付款 1已付款 2待发货  3已完成',
     productInfo TEXT(0) DEFAULT NULL COMMENT '商品内容',
     creatAt DATETIME  NULL DEFAULT CURRENT_TIMESTAMP COMMENT  '创建时间',
     payAt VARCHAR(100) DEFAULT NULL  COMMENT '付款时间',

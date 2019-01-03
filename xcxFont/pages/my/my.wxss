@@ -1,1 +1,53 @@
-/* pages/my/my.wxss */
+page {
+  background: #fff;
+}
+
+.myTop {
+  height: 300rpx;
+  position: relative;
+  justify-content: center;
+}
+
+.bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.headpic {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  position: relative;
+  z-index: 555;
+}
+
+.kf {
+  background: #fff;
+  line-height: 100%;
+  width: 100%;
+  font-size: 26rpx;
+  text-align: left;
+}
+
+.kf::after {
+  border: none;
+}
+
+.pd3020 {
+  padding: 30rpx 20rpx;
+}
+
+.icon-kujialeqiyezhan_zaixiankefu- {
+  font-size: 36rpx;
+  color: #333;
+}
+
+.imgFont {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 20rpx;
+}

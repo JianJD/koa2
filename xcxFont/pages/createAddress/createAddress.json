@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "新增地址",
+  "usingComponents": {
+    "van-field": "../compoents/field/index",
+    "van-area": "../compoents/area/index",
+    "van-button": "../compoents/button/index",
+    "van-popup": "../compoents/popup/index",
+    "van-switch-cell": "../compoents/switch-cell/index",
+    "van-notify": "../compoents/notify/index"
+  }
+}

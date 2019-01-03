@@ -33,7 +33,8 @@ exports.shopCarListForPage=function(value){
 	b.price,
 	b.productDetail,
 	b.saleNum,
-	b.stock
+    b.stock,
+    b.sendMoney
 	
 FROM
 	shopcar AS a
