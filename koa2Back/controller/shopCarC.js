@@ -20,20 +20,19 @@ exports.addShopCar=async (ctx)=>{
     ]
     let isHas=false;
     let shopCarId;
+    let shopCarNum=new Number();
     // 判断商品是否已经存在购物车
     await shopCarModel.findByProductId(data).then(res=>{
         if(res.length!=0)
         {
             isHas=true;
-            shopCarId=res[0].shopCarId
+            shopCarId=res[0].shopCarId;
+            shopCarNum= parseInt(res[0].num)+1
         }
     })
-    console.log(isHas)
     if(isHas)
     {
-        
-        await shopCarModel.changeShopCarNum(shopCarId,0).then(res=>{
-            console.log('更新')
+        await shopCarModel.changeShopCarNum([shopCarNum,shopCarId],0).then(res=>{
             return ctx.body=response.reponseData(1,null,'更新成功')
         })
     }else{
@@ -91,7 +90,12 @@ exports.shopCarListForPage=async(ctx)=>{
     })
     if(totalItems==0)
     {
-        return ctx.body=response.reponseData(1,[],'成功');  
+        let Data={
+            totalItems,
+            totalPage: parseInt(totalItems/ pageSize)+1,
+            List:[]
+        }
+        return ctx.body=response.reponseData(1,Data,'成功');  
     }
     await shopCarModel.shopCarListForPage([userId,pageIndex-1,parseInt(pageSize)]).then(res=>{
         let Data={

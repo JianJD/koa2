@@ -80,6 +80,10 @@ Page({
     
   },
  
-   
+  goshopcar(){
+    wx.switchTab({
+      url: '/pages/shopCar/shopCar',
+    })
+  } 
   
 })

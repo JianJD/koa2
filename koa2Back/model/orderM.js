@@ -9,11 +9,11 @@ exports.updateOrderStatus=function(value){
     let sql='';
     if(value[0]==2)
     {   
-         sql = `UPDATE orderTable SET orderSatus=?,sendAt=Now() WHERE orderId=?`
+         sql = `UPDATE orderTable SET orderStatus=?,sendAt=Now() WHERE orderId=?`
     }
     if(value[0]==3)
     {
-         sql = `UPDATE orderTable SET orderSatus=?,completeAt=Now() WHERE orderId=?`
+         sql = `UPDATE orderTable SET orderStatus=?,completeAt=Now() WHERE orderId=?`
     }
     return query(sql,value)
 }

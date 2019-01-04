@@ -1,8 +1,11 @@
 <!--index.wxml-->
-<van-tabs active="{{ active }}" bind:change="onChange">
-  <van-tab title="{{item.className}}" wx:for="{{classList}}">
-    <productlist list="{{list}}" bind:go='go' />
-  </van-tab>
-  
-</van-tabs>
+
+<view class='flexCls'>
+  <scroll-view class='left'>
+    <view class='item  {{currindex==index?"itemActive":""}}' wx:for="{{classList}}" data-idx='{{index}}' catchtap='tab'> {{item.className}}</view>
+  </scroll-view>
+  <scroll-view class='right' bindscrolltolower='loadMore' scroll-y>
+   <productlist list="{{list}}" bind:go='go' />
+  </scroll-view>
+</view>
 <login />

@@ -1,0 +1,40 @@
+<!--pages/orderDetail/orderDetail.wxml-->
+<!--pages/createOrder/createOrder.wxml-->
+<van-row type="flex" justify="center" class='custom-class'>
+  <van-col span="1" offset='1'>
+    <van-icon name="location-o" size='16px' color='#999' />
+  </van-col>
+  <van-col span="18" offset='1'>
+    <view class='flexCls-align' wx:if="{{addressData!=''}}">
+      <view class='flexCls-1'>{{addressData.receiver}}</view>
+      <view>{{addressData.receiverPhone}}</view>
+    </view>
+    <view class='mgt20 col999 pdb10'  wx:if="{{addressData!=''}}">{{addressData.receiverProvince}}{{addressData.receiverCity}}{{addressData.receiverArea}}{{addressData.receiverAddress}}</view>
+    <navigator url='/pages/createAddress/createAddress'  wx:if="{{addressData==''}}">请先添加地址</navigator>
+  </van-col>
+  <van-col span="1" offset='1'>
+    <van-icon name="arrow" size='16px' color='#999' />
+  </van-col>
+</van-row>
+<view class=' bor-t'>
+
+</view>
+<view class=' line'></view>
+<van-row>
+  <van-col span='1' offset='1'>
+    <van-icon name="description" size='16px' color='#999' />
+  </van-col>
+  <van-col span='10' offset='1' class='mgt20'>
+    <view class='col999 '>购物清单</view>
+  </van-col>
+</van-row>
+<van-card num="{{item.orderNum}}" price="{{item.memberPrice}}" title="{{item.productTitle}}" thumb="{{imgUrl}}{{ item.swiperImg[0].url}}" wx:for="{{list}}" />
+<view class='mgt20'></view>
+<van-cell title="商品金额" value="￥{{productMoney}}" />
+<van-cell title="运费" value="￥{{sendMoney}}" />
+<van-cell title="实际支付" value="￥{{totalMoney}}" />
+<van-cell title="下单时间" value="{{info.creatAt}}" />
+<van-cell title="支付时间" value="{{info.payAt}}" />
+<van-cell title="发货时间" value="{{info.sendAt}}" />
+<van-cell title="收货时间" value="{{info.completeAt}}" />
+<van-toast id="van-toast" />

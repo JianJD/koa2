@@ -11,9 +11,7 @@ exports.delShopCar=function(value){
 }
 // 修改购物车数量
 exports.changeShopCarNum=function(value,Type){
-    let sql='';
-   
-        sql= `UPDATE shopcar SET num=? WHERE shopCarId=?;`;
+    let sql= `UPDATE shopcar SET num=? WHERE shopCarId=?;`;
     
     return query(sql,value)
 }
@@ -62,6 +60,6 @@ exports.findTotalItems=function(value){
 }
 // 根据商品id查数据
 exports.findByProductId=(value)=>{
-    let sql=`select shopCarId from shopcar where productId=? AND userId=?;`
+    let sql=`select shopCarId , num from shopcar where productId=? AND userId=?;`
     return query(sql,value)
 }

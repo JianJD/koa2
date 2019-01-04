@@ -1,4 +1,7 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "van-icon": "../compoents/icon/index"
+
+  }
 }

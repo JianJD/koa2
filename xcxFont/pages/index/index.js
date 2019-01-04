@@ -11,6 +11,7 @@ Page({
      pageSize:10,
      isForSale:1
     }, 
+    currindex:0,
     list:[]
   },
   
@@ -26,6 +27,15 @@ Page({
       }
     })
     that.getPro()
+  },
+  tab(e){
+    that.data.formData.classId=that.data.classList[e.currentTarget.dataset.idx].classId;
+    if (that.data.currindex != e.currentTarget.dataset.idx)
+    {
+      that.data.formData.pageIndex=1;
+      that.data.list=[];
+      that.getPro()
+    }
   },
   getPro(){
     getApp().ajaxResetS('/getProductList', this.data.formData,res=>{
@@ -50,10 +60,10 @@ Page({
       url: `/pages/productDetail/productDetail?productId=${that.data.list[e.detail.index].productId}`,
     })
   },
-  onReachBottom(){
-    if(that.data.formData.pageIndex<that.data.totalPages)
-    {
-      that.data.formData.pageIndex+=1;
+ 
+  loadMore(){
+    if (that.data.formData.pageIndex < that.data.totalPages) {
+      that.data.formData.pageIndex += 1;
       that.getPro()
     }
   }

@@ -3,8 +3,8 @@
 .flexCls-align{
   display: flex;
   padding: 20rpx;
-  background: #f1f1f1;
-  margin-top: 20rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
 }
 .flexCls-1{
   flex: 1;
@@ -27,3 +27,4 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.flexCls{display: flex;}

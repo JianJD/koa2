@@ -24,6 +24,19 @@ Component({
     go(e){
       
       this.triggerEvent('go',e.currentTarget.dataset)
+    },
+    addShopCar(e){
+      getApp().ajaxResetS('/addShopCar', {
+        num: 1,
+        userId: getApp().globalData.userId,
+        productId:e.currentTarget.dataset.id
+      }, res => {
+        if (res.data.Code == 1) {
+          wx.showToast({
+            title: '成功',
+          })
+        }
+      })
     }
   }
 })

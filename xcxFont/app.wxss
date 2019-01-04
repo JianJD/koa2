@@ -1,4 +1,7 @@
 /**app.wxss**/
+view{
+  font-family: '微软雅黑'
+}
 view{font-size: 24rpx;}
 .container {
   height: 100%;

@@ -6,6 +6,7 @@
     "van-tab": "../compoents/tab/index",
     "van-tabs": "../compoents/tabs/index",
     "van-card": "../compoents/card/index",
-    "van-button": "../compoents/button/index"
+    "van-button": "../compoents/button/index",
+    "orderlist":"../orderList/orderList"
   }
 }

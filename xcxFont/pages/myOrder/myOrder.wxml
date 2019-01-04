@@ -1,21 +1,9 @@
 <!--pages/myOrder/myOrder.wxml-->
-<van-tabs active="{{ active }}" bind:change="tab" sticky scroll-top='50px'>
-  <van-tab title="代付款"></van-tab>
-  <van-tab title="待发货"></van-tab>
-  <van-tab title="待收货"></van-tab>
-  <van-tab title="已完成"></van-tab>
+<van-tabs active="{{ active }}" bind:change="tab" sticky scroll-top="{{ scrollTop }}">
+  <van-tab title="待支付">
+    <orderlist list="{{list0}}" bind:pay='pay' bind:del="del" bind:go='go'/>
+  </van-tab>
+  <van-tab title="待发货"><orderlist list="{{list1}}" bind:pay='pay' bind:del="del" bind:go='go' /></van-tab>
+  <van-tab title="待收货"><orderlist list="{{list2}}" bind:pay='pay' bind:del="del" bind:go='go' bind:ordercompelete='done'/></van-tab>
+  <van-tab title="已完成"><orderlist list="{{list3}}" bind:pay='pay' bind:del="del" bind:go='go' /></van-tab>
 </van-tabs>
-<view class='pd20 bg-fff'  wx:for="{{list}}">
-  <view class='flexCls-align pd20 '>
-    <view class='flexCls-1'>下单时间：{{item.creatAt}}</view>
-    <view class='fz22 coleb454f' wx:if="{{item.orderStatus==0}}">待支付</view>
-  </view>
-  <van-card num="{{item2.orderNum}}" price="{{item2.memberPrice}}" title="{{item2.productTitle}}" thumb="{{ imgUrl }}{{item2.swiperImg[0].url}}" wx:for="{{item.productInfo}}" wx:for-item='item2'></van-card>
-  <view class='footer txt-right'>
-    <view class='txt-right mgb20'>共1件商品，实付：
-      <text class='coleb454f'>￥40.00</text>
-    </view>
-    <van-button size="mini" wx:if="{{item.orderStatus==0}}" class='mgt20'>去支付</van-button>
-    <van-button size="mini" wx:if="{{item.orderStatus==2}}">确认收货</van-button>
-  </view>
-</view>

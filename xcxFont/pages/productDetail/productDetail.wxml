@@ -25,7 +25,7 @@
   <van-goods-action-icon
     icon="cart-o"
     text="购物车"
-    bind:click="onClickIcon"
+    bind:click="goshopcar"
     info='{{num}}'
 
   />

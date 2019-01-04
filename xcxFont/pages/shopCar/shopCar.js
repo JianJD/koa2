@@ -16,13 +16,21 @@ Page({
     isDel:false,
     money:0
   },
-
+onShow(){
+  that.data.pageIndex=1;
+  that.data.list= [];
+  that.getShopCar()
+  that.setData({
+    checked:false,
+    money:0
+  })
+},
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     that=this;
-    that.getShopCar()
+    
   },
   toggle(){
     that.setData({
@@ -120,29 +128,28 @@ Page({
           {
             that.data.pageIndex=1;
             that.getShopCar()
+            that.data.money=0
+            countMoney()
           }
         }
       })
     }else
     {
-     
+      let arr = that.data.list.filter(item => { return item.check })
+      if (arr.length == 0) {
+        Toast('请先选择商品')
+        return
+      }
+      wx.setStorage({
+        key: 'productInfo',
+        data: arr,
+      })
+      wx.navigateTo({
+        url: '/pages/createOrder/createOrder',
+      })
     }
   },
-  submit(){
-    let arr=that.data.list.filter(item=>{return item.check})
-    if(arr.length==0)
-    {
-      Toast('请先选择商品')
-      return
-    }
-    wx.setStorage({
-      key: 'productInfo',
-      data: arr,
-    })
-    wx.navigateTo({
-      url: '/pages/createOrder/createOrder',
-    })
-  }
+ 
 })
 function countMoney(){
   let money=0;

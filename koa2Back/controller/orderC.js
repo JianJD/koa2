@@ -22,6 +22,7 @@ exports.createOrder=async(ctx)=>{
     })
     let productInfo;
     await proModel.findProductByProductId(productId).then(res=>{
+        console.log(res)
         let arrProNum=proNum.split('#')
         for(let i=0;i<arrProNum.length;i++)
         {
@@ -88,7 +89,8 @@ exports.delOrder=async(ctx)=>{
 // 查询订单信息
 exports.findOrderInfoByOrderId=async(ctx)=>{
     let {orderId} = ctx.request.body;
-    if(!orderId)
+    console.log(orderId)
+    if((orderId==undefined||orderId==''))
     {
         return ctx.body=response.reponseData(0,null,'orderid不能为空')
     }
@@ -99,6 +101,10 @@ exports.findOrderInfoByOrderId=async(ctx)=>{
         let Data=res[0];
         Data.addressInfo=JSON.parse(Data.addressInfo)
         Data.productInfo=JSON.parse(Data.productInfo)
+        for(let item of Data.productInfo)
+        {
+            item.swiperImg=JSON.parse(item.swiperImg)
+        }
         return ctx.body=response.reponseData(1,Data,'获取成功')
     })
 }
@@ -107,7 +113,7 @@ exports.orderList=async(ctx)=>{
     let {userId,orderStatus=0,pageIndex=0,pageSize=10}=ctx.request.body;
     if(!userId)
     {
-        return ctx.body=response.responseData(0,null,'userId不能为空')
+        return ctx.body=response.reponseData(0,null,'userId不能为空')
     }
     let totalItems;
     await orderM.totalItems([userId,orderStatus]).then(res=>{
@@ -115,7 +121,12 @@ exports.orderList=async(ctx)=>{
     })
     if(totalItems==0)
     {
-        return ctx.body=response.responseData(0,[],'成功')
+        let Data={
+            totalItems,
+            totalPage: parseInt(totalItems/ pageSize)+1,
+            List:[]
+        }
+        return ctx.body=response.reponseData(0,Data,'成功')
     }
     await orderM.orderList([userId,orderStatus,parseInt(pageIndex)-1,parseInt(pageSize)]).then(res=>{
         let Data={

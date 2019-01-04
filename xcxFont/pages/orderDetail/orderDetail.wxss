@@ -1,0 +1,26 @@
+/* pages/orderDetail/orderDetail.wxss */
+page {
+  background: #f1f1f1;
+}
+
+.bor-t {
+  background: #fff;
+  height: 4rpx;
+  background: linear-gradient(to right, #ff973b, #ff5101);
+}
+
+.van-row {
+  background: #fff;
+}
+
+.pdb10 {
+  padding-bottom: 10rpx;
+}
+
+.line {
+  height: 20rpx;
+  background: #fff;
+}
+.van-cell__title{color: #666;}
+.van-cell__value{color: #333;}
+.van-row{padding-top: 20rpx;padding-bottom: 20rpx;}

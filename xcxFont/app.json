@@ -8,7 +8,8 @@
     "pages/address/address",
     "pages/createAddress/createAddress",
     "pages/createOrder/createOrder",
-    "pages/myOrder/myOrder"
+    "pages/myOrder/myOrder",
+    "pages/orderDetail/orderDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",

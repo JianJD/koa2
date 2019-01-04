@@ -3,6 +3,9 @@
   <image src='{{imgUrl}}{{item.swiperImg[0].url}}' mode='aspectFill' class='proImg'></image>
   <view class='flexCls-1 flexCls-C'>
     <view class='fz24 text2'>{{item.productTitle}}</view>
-    <view class='colred fz24'>￥ {{item.memberPrice}}</view>
+    <view class='colred fz24 flexCls' >
+      <view class='flexCls-1'> ￥ {{item.memberPrice}}</view>
+      <van-icon name='shopping-cart-o' size='16px' catchtap='addShopCar' data-id='{{item.productId}}'/>
+   </view>
   </view>
 </view>
