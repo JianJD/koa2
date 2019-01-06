@@ -119,7 +119,12 @@ exports.getProductList=async (ctx)=>{
     })
     if(totalItems==0)
     {
-        return ctx.body=response.reponseData(1,[],'获取成功')
+        let Data={
+            List:[],
+            totalItems,
+            totalPages:parseInt(totalItems/pageSize)+1
+        }
+        return ctx.body=response.reponseData(1,Data,'获取成功')
     }
     await productModel.getProductList(value).then(res=>{
         let Data={

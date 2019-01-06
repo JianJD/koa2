@@ -2,11 +2,11 @@
   <div>
    <Menu mode="vertical" theme="light" active-name="1" width="auto" :class="menuitemClasses">
         <div class="layout-nav" v-for="(item,index) in list" :key='index'>
-            <MenuItem name="1" v-if="item.children=='undefind'" :to='item.path'>
+            <MenuItem :name="item.path" v-if="item.children=='undefind'" :to='item.path'>
               <Icon type="ios-paper" />
                 <span>{{item.txt}}</span>
             </MenuItem>
-               <Submenu name="2"  v-if="item.children">
+               <Submenu name="2"  v-if="item.children!='undefind'">
                     <template slot="title">
                         <Icon type="ios-keypad"></Icon>
                        <span>{{item.title}}</span>
@@ -48,6 +48,20 @@ export default {
                     }
                    
                 ]
+            },
+            {
+             path:'/addClass',
+            title:'产品分类',
+            txt:'产品分类',
+            icon:'ios-keypad',  
+            children:'undefind' 
+            },
+             {
+             path:'/orderManger',
+            title:'订单管理',
+            txt:'订单管理',
+            icon:'ios-keypad',  
+            children:'undefind' 
             }
         ]
     };
@@ -66,7 +80,6 @@ export default {
 <style>
 .ivu-menu {
     width: 100% !important;
-    height: 100vh;
 }
 .layout{
         border: 1px solid #d7dde4;

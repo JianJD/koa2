@@ -14,6 +14,7 @@ var productClassR=require('./routers/productClassR')
 var addressR=require('./routers/addressR')
 var orderR=require('./routers/orderR')
 var shopCarR=require('./routers/shopCarR')
+var wxpay=require('./routers/pay')
 var sql=require('./mysqlLib/mysql')
 // 访问的时候不需要加static文件夹名称
 var staticPath='./static'
@@ -28,12 +29,16 @@ app.use(static(path.join(__dirname, staticPath)))
 app.use(bodyParser())
 // 使用路由
 app.use(upload.routes())
+app.use(wxpay.routes())
 app.use(user.routes())
 app.use(product.routes())
 app.use(productClassR.routes())
 app.use(addressR.routes())
 app.use(shopCarR.routes())
 app.use(orderR.routes())
-app.listen('3001','192.168.2.59',function(){
+// app.listen('3001','192.168.1.105',function(){
+//     console.log('this server is running at localhost:3001')
+// })
+app.listen(3001,function(){
     console.log('this server is running at localhost:3001')
 })

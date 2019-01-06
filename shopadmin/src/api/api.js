@@ -24,8 +24,24 @@ export default{
     delProduct(data){
         return axios.post(`${api}/delProduct`, data) 
     },
+    // 上下架
     upAndDown(data){
         return axios.post(`${api}/upAndDown`, data) 
     },
-    
+    // 删除分类
+    del(data){
+        return axios.post(`${api}/delClass`, data)  
+    },
+    addOrEditClass(data){
+        return axios.post(`${api}/addOrEditClass`, data)
+    },
+    getOrderList(data){
+        return axios.post(`${api}/orderListAdmin`, data)
+    },
+    delOrder(data){
+        return axios.post(`${api}/delOrder`, data)
+    },
+    sendForOrder(data){
+        return axios.post(`${api}/sendForOrder`, data)
+    }
 }

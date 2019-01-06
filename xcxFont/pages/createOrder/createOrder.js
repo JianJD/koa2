@@ -87,7 +87,22 @@ submit(){
     proNum: proNum.join('#')
   }, res => {
     if (res.data.Code == 1) {
-     getApp().Toast('下单成功')
+      getApp().pay(that.data.totalMoney,res.data.Data.orderId,function(msg){
+        let data = msg.data.Data.Data
+        wx.requestPayment({
+          timeStamp: data.timeStamp.toString() ,
+          nonceStr: data.nonce_str,
+          package: data.package,
+          signType: 'MD5',
+          paySign: data.paySign,
+          success(res) { 
+            console.log(res)
+          },
+          fail(res){
+            console.log(res)
+          }
+        })
+      })
     }
   })
 }

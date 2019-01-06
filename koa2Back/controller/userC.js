@@ -1,10 +1,8 @@
 var request = require('request');
 var userMoel=require('../model/userM');
 var time=require('../utils/public')
-const wxConfig = {
-    APPID: 'wxb68699ee0229042e',
-    SECRET: 'ca82d62e5efc42192dedeff50be56a9e'
-}
+var config=require('../config/config')
+const wxConfig = config.wxConfig
 exports.login= async(ctx)=>{
     let {code ,userName,header}=ctx.request.body
     let isHasUser;
@@ -27,7 +25,7 @@ exports.login= async(ctx)=>{
         await userMoel.findUserById(userInfo.openid).then(res=>{
             ctx.body={
                 code:1,
-                Data:res,
+                Data:returnData,
                 msg:'注册成功'
             }
         })

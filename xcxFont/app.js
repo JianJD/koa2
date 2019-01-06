@@ -22,7 +22,8 @@ App({
   },
   globalData: {
     isCanGetUserInfo: 0,
-    ajaxUrl: 'http://192.168.2.59:3001',
+    // ajaxUrl: 'http://192.168.1.105:3001',
+    ajaxUrl: 'http://127.0.0.1:3001',
     userInfo: '',
     userId:'',
   },
@@ -66,6 +67,36 @@ App({
               }
             })
           }
+        })
+      }
+    })
+  },
+  pay(money, orderNum,callback){
+    wx.login({
+      success(res){
+        // wx.request({
+        //   url: 'https://www.football9.cn/tea/tea-api/pay',
+        //   header: {
+        //     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        //   },
+        //   data:{
+        //     code:res.code,
+        //     money:120,
+        //     number: orderNum
+        //   },
+        //   method:'post',
+        //   success(res){
+        //     console.log(res)
+        //   }
+        // })
+        // return
+        getApp().ajaxResetS('/pay',{
+          code:res.code,
+          money,
+          orderNum: orderNum,
+          openid:getApp().globalData.userId
+        },(res)=>{
+          callback(res)
         })
       }
     })

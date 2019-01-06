@@ -1,7 +1,7 @@
 var query=require('../mysqlLib/pool');
 // 下单
 exports.createOrder=function(value){
-    let sql = `INSERT INTO orderTable SET userId=?,productId=?,addressInfo=?,productInfo=?,creatAt=Now(),orderSatus=0;`
+    let sql = `INSERT INTO orderTable SET userId=?,productId=?,addressInfo=?,productInfo=?,creatAt=Now(),orderStatus=0;`
     return query(sql,value)
 }
 // 更新订单状态
@@ -49,5 +49,33 @@ exports.totalItems=(value)=>{
                 WHERE
                     userId =? 
                     AND orderStatus =? ;`;
+    return query(sql,value)
+}
+exports.findOrderByUserId=(value)=>{
+    let sql=`select orderId from orderTable where userId=? order by orderId desc limit 0,1; `;
+    return query(sql,value)
+}
+// 查询订单总个数
+exports.totalItemsAdmin=(value)=>{
+    let sql = `SELECT
+                    COUNT( orderTable.orderId ) AS totalItems 
+                FROM
+                    orderTable 
+                WHERE
+                    orderStatus =? ;`;
+    return query(sql,value)
+}
+// 订单列表
+exports.orderListAdmin=(value)=>{
+    let sql = `SELECT
+	                a.*,b.userName,b.header 
+                FROM
+                    orderTable as a
+                    left join usersshop as b
+                    on a.userId=b.openId
+                WHERE
+                    orderStatus =? 
+                ORDER BY
+                    orderId DESC limit ?,?;`;
     return query(sql,value)
 }

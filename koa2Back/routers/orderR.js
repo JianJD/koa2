@@ -6,5 +6,5 @@ router.post('/sendForOrder',orderController.sendForOrder)
 router.post('/delOrder',orderController.delOrder)
 router.post('/findOrderInfoByOrderId',orderController.findOrderInfoByOrderId)
 router.post('/orderList',orderController.orderList)
-
+router.post('/orderListAdmin',orderController.orderListAdmin)
 module.exports=router

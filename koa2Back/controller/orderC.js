@@ -22,7 +22,6 @@ exports.createOrder=async(ctx)=>{
     })
     let productInfo;
     await proModel.findProductByProductId(productId).then(res=>{
-        console.log(res)
         let arrProNum=proNum.split('#')
         for(let i=0;i<arrProNum.length;i++)
         {
@@ -38,9 +37,12 @@ exports.createOrder=async(ctx)=>{
     ]
 
    await orderM.createOrder(value).then(res=>{
-       return ctx.body=response.reponseData(1,null,'成功')
-   })
-
+   }).catch(()=>{
+    return ctx.body=response.reponseData(0,null,'存储过程异常')
+    })
+   await orderM.findOrderByUserId([userId]).then(res=>{
+    return ctx.body=response.reponseData(1,res[0],'成功')   
+    })
 }
 // 待发货->待收货
 exports.sendForOrder=async (ctx)=>{
@@ -56,6 +58,7 @@ exports.sendForOrder=async (ctx)=>{
     await orderM.updateOrderStatus(value).then(res=>{
         return ctx.body=response.reponseData(1,null,'success')
     })
+    
 }
 // 待收货->已完成
 exports.orderComplete=async (ctx)=>{
@@ -89,7 +92,6 @@ exports.delOrder=async(ctx)=>{
 // 查询订单信息
 exports.findOrderInfoByOrderId=async(ctx)=>{
     let {orderId} = ctx.request.body;
-    console.log(orderId)
     if((orderId==undefined||orderId==''))
     {
         return ctx.body=response.reponseData(0,null,'orderid不能为空')
@@ -126,9 +128,32 @@ exports.orderList=async(ctx)=>{
             totalPage: parseInt(totalItems/ pageSize)+1,
             List:[]
         }
-        return ctx.body=response.reponseData(0,Data,'成功')
+        return ctx.body=response.reponseData(1,Data,'成功')
     }
     await orderM.orderList([userId,orderStatus,parseInt(pageIndex)-1,parseInt(pageSize)]).then(res=>{
+        let Data={
+            totalItems,
+            totalPage: parseInt(totalItems/ pageSize)+1,
+            List:res
+        }
+        return ctx.body=response.reponseData(1,Data,'成功');
+    })
+}
+exports.orderListAdmin=async(ctx)=>{
+    let {orderStatus=1,pageIndex=0,pageSize=10}=ctx.request.body;
+    await orderM.totalItemsAdmin([orderStatus]).then(res=>{
+        totalItems=res[0].totalItems
+    })
+    if(totalItems==0)
+    {
+        let Data={
+            totalItems,
+            totalPage: parseInt(totalItems/ pageSize)+1,
+            List:[]
+        }
+        return ctx.body=response.reponseData(1,Data,'成功')
+    }
+    await orderM.orderListAdmin([orderStatus,parseInt(pageIndex)-1,parseInt(pageSize)]).then(res=>{
         let Data={
             totalItems,
             totalPage: parseInt(totalItems/ pageSize)+1,
