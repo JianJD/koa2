@@ -32,7 +32,7 @@ Page({
           list: res.data
         }, () => {
           for (let item of that.data.list) {
-            that.data.productMoney += item.memberPrice * item.num
+            that.data.productMoney += item.specPrice * item.num
             that.data.sendMoney = item.sendMoney
           }
           that.setData({
@@ -75,16 +75,19 @@ submit(){
   }
   let ids=[];
   let proNum=[];
+  let specIds=[]
   for (let item of that.data.list)
   {
     ids.push(item.productId)
-    proNum.push(item.num)
+    proNum.push(item.num);
+    specIds.push(item.specId)
   }
   getApp().ajaxResetS('/createOrder', {
     userId: getApp().globalData.userId,
     productId: ids.toString(),
     addressId: that.data.addressData.addressId,
-    proNum: proNum.join('#')
+    proNum: proNum.join(','),
+    specId: specIds.join(',')
   }, res => {
     if (res.data.Code == 1) {
       getApp().pay(that.data.totalMoney,res.data.Data.orderId,function(msg){

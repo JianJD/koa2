@@ -3,6 +3,7 @@ var responseR = require('../utils/public');
 var request = require('request');
 var congfig=require('../config/config')
 var xmlreader = require("xmlreader");
+var orderM=require('../model/orderM')
 exports.wxPay = async (ctx) => {
     let {
         code,
@@ -27,32 +28,18 @@ console.log( ctx.req.connection.remoteAddress)
     let nonce_str = wxpay.createNonceStr();
     let timestamp = wxpay.createTimeStamp();
     let body = '123';
-    let out_trade_no = orderNum;
+    let out_trade_no = timestamp;
     let total_fee = wxpay.getmoney(money);
     let spbill_create_ip =ctx. req.connection.remoteAddress.replace('::ffff:','');
     let notify_url = wxurl;
     let trade_type = 'JSAPI';
     let appid=congfig.wxConfig.APPID;
-    openid="opBR45ITDFw1artp6GbH2YPkMECc"
-    let sign = wxpay.paysignjsapi(openid,appid,body,mch_id,nonce_str,notify_url,out_trade_no,spbill_create_ip,total_fee,trade_type,mchkey);
+    let sign = wxpay.paysignjsapi(orderNum,openid,appid,body,mch_id,nonce_str,notify_url,out_trade_no,spbill_create_ip,total_fee,trade_type,mchkey);
     console.log('签名'+sign)
-    // let formData=
-    // `<xml>
-    //     <appid>${appid}</appid>
-    //     <body>${body}></body>
-    //     <mch_id>${mch_id}</mch_id>
-    //     <nonce_str>${nonce_str}</nonce_str>
-    //     <notify_url>${notify_url}</notify_url>
-    //     <openid>${openid}</openid>
-    //     <out_trade_no>${out_trade_no}</out_trade_no>
-    //     <spbill_create_ip>${spbill_create_ip}</spbill_create_ip>
-    //     <total_fee>${total_fee}</total_fee>
-    //     <trade_type>${trade_type}</trade_type>
-    //     <sign>${sign}</sign>
-    // </xml>`;
   
 var formData  = "<xml>";
     formData  += "<appid>"+appid+"</appid>";  //appid
+    formData  += "<attach><![CDATA["+orderNum+"]]></attach>";
     formData  += "<body><![CDATA["+body+"]]></body>";
     formData  += "<mch_id>"+mch_id+"</mch_id>";  //商户号
     formData  += "<nonce_str>"+nonce_str+"</nonce_str>"; //随机字符串，不长于32位。
@@ -95,6 +82,29 @@ var formData  = "<xml>";
     })
  
 }
+exports.wxPayNotify=async(ctx)=>{
+    xmlreader.read(ctx.request.body.toString("utf-8"),async function (errors, res) {
+        console.log(ctx)
+        if(!errors){
+            if(res.xml.return_code.text()=='SUCCESS')
+            {
+                let value=[
+                    1,
+                    res.xml.attach.text(),
+                    res.xml.transaction_id.text()
+                ]
+              await  orderM.payOrder(value).then(msg=>{
+                return  ctx.body=responseR.reponseData(1,msg,'SUCCESS')
+              })
+            }
+        }
+    }) 
+}
+
+
+
+
+
 function getWxorderId(url,formData) {
     return new Promise ((resolve, reject)=>{
         request({url:url,method:'POST',body:formData}, function (err, res, body) {

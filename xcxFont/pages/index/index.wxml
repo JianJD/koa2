@@ -5,7 +5,8 @@
     <view class='item  {{currindex==index?"itemActive":""}}' wx:for="{{classList}}" data-idx='{{index}}' catchtap='tab'> {{item.className}}</view>
   </scroll-view>
   <scroll-view class='right' bindscrolltolower='loadMore' scroll-y>
-   <productlist list="{{list}}" bind:go='go' />
+   <productlist list="{{list}}" bind:go='go'  bind:car='car'/>
   </scroll-view>
 </view>
 <login />
+<sku  isShowChoose='{{isShowChoose}}' showBuy='{{showBuy}}' listData='{{specArr}}' bind:addCar='addShopCar' bind:chooseColor='chooseColor'  bind:num='num'/>

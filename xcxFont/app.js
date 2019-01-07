@@ -26,6 +26,7 @@ App({
     ajaxUrl: 'http://127.0.0.1:3001',
     userInfo: '',
     userId:'',
+    isLogin:0
   },
   Toast(txt){
     Toast(txt)
@@ -63,7 +64,12 @@ App({
               method: 'post',
               success(res) {
                 console.log(res)
-                getApp().globalData.userId = res.data.Data[0].openId
+                if(res.data.Code==1)
+                {
+                  getApp().globalData.isLogin=1
+                  getApp().globalData.userId = res.data.Data[0].openId
+                }
+                
               }
             })
           }
@@ -74,22 +80,7 @@ App({
   pay(money, orderNum,callback){
     wx.login({
       success(res){
-        // wx.request({
-        //   url: 'https://www.football9.cn/tea/tea-api/pay',
-        //   header: {
-        //     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        //   },
-        //   data:{
-        //     code:res.code,
-        //     money:120,
-        //     number: orderNum
-        //   },
-        //   method:'post',
-        //   success(res){
-        //     console.log(res)
-        //   }
-        // })
-        // return
+
         getApp().ajaxResetS('/pay',{
           code:res.code,
           money,

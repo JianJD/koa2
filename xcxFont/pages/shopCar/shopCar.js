@@ -60,7 +60,8 @@ onShow(){
   changeNum(e){
     getApp().ajaxResetS('/changeShopCarNum',{
       shopCarId:that.data.list[e.currentTarget.dataset.idx].shopCarId,
-      num:e.detail
+      num:e.detail,
+      specId: that.data.list[e.currentTarget.dataset.idx].specId
     },res=>{
       if(res.data.Code==1)
       {
@@ -157,7 +158,7 @@ function countMoney(){
   {
     if(item.check)
     {
-      money+=item.memberPrice*item.num
+      money += item.specPrice*item.num
     }
   }
   that.setData({

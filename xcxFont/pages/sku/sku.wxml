@@ -1,0 +1,40 @@
+<!--pages/sku/sku.wxml-->
+<!-- 多规格弹窗 -->
+<view class='mask' wx:if="{{isShowChoose}}"></view>
+<view class='choosePop' wx:if="{{isShowChoose}}">
+  <view class='pd20'>
+    <!-- 第一个盒子 -->
+    <view class='flexCls bor-b' style='padding-bottom:30rpx;'>
+      <view class='proDuctImg'>
+        <image src='{{imgUrl}}{{img}}'></image>
+      </view>
+      <view class='flexCls-1 mgl20 fz26' style='margin-top:50rpx;'>
+        <view class='colf98700 fz34' wx:if="{{price}}">￥{{price}}</view>
+        <view wx:if="{{stock!=''}}">库存 {{stock}}件</view>
+        <!-- <view>选择 {{hasChoosed}}</view> -->
+      </view>
+      <van-icon name="close" size='18px' bind:click='close' />
+    </view>
+    <!-- 第一个盒子结束 -->
+    <view style='max-height:250rpx;overflow:auto;'>
+      <view class='pd200 bor-b'>
+        <view class='fz30 col999'>颜色分类</view>
+        <view class='mgt20 overAuto'>
+          <view class='item_new  {{item.isColorChoose?"actived":""}}' wx:for="{{listData}}" data-idx='{{index}}' data-specid='{{item.specId}}' catchtap='chooseColor'>{{item.color}}{{item.size}}</view>
+        </view>
+      </view>
+    </view>
+    <view class='pd200 flexCls-align'>
+      <view class='flexCls-1'>购买数量</view>
+      <view class='flexCls-align'>
+        <van-stepper value="{{ num }}" bind:change="onChange" />
+         </view>
+    </view>
+
+  </view>
+  <view class='flexCls-align'>
+  <view class='buy_new' catchtap='addCar' style='width:{{showBuy?"50%":"100%"}}'>加入购物车</view>
+    <view class='buy_new' catchtap='Buy' wx:if="{{showBuy}}">立即购买</view>
+  </view>
+</view>
+<van-toast id="van-toast" />

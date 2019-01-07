@@ -3,6 +3,7 @@
   "usingComponents":{
     "van-goods-action": "../compoents/goods-action/index",
     "van-goods-action-icon": "../compoents/goods-action-icon/index",
-    "van-goods-action-button": "../compoents/goods-action-button/index"
+    "van-goods-action-button": "../compoents/goods-action-button/index",
+    "sku":"../sku/sku"
   }
 }

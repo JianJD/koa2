@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-icon": "../compoents/icon/index",
+    "van-stepper": "../compoents/stepper/index",
+    "van-toast": "../compoents/toast/index"
+  }
+}

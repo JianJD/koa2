@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "购物车",
   "usingComponents": {
     "van-card": "../compoents/card/index",
     "van-stepper": "../compoents/stepper/index",

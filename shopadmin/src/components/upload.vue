@@ -24,7 +24,7 @@
         </div>
     </Upload>
     <Modal title="View Image" v-model="visible">
-        <img :src="imgUrl + url + '/large'" v-if="visible" style="width: 100%">
+        <img :src="imgUrl + url" v-if="visible" style="width: 100%">
     </Modal>
     </div>
 </template>
@@ -34,6 +34,10 @@
             uploadList:{
                 type:Array,
                 default:[]
+            },
+            one:{
+                type:Boolean,
+                default:false
             }
         },
         data () {
@@ -53,11 +57,29 @@
                this.uploadList.splice(index,1)
             },
             handleSuccess (res, file) {
-                console.log(res.Data)
-                this.uploadList.push({
-                    name:'pic',
-                    url:res.Data
-                })
+                if(!this.one)
+                {
+                     this.uploadList.push({
+                            name:'pic',
+                            url:res.Data
+                        })
+                }else{
+                    if(this.uploadList.length>0)
+                    {
+                    this.uploadList.splice(0,1,{
+                            name:'pic',
+                            url:res.Data
+                        })
+                    }else
+                    {
+                    this.uploadList.push({
+                            name:'pic',
+                            url:res.Data
+                        })
+                    }
+                }
+               
+                    console.log(this.uploadList)
                 this.$emit('success',this.uploadList)
             },
             

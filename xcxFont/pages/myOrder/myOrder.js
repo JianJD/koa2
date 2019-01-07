@@ -110,7 +110,7 @@ Page({
   },
   getOrderList() {
     getApp().ajaxResetS('/orderList', {
-      userId: 'oaKg65G995UnaF71UTkG0tmMgM14',
+      userId: getApp().globalData.userId,
       orderStatus: that.data.orderStatus,
       pageIndex: that.data.pageIndex,
       pageSize: 10

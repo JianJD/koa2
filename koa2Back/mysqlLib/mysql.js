@@ -54,6 +54,17 @@ let order =
     updateAt DATETIME   DEFAULT CURRENT_TIMESTAMP COMMENT '商品更新时间',
     PRIMARY KEY ( productId )
   );`;
+  let productionSpec=
+  `create table if not exists productionspec(
+    specId INT NOT NULL AUTO_INCREMENT COMMENT '商品规格id',
+    productId VARCHAR(255) DEFAULT NULL COMMENT '商品ID',
+    specImg VARCHAR(255) DEFAULT NULL COMMENT '商品规格图片',
+    color VARCHAR(20) DEFAULT NULL COMMENT '商品颜色',
+    price float NOT NULL COMMENT '规格价格',
+    stock INT NOT NULL COMMENT '规格库存',
+    size VARCHAR(255) DEFAULT NULL COMMENT '商品大小',
+    PRIMARY KEY ( specId )
+  );`;
   //收货地址表
   let addressReceive=
   `create table if not exists addressReceive(
@@ -83,6 +94,7 @@ let order =
   `create table if not exists shopcar(
     shopCarId INT NOT NULL AUTO_INCREMENT COMMENT '购物车主键id',
     userId VARCHAR(255) NOT NULL COMMENT '用户id',
+    specId VARCHAR(255) NOT NULL COMMENT '规格id',
     num INT NOT NULL COMMENT '商品数量',
     productId VARCHAR(255) NOT NULL COMMENT '商品id',
     createAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -102,3 +114,4 @@ createTable(production)
 createTable(addressReceive)
 createTable(classTable)
 createTable(shopCar)
+createTable(productionSpec)

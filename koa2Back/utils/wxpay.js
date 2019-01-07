@@ -21,10 +21,11 @@ var wxpay = {
     },
 
     //签名加密算法
-    paysignjsapi: function (openid,appid, body, mch_id, nonce_str, notify_url, out_trade_no, spbill_create_ip, total_fee, trade_type, mchkey) {
+    paysignjsapi: function (attach,openid,appid, body, mch_id, nonce_str, notify_url, out_trade_no, spbill_create_ip, total_fee, trade_type, mchkey) {
         var ret = {
             appid: appid, //appid
             mch_id: mch_id, //商户号
+            attach:attach,
             nonce_str: nonce_str, //随机字符串
             body: body, //订单支付内容  相当标题
             notify_url: notify_url, //微信支付回调地址

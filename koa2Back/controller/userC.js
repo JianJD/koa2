@@ -23,19 +23,11 @@ exports.login= async(ctx)=>{
             console.log('新增会员成功')
         })
         await userMoel.findUserById(userInfo.openid).then(res=>{
-            ctx.body={
-                code:1,
-                Data:returnData,
-                msg:'注册成功'
-            }
+            ctx.body=time.reponseData(1,returnData,'注册成功')
         })
     }else{
    
-        ctx.body={
-            code:1,
-            Data:isHasUser,
-            msg:'登录成功'
-        }
+        ctx.body=time.reponseData(1,isHasUser,'登录成功')
     }
 }
  function getOpenId(code) {

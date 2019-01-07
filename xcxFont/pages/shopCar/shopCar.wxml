@@ -6,10 +6,11 @@
     <van-checkbox wx:for="{{ list }}" value='{{item.check}}' data-idx='{{index}}' wx:key="index" name="{{ item.shopCarId }}" checked-color="{{checkColor}}" label-disabled bind:change="boxChange">
       <view class='flexCls-align pd20'>
         <image src='{{imgUrl}}{{item.swiperImg[0].url}}' class='proImg'></image>
-        <view class='flexCls-1 flexCls-C'>
+        <view class='flexCls-1 '>
           <view class='fz24 text2'>{{item.productTitle}}</view>
+          <view class='col999 size'>{{item.color}} {{item.size}}</view>
           <view class='colred fz24 flexCls-align'>
-            <view class='flexCls-1'>￥{{item.memberPrice}}</view>
+            <view class='flexCls-1'>￥{{item.specPrice}}</view>
             <van-stepper value="{{ item.num }}" bind:change="changeNum" data-idx="{{index}}" />
           </view>
         </view>

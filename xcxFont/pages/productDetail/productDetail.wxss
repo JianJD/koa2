@@ -1,4 +1,7 @@
 /* pages/productDetail/productDetail.wxss */
+page{
+  padding-bottom: 131rpx;
+}
 .imgs{height: 500rpx;}
 .imgs image{width: 100%;height: 100%;}
 .line{position: relative;}

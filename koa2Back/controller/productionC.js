@@ -1,47 +1,52 @@
 var productModel=require('../model/productionM');
 var response=require('../utils/public')
-
+var specModel=require('../model/productSpecM')
 let Data={
     code:1,
     Data:'',
     msg:''
 }
 exports.addOrEditProduct= async (ctx)=>{
-    let {classId ,isForSale,productTitle,swiperImg,memberPrice,price,childrenProduct,productDetail,sendMoney,stock,Type,video}=ctx.request.body;
+    let {classId ,isForSale,productTitle,swiperImg,memberPrice,price,childrenProduct,productDetail,sendMoney,stock,Type,video,spec}=ctx.request.body;
     if(!productTitle)
     {
-        ctx.body=response.reponseData(0,null,'产品名称不能为空')
+        return  ctx.body=response.reponseData(0,null,'产品名称不能为空')
     }
     if(!swiperImg)
     {
-        ctx.body=response.reponseData(0,null,'产品图不能为空')
+        return  ctx.body=response.reponseData(0,null,'产品图不能为空')
     }
     if(!memberPrice)
     {
-        ctx.body=response.reponseData(0,null,'会员价不能为空')
+        return  ctx.body=response.reponseData(0,null,'会员价不能为空')
     }
     if(!price)
     {
-        ctx.body=response.reponseData(0,null,'原价不能为空')
+        return  ctx.body=response.reponseData(0,null,'原价不能为空')
     }
     if(!childrenProduct)
     {
-        ctx.body=response.reponseData(0,null,'产品子类不能为空')
+        return ctx.body=response.reponseData(0,null,'产品子类不能为空')
     }
     if(!productDetail)
     {
-        ctx.body=response.reponseData(0,null,'产品详情不能为空')
+        return  ctx.body=response.reponseData(0,null,'产品详情不能为空')
     }
     if(!sendMoney)
     {
-        ctx.body=response.reponseData(0,null,'运费不能为空')
+        return   ctx.body=response.reponseData(0,null,'运费不能为空')
     }
     if(!stock)
     {
-        ctx.body=response.reponseData(0,null,'库存不能为空')
+        return  ctx.body=response.reponseData(0,null,'库存不能为空')
     }
+    if(!spec)
+    {
+        return  ctx.body=response.reponseData(0,null,'规格不能为空')
+    }
+    // 0新增 1编辑
     if(Type==undefined||Type==null){
-        ctx.body=response.reponseData(0,null,'请选择操作类型')
+      return  ctx.body=response.reponseData(0,null,'请选择操作类型')
     }
     let value=[
         classId ,
@@ -55,8 +60,10 @@ exports.addOrEditProduct= async (ctx)=>{
         sendMoney,
         stock,
         video,
-    
     ]
+    spec=JSON.parse(spec)
+    let spenValue=[];
+    // 编辑商品
     if(Type==1)
     {
         if(!ctx.request.body.productId)
@@ -64,12 +71,48 @@ exports.addOrEditProduct= async (ctx)=>{
             return ctx.body=response.reponseData(0,null,'商品Id不能为空')
         }
         value.push(ctx.request.body.productId)
-        
+        for(let item of spec)
+        {
+            let arr=[];
+            arr.push(ctx.request.body.productId)
+            arr.push(item.specImg)
+            arr.push(item.color)
+            arr.push(item.price)
+            arr.push(item.stock)
+            arr.push(item.size)
+            spenValue.push(arr)
+        }
+        // 如果是编辑先删除之前的规格id
+     await  specModel.delSpec(ctx.request.body.productId).then(res=>{
+
+        }).catch(()=>{
+            return ctx.body=response.reponseData(0,null,'删除规格错误')
+        })
     }
+    
   await  productModel.addOrEditProduct(value,Type).then(res=>{
-        ctx.body=response.reponseData(1,null,'操作成功')
+      if(Type==0)
+      {
+        for(let item of spec)
+        {
+            let arr=[];
+            arr.push(res.insertId)
+            arr.push(item.specImg)
+            arr.push(item.color)
+            arr.push(item.price)
+            arr.push(item.stock)
+            arr.push(item.size)
+            spenValue.push(arr)
+        }
+      }
+       
     }).catch(err=>{
-        ctx.body=response.reponseData(0,null,err)
+     return   ctx.body=response.reponseData(0,null,'插入商品表过程错误')
+    })
+    await specModel.createSpec(spenValue).then(res=>{
+        ctx.body=response.reponseData(1,null,'操作成功')
+    }).catch(()=>{
+        ctx.body=response.reponseData(1,null,'存储过程错误')
     })
 }
 exports.delProduction=async (ctx)=>{
@@ -151,5 +194,18 @@ exports.upAndDown=async(ctx)=>{
         return ctx.body=response.reponseData(1,null,'操作成功')
     }).catch(()=>{
         ctx.body=response.reponseData(0,null,'异常啦')
+    })
+}
+// 根据商品id查多规格
+exports.findSpecByProductId=async(ctx)=>{
+    let {productId}=ctx.request.body;
+    if(!productId)
+    {
+        return ctx.body=response.reponseData(0,null,'商品id参数为必传参数')
+    }
+    await specModel.findSpecByProductId(productId).then(res=>{
+        return ctx.body=response.reponseData(1,res,'success')
+    }).catch(()=>{
+        return ctx.body=response.reponseData(0,null,'存储过程异常') 
     })
 }

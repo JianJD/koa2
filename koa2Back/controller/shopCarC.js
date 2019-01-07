@@ -1,22 +1,27 @@
 var shopCarModel=require('../model/shopCarM');
 var response=require('../utils/public');
 exports.addShopCar=async (ctx)=>{
-    let {userId,num,productId}=ctx.request.body;
+    let {userId,num,productId,specId}=ctx.request.body;
     if(!userId)
     {
-        return response.reponseData(0,null,'userId不能为空');
+        return ctx.body=response.reponseData(0,null,'userId不能为空');
     }
     if(!num)
     {
-        return response.reponseData(0,null,'商品数量不能为空');
+        return ctx.body=response.reponseData(0,null,'商品数量不能为空');
     }
     if(!productId)
     {
-        return response.reponseData(0,null,'产品id不能为空');
+        return ctx.body=response.reponseData(0,null,'产品id不能为空');
+    }
+    if(!specId)
+    {
+        return ctx.body=response.reponseData(0,null,'规格id不能为空');
     }
     let data=[
         productId,
-        userId
+        userId,
+        specId
     ]
     let isHas=false;
     let shopCarId;
@@ -27,24 +32,25 @@ exports.addShopCar=async (ctx)=>{
         {
             isHas=true;
             shopCarId=res[0].shopCarId;
-            shopCarNum= parseInt(res[0].num)+1
+            shopCarNum= parseInt(res[0].num)+parseInt(num)
         }
     })
     if(isHas)
     {
-        await shopCarModel.changeShopCarNum([shopCarNum,shopCarId],0).then(res=>{
+        await shopCarModel.changeShopCarNum([shopCarNum,specId,shopCarId],0).then(res=>{
             return ctx.body=response.reponseData(1,null,'更新成功')
         })
     }else{
         let value=[
             userId,
             parseInt(num),
-            productId
+            productId,
+            specId
         ];
         await shopCarModel.addShopCar(value).then(res=>{
             return ctx.body=response.reponseData(1,null,'成功')
         }).catch(()=>{
-            ctx.body=response.reponseData(1,null,'存储过程异常')
+            ctx.body=response.reponseData(0,null,'存储过程异常')
         })
     }
     
@@ -63,19 +69,23 @@ exports.delShopCar=async(ctx)=>{
     })
 }
 exports.changeShopCarNum=async (ctx)=>{
-    let {shopCarId,num}=ctx.request.body;
+    let {shopCarId,num,specId}=ctx.request.body;
     if(!shopCarId)
     {
-        return response.reponseData(0,null,'购物车id不能为空');
+        return ctx.body=response.reponseData(0,null,'购物车id不能为空');
     }
     if(!num)
     {
-        return response.reponseData(0,null,'商品数量不能为空');
+        return ctx.body=response.reponseData(0,null,'商品数量不能为空');
     }
-    await shopCarModel.changeShopCarNum([num,shopCarId]).then(res=>{
+    if(!specId)
+    {
+        return ctx.body=response.reponseData(0,null,'specId不能为空');
+    }
+    await shopCarModel.changeShopCarNum([num,specId,shopCarId]).then(res=>{
         return ctx.body=response.reponseData(1,null,'成功');
     }).catch(()=>{
-        ctx.body=response.reponseData(1,null,'存储过程异常');
+        ctx.body=response.reponseData(0,null,'存储过程异常');
     })
 }
 exports.shopCarListForPage=async(ctx)=>{

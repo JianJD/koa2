@@ -17,6 +17,10 @@ exports.updateOrderStatus=function(value){
     }
     return query(sql,value)
 }
+exports.payOrder=function(value){
+    let  sql = `UPDATE orderTable SET orderStatus=?,payAt=Now(), wxOrderId=? WHERE orderId=?`
+    return query(sql,value)
+}
 // 删除订单
 exports.delOrder=function(value){
     let sql = `DELETE FROM  orderTable WHERE orderId=?`
@@ -65,7 +69,7 @@ exports.totalItemsAdmin=(value)=>{
                     orderStatus =? ;`;
     return query(sql,value)
 }
-// 订单列表
+// 管理员订单列表
 exports.orderListAdmin=(value)=>{
     let sql = `SELECT
 	                a.*,b.userName,b.header 

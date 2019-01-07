@@ -2,30 +2,43 @@ var orderM=require('../model/orderM');
 var response=require('../utils/public');
 var proModel=require('../model/productionM');
 var addressModel=require('../model/addressM')
+var specM=require('../model/productSpecM')
 exports.createOrder=async(ctx)=>{
-    let {userId,productId,addressId,proNum} = ctx.request.body;
+    let {userId,productId,addressId,proNum,specId} = ctx.request.body;
     if(!userId)
     {
         return ctx.body=response.reponseData(0,null,'userid不能为空');
     }
     if(!productId)
     {
-        return ctx.body=response.reponseData(0,null,'产品id不能为空不能为空')
+        return ctx.body=response.reponseData(0,null,'产品id不能为空')
     }
     if(!addressId)
     {
-        return ctx.body=response.reponseData(0,null,'地址id不能为空不能为空')
+        return ctx.body=response.reponseData(0,null,'地址id不能为空')
+    }
+    if(!specId)
+    {
+        return ctx.body=response.reponseData(0,null,'specId不能为空')
     }
     let addressInfo;
     await addressModel.findAddressById(addressId).then(res=>{
         addressInfo=JSON.stringify(res[0])
     })
     let productInfo;
+    //根据规格id进行查询规格信息
+    let specInfo;
+    await specM.findSpecBySpecId(specId).then(res=>{
+        specInfo=res
+    })
+    // 获取商品信息
     await proModel.findProductByProductId(productId).then(res=>{
-        let arrProNum=proNum.split('#')
+        console.log(res)
+        let arrProNum=proNum.split(',')
         for(let i=0;i<arrProNum.length;i++)
         {
-            res[i].orderNum=parseInt(arrProNum[i]) 
+            res[i].orderNum=parseInt(arrProNum[i])
+            res[i].specInfo=specInfo[i]
         }
         productInfo=JSON.stringify(res)
     })
@@ -37,12 +50,16 @@ exports.createOrder=async(ctx)=>{
     ]
 
    await orderM.createOrder(value).then(res=>{
+       let data={
+           orderId:res.insertId
+       }
+    ctx.body=response.reponseData(1,data,'成功')
    }).catch(()=>{
     return ctx.body=response.reponseData(0,null,'存储过程异常')
     })
-   await orderM.findOrderByUserId([userId]).then(res=>{
-    return ctx.body=response.reponseData(1,res[0],'成功')   
-    })
+//    await orderM.findOrderByUserId([userId]).then(res=>{
+//     return ctx.body=response.reponseData(1,res[0],'成功')   
+//     })
 }
 // 待发货->待收货
 exports.sendForOrder=async (ctx)=>{

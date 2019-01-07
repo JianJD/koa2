@@ -41,3 +41,4 @@
   />
 </van-goods-action>
 <van-toast id="van-toast" />
+<sku listData='{{specArr}}' isShowChoose='{{isShowChoose}}' bind:addCar='addShopCar'bind:chooseColor='chooseColor' bind:buy='createOrder' bind:num='num'/>

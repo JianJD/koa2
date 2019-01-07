@@ -1,7 +1,7 @@
 var query=require('../mysqlLib/pool');
 // 加入购物车
 exports.addShopCar=function(value){
-    let sql = `INSERT INTO shopcar SET userId=?,num=?,productId=?,createAt=now();`;
+    let sql = `INSERT INTO shopcar SET userId=?,num=?,productId=?, specId=? ,createAt=now();`;
     return query(sql,value)
 }
 // 删除购物车
@@ -11,7 +11,7 @@ exports.delShopCar=function(value){
 }
 // 修改购物车数量
 exports.changeShopCarNum=function(value,Type){
-    let sql= `UPDATE shopcar SET num=? WHERE shopCarId=?;`;
+    let sql= `UPDATE shopcar SET num=? ,specId=? WHERE shopCarId=?;`;
     
     return query(sql,value)
 }
@@ -32,11 +32,15 @@ exports.shopCarListForPage=function(value){
 	b.productDetail,
 	b.saleNum,
     b.stock,
-    b.sendMoney
-	
+    b.sendMoney,
+    c.specId,
+    c.price as specPrice,
+    c.color,
+    c.size
 FROM
 	shopcar AS a
-	LEFT JOIN production AS b ON a.productId = b.productId 
+    LEFT JOIN production AS b ON a.productId = b.productId 
+    LEFT JOIN productionspec AS c ON a.specId = c.specId
 WHERE
 	a.userId =? 
 ORDER BY
@@ -60,6 +64,6 @@ exports.findTotalItems=function(value){
 }
 // 根据商品id查数据
 exports.findByProductId=(value)=>{
-    let sql=`select shopCarId , num from shopcar where productId=? AND userId=?;`
+    let sql=`select shopCarId , num from shopcar where productId=? AND userId=? AND specId=?;`
     return query(sql,value)
 }

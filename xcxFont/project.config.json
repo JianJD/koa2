@@ -37,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
@@ -60,7 +60,14 @@
 				{
 					"id": -1,
 					"name": "订单详情",
-					"pathName": "pages/orderDetail/orderDetail"
+					"pathName": "pages/orderDetail/orderDetail",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "产品",
+					"pathName": "pages/productDetail/productDetail",
+					"query": "productId=16"
 				}
 			]
 		}
