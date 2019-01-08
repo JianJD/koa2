@@ -35,18 +35,35 @@
         </template>
         <template slot-scope="{ row ,index }" slot="edit">
            <Button type="error" size='small' icon='ios-trash-outline' v-if="row.orderStatus==0" @click='delOrder(index)'>删除</Button>
-           <Button type="primary" size='small' icon='md-create' @click="send(index)">发货</Button>
-           
+           <Button type="primary" size='small' icon='md-create' @click="send(index)" v-if="row.orderStatus==1">发货</Button>
         </template>
        </Table>
+         <Modal v-model="showSend" title="发货">
+           <Form ref="formData" :model="formData" inline>
+              <FormItem prop="company" label='快递公司'>
+              <Select v-model="formData.company" style="width:200px">
+                  <Option v-for="(item,index) in express" :value="item.code" :key="index">{{ item.txt }}</Option>
+              </Select>
+              </FormItem>
+              <FormItem prop="code" label='快递单号'>
+                  <Input type="text" v-model="formData.code" placeholder="请输入快递单号"></Input>
+              </FormItem>
+           </Form>
+           <div slot="footer">
+          <Button type="text" size="large" @click="close">取消</Button>
+          <Button type="primary" size="large" @click="confirm">确定</Button>
+        </div>
+         </Modal>
   </div>
 </template>
 
 <script>
-
+  import express from '@/assets/js/express'
   export default {
     data () {
       return {
+        express:express.arr,
+        showSend:false,
         list:[],
         imgUrl:this.imgUrl,
         columns: [
@@ -104,7 +121,12 @@
           },
         ],
         status:0,
-        pageIndex:1
+        pageIndex:1,
+        formData:{
+          company:'',
+          code:''
+        },
+        sendIndex:null
       };
     },
 
@@ -116,6 +138,24 @@
     },
 
     methods: {
+      confirm(){
+        this.api.sendForOrder({
+          orderId:this.list[this.sendIndex].orderId 
+        }).then(res=>{
+          if(res.data.Code==1)
+          {
+            this.list.splice(idx,1)
+            this.showSend=false
+            if(this.list.length==0)
+            {
+              this.getOrderList()
+            }
+          }
+        })
+      },
+      close(){
+        this.showSend=false
+      },
       getOrderList(){
         this.api.getOrderList({
           pageIndex:this.pageIndex,
@@ -143,18 +183,9 @@
         })
       },
       send(idx){
-        this.api.sendForOrder({
-          orderId:this.list[idx].orderId 
-        }).then(res=>{
-          if(res.data.Code==1)
-          {
-            this.list.splice(idx,1)
-            if(this.list.length==0)
-            {
-              this.getOrderList()
-            }
-          }
-        })
+        this.sendIndex=idx;
+        this.showSend=true
+        
       }
     },
 

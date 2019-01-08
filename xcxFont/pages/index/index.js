@@ -38,6 +38,9 @@ Page({
       that.data.formData.pageIndex=1;
       that.data.list=[];
       that.getPro()
+      that.setData({
+        currindex: e.currentTarget.dataset.idx
+      })
     }
   },
   getPro(){

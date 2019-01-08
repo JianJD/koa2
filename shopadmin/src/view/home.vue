@@ -59,7 +59,7 @@
             window.sessionStorage.setItem('isLogin',1)
           }else
           {
-             this.$Message.error(res.data.Msg);
+             this.$Message.error(res.data.msg);
             window.sessionStorage.setItem('isLogin',0)
           }
         })

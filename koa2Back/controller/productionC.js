@@ -177,7 +177,7 @@ exports.getProductList=async (ctx)=>{
         }
         return ctx.body=response.reponseData(1,Data,'获取成功')
     }).catch(()=>{
-        return ctx.body=response.reponseData(1,null,'异常啦')
+        return ctx.body=response.reponseData(0,null,'异常啦')
     })
 }
 exports.upAndDown=async(ctx)=>{

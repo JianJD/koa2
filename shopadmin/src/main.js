@@ -14,6 +14,21 @@ Vue.prototype.api=API
 Vue.config.productionTip = false
 Vue.use(iView);
 /* eslint-disable no-new */
+router.beforeEach((to,form,next)=>{
+  console.log(to)
+  let isLogin=sessionStorage.getItem('isLogin')||0
+  if(to.path!='/'&&isLogin==0)
+  {
+    next({
+      path:'/'
+    })
+  }else  if(to.path=='/')
+  {
+    next()
+  }else if(isLogin==1){
+    next()
+  }
+})
 new Vue({
   el: '#app',
   router,

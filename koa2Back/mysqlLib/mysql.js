@@ -41,7 +41,7 @@ let order =
     classId CHAR(10) DEFAULT NULL COMMENT '商品类别ID',
     isForSale INT DEFAULT 1 COMMENT '是否上架',
     productTitle VARCHAR(20) NOT NULL COMMENT '商品标题',
-    swiperImg VARCHAR(255) NOT NULL COMMENT '商品轮播图',
+    swiperImg TEXT NOT NULL COMMENT '商品轮播图',
     memberPrice DOUBLE NOT NULL COMMENT '商品会员价格',
     price DOUBLE NOT NULL COMMENT '商品原价',
     childrenProduct VARCHAR(255) DEFAULT NULL COMMENT '多规格',
