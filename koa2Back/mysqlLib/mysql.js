@@ -100,6 +100,14 @@ let order =
     createAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     PRIMARY KEY (shopCarId)
   );`;
+  let  admin=
+  `create table if not exists admin(
+    adminId INT NOT NULL AUTO_INCREMENT COMMENT 'admin主键id',
+    phone VARCHAR(255) NOT NULL COMMENT '用户手机',
+    password VARCHAR(255) NOT NULL COMMENT '用户密码',
+    loginTime datetime NOT NULL COMMENT '最后的登录时间',
+    PRIMARY KEY (adminId)
+  );`;
 let createTable = (sql) => {
   return query(sql, []).then(res => {
   }).catch(err => {
@@ -115,3 +123,4 @@ createTable(addressReceive)
 createTable(classTable)
 createTable(shopCar)
 createTable(productionSpec)
+createTable(admin)

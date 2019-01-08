@@ -4,7 +4,7 @@ var proModel=require('../model/productionM');
 var addressModel=require('../model/addressM')
 var specM=require('../model/productSpecM')
 exports.createOrder=async(ctx)=>{
-    let {userId,productId,addressId,proNum,specId} = ctx.request.body;
+    let {userId,productId,addressId,proNum,specId,sendMoney,orderMoney,totalMoney} = ctx.request.body;
     if(!userId)
     {
         return ctx.body=response.reponseData(0,null,'userid不能为空');
@@ -21,6 +21,18 @@ exports.createOrder=async(ctx)=>{
     {
         return ctx.body=response.reponseData(0,null,'specId不能为空')
     }
+    if(!sendMoney)
+    {
+        return ctx.body=response.reponseData(0,null,'sendMoney不能为空')
+    }
+    if(!orderMoney)
+    {
+        return ctx.body=response.reponseData(0,null,'orderMoney不能为空')
+    }
+    if(!totalMoney)
+    {
+        return ctx.body=response.reponseData(0,null,'totalMoney不能为空')
+    }
     let addressInfo;
     await addressModel.findAddressById(addressId).then(res=>{
         addressInfo=JSON.stringify(res[0])
@@ -31,22 +43,47 @@ exports.createOrder=async(ctx)=>{
     await specM.findSpecBySpecId(specId).then(res=>{
         specInfo=res
     })
+    // 组合规格id和数量
+    let orderNum=proNum.split(',');
+    let specIds=specId.split(',');
+    let productIds=productId.split(',')
+    let idAndNum=[];
+    for(let i=0;i<orderNum.length;i++)
+    {
+        let obj={
+            specId:specIds[i],
+            orderNum:orderNum[i],
+            productId:productIds[i]
+        }
+        idAndNum.push(obj)
+    }
     // 获取商品信息
     await proModel.findProductByProductId(productId).then(res=>{
-        console.log(res)
-        let arrProNum=proNum.split(',')
-        for(let i=0;i<arrProNum.length;i++)
+        
+        for(let i=0;i<idAndNum.length;i++)
         {
-            res[i].orderNum=parseInt(arrProNum[i])
-            res[i].specInfo=specInfo[i]
+            for(let j=0;j<res.length;j++)
+            {
+                
+                
+                if(idAndNum[i].productId==res[j].productId)
+                {
+                    
+                    idAndNum[i].productInfo=res[j]
+                    idAndNum[i].specInfo=specInfo[i]
+                }
+            }
         }
-        productInfo=JSON.stringify(res)
+        productInfo=JSON.stringify(idAndNum)
     })
     let value=[
         userId,
         productId,
         addressInfo,
-        productInfo
+        productInfo,
+        sendMoney,
+        orderMoney,
+        totalMoney
     ]
 
    await orderM.createOrder(value).then(res=>{
@@ -122,7 +159,7 @@ exports.findOrderInfoByOrderId=async(ctx)=>{
         Data.productInfo=JSON.parse(Data.productInfo)
         for(let item of Data.productInfo)
         {
-            item.swiperImg=JSON.parse(item.swiperImg)
+            item.productInfo.swiperImg=JSON.parse(item.productInfo.swiperImg)
         }
         return ctx.body=response.reponseData(1,Data,'获取成功')
     })

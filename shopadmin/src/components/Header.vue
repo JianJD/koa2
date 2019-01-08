@@ -45,17 +45,15 @@ export default {
                     {
                         txt:'商品列表',
                         path:'/productList',
+                    },
+                     {
+                        txt:'产品分类',
+                        path:'/addClass',
                     }
                    
                 ]
             },
-            {
-             path:'/addClass',
-            title:'产品分类',
-            txt:'产品分类',
-            icon:'ios-keypad',  
-            children:'undefind' 
-            },
+            
              {
              path:'/orderManger',
             title:'订单管理',

@@ -27,16 +27,12 @@ getDetail(){
     {
       that.setData({
         addressData:res.data.Data.addressInfo,
-        list:res.data.Data.productInfo
+        list:res.data.Data.productInfo,
+        allData: res.data.Data
       })
       let money=0
-      for (let item of res.data.Data.productInfo)
-      {
-        money += item.memberPrice * item.orderNum
-      }
+     
       that.setData({
-        productMoney: money,
-        totalMoney: money,
         info:res.data.Data
       })
     }

@@ -124,7 +124,8 @@ Page({
           item.productInfo = JSON.parse(item.productInfo)
           for(let item2 of item.productInfo)
           {
-            item2.swiperImg = JSON.parse(item2.swiperImg)
+            console.log(item2.productInfo.swiperImg)
+            item2.productInfo.swiperImg = JSON.parse(item2.productInfo.swiperImg)
           }
         }
         switch (that.data.orderStatus){
@@ -166,6 +167,7 @@ Page({
     getApp().ajaxResetS('/delOrder',{
       orderId:e.detail.orderId
     },res=>{
+      console.log(res)
       if(res.data.Code==1)
       {
         switch (that.data.orderStatus)
@@ -175,6 +177,10 @@ Page({
             if (that.data.list0.length == 0) {
               that.data.pageIndex = 1;
               that.getOrderList()
+            }else{
+              that.setData({
+                list0:that.data.list0
+              })
             }
             break
           }
@@ -183,6 +189,10 @@ Page({
             if (that.data.list1.length == 0) {
               that.data.pageIndex = 1;
               that.getOrderList()
+            } else {
+              that.setData({
+                list1: that.data.list1
+              })
             }
             break
           }
@@ -191,6 +201,10 @@ Page({
             if (that.data.list2.length == 0) {
               that.data.pageIndex = 1;
               that.getOrderList()
+            } else {
+              that.setData({
+                list2: that.data.list2
+              })
             }
             break
           }
@@ -199,6 +213,10 @@ Page({
             if (that.data.list3.length == 0) {
               that.data.pageIndex = 1;
               that.getOrderList()
+            } else {
+              that.setData({
+                list3: that.data.list3
+              })
             }
             break
           }
@@ -230,6 +248,33 @@ Page({
           that.getOrderList()
         }
       }
+    })
+  },
+  pay(e){
+    let idx = e.detail.index;
+    let orderId = e.detail.orderId;
+    let money=new Number()
+    switch (that.data.orderStatus)
+    {
+      case 0:{
+        money=that.data.list0[idx].totalMoney;
+        break
+      }
+      case 1: {
+        money = that.data.list1[idx].totalMoney;
+        break
+      }
+      case 2: {
+        money = that.data.list2[idx].totalMoney;
+        break
+      }
+      case 3: {
+        money = that.data.list3[idx].totalMoney;
+        break
+      }
+    }
+    getApp().pay(money, orderId,function(res){
+      console.log(res)
     })
   }
 })

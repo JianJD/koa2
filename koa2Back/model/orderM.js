@@ -1,7 +1,7 @@
 var query=require('../mysqlLib/pool');
 // 下单
 exports.createOrder=function(value){
-    let sql = `INSERT INTO orderTable SET userId=?,productId=?,addressInfo=?,productInfo=?,creatAt=Now(),orderStatus=0;`
+    let sql = `INSERT INTO orderTable SET userId=?,productId=?,addressInfo=?,productInfo=?,sendMoney=?,orderMoney=?,totalMoney=?,creatAt=Now(),orderStatus=0;`
     return query(sql,value)
 }
 // 更新订单状态

@@ -14,6 +14,6 @@ exports.findSpecByProductId=(value)=>{
     return query(sql)
 }
 exports.findSpecBySpecId=(value)=>{
-    let sql=`SELECT color,size,price FROM productionspec WHERE specId in (${value});`
+    let sql=`SELECT color,size,price,productId FROM productionspec WHERE specId in (${value});`
     return query(sql)
 }

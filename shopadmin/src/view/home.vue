@@ -4,17 +4,17 @@
      <Card style="width:320px" title='店铺管理后台'>
          <Form ref="formInline" :model="formInline" >
           <FormItem prop="user">
-              <Input type="text" v-model="formInline.user" placeholder="Username">
+              <Input type="text" v-model="formInline.phone" placeholder="请输入手机号码">
                   <Icon type="ios-person-outline" slot="prepend"></Icon>
               </Input>
           </FormItem>
           <FormItem prop="password">
-              <Input type="password" v-model="formInline.password" placeholder="Password">
+              <Input type="password" v-model="formInline.password" placeholder="请输入密码">
                   <Icon type="ios-lock-outline" slot="prepend"></Icon>
               </Input>
           </FormItem>
           <FormItem class="mgb0">
-              <Button type="primary" @click="handleSubmit('formInline')">Signin</Button>
+              <Button type="primary" @click="handleSubmit('formInline')">登录</Button>
           </FormItem>
       </Form>
     </Card>
@@ -27,7 +27,7 @@
     data () {
       return {
           formInline:{
-            user:'',
+            phone:'',
             password:''
           }
       };
@@ -38,7 +38,33 @@
     computed: {},
     mounted() {},
 
-    methods: {},
+    methods: {
+      handleSubmit(){
+        if(!this.formInline.phone)
+        {
+          this.$Message.error('请输入手机号');
+          return
+        }
+        if(!this.formInline.password)
+        {
+          this.$Message.error('请输入密码');
+          return
+        }
+        this.api.adminLogin(this.formInline).then(res=>{
+          if(res.data.Code==1)
+          {
+            this.$router.push({
+              path:'/layout'
+            })
+            window.sessionStorage.setItem('isLogin',1)
+          }else
+          {
+             this.$Message.error(res.data.Msg);
+            window.sessionStorage.setItem('isLogin',0)
+          }
+        })
+      }
+    },
 
     watch: {}
 

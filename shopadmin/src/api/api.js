@@ -43,5 +43,9 @@ export default{
     },
     sendForOrder(data){
         return axios.post(`${api}/sendForOrder`, data)
+    },
+    // 管理员登录
+    adminLogin(data){
+        return axios.post(`${api}/adminLogin`, data)
     }
 }

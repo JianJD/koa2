@@ -35,7 +35,7 @@ console.log( ctx.req.connection.remoteAddress)
     let trade_type = 'JSAPI';
     let appid=congfig.wxConfig.APPID;
     let sign = wxpay.paysignjsapi(orderNum,openid,appid,body,mch_id,nonce_str,notify_url,out_trade_no,spbill_create_ip,total_fee,trade_type,mchkey);
-    console.log('签名'+sign)
+    // console.log('签名'+sign)
   
 var formData  = "<xml>";
     formData  += "<appid>"+appid+"</appid>";  //appid
@@ -51,10 +51,10 @@ var formData  = "<xml>";
     formData  += "<trade_type>"+trade_type+"</trade_type>";
     formData  += "<sign>"+sign+"</sign>";
     formData  += "</xml>";
-    console.log(formData)
+    // console.log(formData)
     var url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';//统一下单地址
     await getWxorderId(url,formData).then(res=>{
-        console.log(res)
+        // console.log(res)
         xmlreader.read(res.toString("utf-8"), function (errors, res) {
                if (null !== errors) {
                    return ctx.body=responseR.reponseData(0,null,'未知错误')

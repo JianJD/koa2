@@ -17,12 +17,12 @@
           </div>
         </template>
         <template slot-scope="{ row }" slot="productInfo">
-          <div v-for='item in JSON.parse(row.productInfo) ' :key='item.productId'>
-            <img :src="imgUrl+JSON.parse(item.swiperImg)[0].url" alt="" class="img inline" />
+          <div v-for='(item,index) in JSON.parse(row.productInfo) ' :key='index'>
+            <img :src="imgUrl+JSON.parse(item.productInfo.swiperImg)[0].url" alt="" class="img inline" />
             <div class="inline">
-              {{item.productTitle}}
+              {{item.productInfo.productTitle}}
+               <div><span class="col999">分类：</span>{{item.specInfo.color}}{{item.specInfo.size}}</div>
                <div><span class="col999">数量：</span>{{item.orderNum}}</div>
-               <div><span class="col999">分类：</span>{{item.orderNum}}</div>
             </div>
            
           </div>

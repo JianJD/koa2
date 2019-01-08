@@ -87,24 +87,14 @@ submit(){
     productId: ids.toString(),
     addressId: that.data.addressData.addressId,
     proNum: proNum.join(','),
-    specId: specIds.join(',')
+    specId: specIds.join(','),
+    sendMoney:that.data.sendMoney,
+    orderMoney:that.data.totalMoney-that.data.sendMoney,
+    totalMoney:that.data.totalMoney
   }, res => {
     if (res.data.Code == 1) {
       getApp().pay(that.data.totalMoney,res.data.Data.orderId,function(msg){
-        let data = msg.data.Data.Data
-        wx.requestPayment({
-          timeStamp: data.timeStamp.toString() ,
-          nonceStr: data.nonce_str,
-          package: data.package,
-          signType: 'MD5',
-          paySign: data.paySign,
-          success(res) { 
-            console.log(res)
-          },
-          fail(res){
-            console.log(res)
-          }
-        })
+        
       })
     }
   })

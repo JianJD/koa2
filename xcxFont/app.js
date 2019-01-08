@@ -80,16 +80,29 @@ App({
   pay(money, orderNum,callback){
     wx.login({
       success(res){
-
-        getApp().ajaxResetS('/pay',{
-          code:res.code,
+        getApp().ajaxResetS('/pay', {
+          code: res.code,
           money,
           orderNum: orderNum,
-          openid:getApp().globalData.userId
-        },(res)=>{
-          callback(res)
+          openid: getApp().globalData.userId
+        }, (res) => {
+          let data = res.data.Data.Data
+          wx.requestPayment({
+            timeStamp: data.timeStamp.toString(),
+            nonceStr: data.nonce_str,
+            package: data.package,
+            signType: 'MD5',
+            paySign: data.paySign,
+            success(res) {
+              callback(res)
+            },
+            fail(res) {
+              console.log(res)
+            }
+          })
         })
       }
     })
+   
   }
 })

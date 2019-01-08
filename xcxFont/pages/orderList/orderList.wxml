@@ -7,12 +7,13 @@
         <view class='fz22 coleb454f' wx:if="{{item.orderStatus==2}}">待收货</view>
         <view class='fz22 coleb454f' wx:if="{{item.orderStatus==3}}">已完成</view>
       </view>
-      <van-card num="{{item2.orderNum}}" price="{{item2.memberPrice}}" title="{{item2.productTitle}}" thumb="{{ imgUrl }}{{item2.swiperImg[0].url}}" wx:for="{{item.productInfo}}" wx:for-item='item2' wx:key="{{item2.orderNum}}"></van-card>
+      <van-card num="{{item2.orderNum}}" price="{{item2.specInfo.price}}" title="{{item2.productInfo.productTitle}}" thumb="{{ imgUrl }}{{item2.productInfo.swiperImg[0].url}}" wx:for="{{item.productInfo}}" wx:for-item='item2' wx:key="{{item2.orderNum}}"></van-card>
       <view class='footer txt-right'>
         <view class='txt-right mgb20'>
 
-          共1件商品，实付：
-          <text class='coleb454f'>￥40.00</text>
+          共{{item.productInfo.length}}件商品，实付:
+          <text class='coleb454f'>￥{{item.totalMoney}}</text>
+          <text class='col999 mgl20'>(含运费￥{{item.sendMoney}})</text>
         </view>
         <van-button size="small" wx:if="{{item.orderStatus==0}}" catchtap='pay' data-id='{{item.orderId}}' data-idx='{{index}}' >去支付</van-button>
         <van-button size="small" wx:if="{{item.orderStatus==2}}" catchtap='orderCompelete' data-id='{{item.orderId}}' data-idx='{{index}}' >确认收货</van-button>
