@@ -38,6 +38,10 @@
             one:{
                 type:Boolean,
                 default:false
+            },
+            index:{
+                type:[Number,String],
+                default:'null'
             }
         },
         data () {
@@ -79,8 +83,18 @@
                     }
                 }
                
-                    console.log(this.uploadList)
-                this.$emit('success',this.uploadList)
+                 if(this.index=='null')
+                 {
+                     this.$emit('success',this.uploadList)
+                 }else
+                 {
+                     let data={
+                         url:this.uploadList,
+                         index:this.index
+                     }
+                     this.$emit('success',data)
+                 }
+                
             },
             
         },

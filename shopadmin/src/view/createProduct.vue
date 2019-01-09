@@ -25,7 +25,7 @@
             <div v-for="(item , index) in spec" :key='index' class="item">
                 <Form  :model="item"  :label-width="80" >
                   <FormItem label="规格名称" prop="specName">
-                    <Input v-model="item.specName" placeholder="请输入规格名称"></Input>
+                    <Input v-model="item.specName"  placeholder="请输入规格名称"></Input>
                  </FormItem>
                   <FormItem label="规格值" prop="specName">
                     <div v-for="(item2,index2) in item.specAttr" :key='index2' class="mgt10">
@@ -38,10 +38,28 @@
                <Icon type="ios-close-circle" size='25' v-if="spec.length>0" @click='reduceSpec(index)'/>
             </div>
 
-              <Button type="success" :style="{display:'block',margin:'10px 0 0 0'}" @click="addSpecNew">添加多规格</Button>
+              <Button type="success" :style="{display:'block',margin:'10px 0 0 0'}" @click="addSpecNew">添加规格</Button>
           </FormItem>
              <FormItem label="规格参数" prop="children">
-               
+                <Row type='flex'>
+                    <Col span="5" class-name='bor'>综合规格</Col>
+                    <Col span="7" class-name='bor'>售价</Col>
+                     <Col span="7" class-name='bor'>库存</Col>
+                      <Col span="5" class-name='bor'>图片</Col>
+                </Row>
+                  <Row type='flex' v-for="(item ,index) in lastSpec" :key='index'>
+                    <Col span="5" class-name='bor hei74'>{{item.specAttrKeyName}}</Col>
+                    <Col span="7" class-name='bor hei74'>
+                       <Input v-model="item.stock"  placeholder="请输入规格库存"></Input>
+                    </Col>
+                     <Col span="7" class-name='bor hei74'>
+                       <Input v-model="item.price"  placeholder="请输入规格价格"></Input>
+                     </Col>
+                      <Col span="5" class-name='bor hei74'>
+                         <upload :uploadList='item.imgUrl' @success='specuploadSuccess'  :index="index" :one='true'></upload>
+                      </Col>
+                </Row>
+
             </FormItem>
           <FormItem label="是否上架" prop="isForSale">
                <i-switch v-model="formValidate.isForSale" size="large">
@@ -157,6 +175,7 @@
     },
 
     methods: {
+     
       // 添加规格名称
       addSpecNew(){
         this.spec.push({
@@ -303,27 +322,31 @@
         this.specDialog=true
       },
       getID(){
-      return  Number(Math.random().toString().substr(3) + Date.now()).toString(36)
+        return  Number(Math.random().toString().substr(3) + Date.now()).toString(36)
       }, 
        getValuesByArray(arr1,arr2,specName){
           var arr = [];
-      for(var i=0;i<arr1.length;i++){
-            var v1 = arr1[i]._id||''
-           
-          for(var j=0;j<arr2.length;j++){
-            var v2 = j;
-            let obj={
-              _id:`${v1?`${v1}#`:''}${v2}`,
-              specAttrKeyName:`${arr1[i].specAttrKeyName||''}${arr2[j].specValue}`,
-              price:'',
-              stock:'',
-              imgUrl:''
-            }
-            arr.push(obj);
+          for(var i=0;i<arr1.length;i++){
+                var v1 = arr1[i]._id||''
+              
+              for(var j=0;j<arr2.length;j++){
+                var v2 = j;
+                let obj={
+                  _id:`${v1?`${v1}#`:''}${v2}`,
+                  specAttrKeyName:`${arr1[i].specAttrKeyName?arr1[i].specAttrKeyName+'#':''}${arr2[j].specValue}`,
+                  specName:arr1[i].specName?arr1[i].specName+'#'+specName:specName,
+                  price:'',
+                  stock:'',
+                  imgUrl:[]
+                }
+                arr.push(obj);
+              };
           };
-      };
-      return arr;
+          return arr;
       },
+      specuploadSuccess(res){
+        this.lastSpec[res.index].specImg=res.url
+      }
     },
 
     watch: {
@@ -335,6 +358,7 @@
             let len=newval.length;
             if(len==0)
             {
+               this.lastSpec=[]
               return
             }
             let arr=[""]
@@ -350,12 +374,13 @@
               arr[0]._id=0;
               arr[0].attrName=newval[0].specName;
               arr[0].attrKeyName=newval[0].specAttr[0].specValue;
-              arr[0].imgUrl='';
+              arr[0].imgUrl=[];
               arr[0].price='';
               arr[0].stock=''
             }
             
             console.log(arr)
+            this.lastSpec=arr
             return
            
         },

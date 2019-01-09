@@ -6,3 +6,6 @@
     padding: 20px;
 }
 .mgb20{margin-bottom: 20px;}
+.bor{border: 1px solid #ccc;text-align: center;}
+.ivu-row-flex:last-child .bor{border-bottom: 1px solid #ccc;}
+.hei74{height: 74px;line-height: 74px}
