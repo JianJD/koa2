@@ -22,16 +22,27 @@
             </Select>
           </FormItem>
           <FormItem label="商品规格" prop="spec">
-              <div v-for="(item,index) in spec" :key="index">
-                <img :src="imgUrl+item.specImg" class="specImg inline"/>
-                <div class="inline">库存:{{item.stock}}</div>
-                <div class="inline">颜色:{{item.color}}</div>
-                <div class="inline">大小:{{item.size}}</div>
-                <div class="inline">价格:{{item.price}}</div>
-                <Button type="error" :style="{display:'block',margin:'0 auto'}" @click="delSpec(index)" size='small'>删除</Button>
-              </div>
-              <Button type="success" :style="{display:'block'}" @click="openSpecDialog()">添加多规格</Button>
+            <div v-for="(item , index) in spec" :key='index' class="item">
+                <Form  :model="item"  :label-width="80" >
+                  <FormItem label="规格名称" prop="specName">
+                    <Input v-model="item.specName" placeholder="请输入规格名称"></Input>
+                 </FormItem>
+                  <FormItem label="规格值" prop="specName">
+                    <div v-for="(item2,index2) in item.specAttr" :key='index2' class="mgt10">
+                        <Input v-model="item2.specVlaue" placeholder="请输入规格值" ></Input>
+                        <Icon type="md-add-circle" size='20' @click='addSpecAttrValue(index)' v-if="index2==item.specAttr.length-1"/>
+                        <Icon type="md-close-circle" size='20' v-if="index2>0" @click='reduceAttrValue(index,index2)'/>
+                    </div>
+                 </FormItem>
+                </Form> 
+               <Icon type="ios-close-circle" size='25' v-if="index>0" @click='reduceSpec(index)'/>
+            </div>
+
+              <Button type="success" :style="{display:'block',margin:'10px 0 0 0'}" @click="addSpecNew">添加多规格</Button>
           </FormItem>
+             <FormItem label="规格参数" prop="children">
+                <Table :columns="columns" :data="lastSpec" border height="500"></Table> 
+            </FormItem>
           <FormItem label="是否上架" prop="isForSale">
                <i-switch v-model="formValidate.isForSale" size="large">
                   <span slot="open">是</span>
@@ -104,7 +115,21 @@
           color:'',
           price:''
         },
-        spec:[]
+        spec:[
+          {
+            specName:'',
+            specAttr:[
+              {
+                specValue:''
+              }
+            ]
+          }
+        ],//多规格
+        columns:[
+            
+        ],
+        lastSpec:[],
+        
       };
     },
 
@@ -141,6 +166,31 @@
     },
 
     methods: {
+      // 添加规格名称
+      addSpecNew(){
+        this.spec.push({
+          specName:'',
+            specAttr:[
+              {
+                specValue:''
+              }
+            ]
+        })
+      },
+      // 删除规格值
+      reduceSpec(index){
+        this.spec.splice(index,1)
+      },
+      // 添加规格值
+      addSpecAttrValue(index1){
+        this.spec[index1].specAttr.push({
+          specValue:''
+        })
+      },
+      // 删除规格值
+      reduceAttrValue(index1,index2){
+        this.spec[index1].specAttr.splice(index2,1)
+      },
       editorSuccess(res){
         this.formValidate.productDetail=res
       },
@@ -257,10 +307,68 @@
       // 打开新增多规格弹窗
       openSpecDialog(){
         this.specDialog=true
+      },
+      getID(){
+      return  Number(Math.random().toString().substr(3) + Date.now()).toString(36)
       }
     },
 
-    watch: {}
+    watch: {
+      'spec':{
+        handler(newval){
+          console.log(123)
+            let that=this
+            that.columns=[];
+            let len=newval.length;
+            // 对数据进行组合
+            for(let i=0;i<newval[0].specAttr;i++)
+            {
+                for(let j=0;j<newval[j+1].specAttr.length;j++)
+                {
+                  
+                }
+            }
+            newval.forEach((item,i)=>{
+              if(item.specName)//设置表头
+              {
+                that.columns.push({
+                  title:item.specName,
+                  align:'center',
+                })
+              }
+              if( newval[i+1].specAttr)//有两个以上
+              {
+                newval[i+1].specAttr.forEach((item2,j)=>{
+                  
+                })
+              }else//只有一个分类
+              {
+                
+              }
+              
+            })
+         
+          // 添加表头
+           that.columns.push({
+              title:'售价',
+              align:'center',
+              key:'price'
+            })
+            that.columns.push({
+              title:'库存',
+              align:'center',
+              key:'stock'
+            })
+            that.columns.push({
+              title:'图片',
+              align:'center',
+              key:'imgUrl'
+            })
+        },
+        deep:true
+        
+      }
+    },
 
   }
 
@@ -272,4 +380,8 @@
 .ivu-input-wrapper{width: 50% !important;}
 .specImg{width: 50px;height: 50px;}
 .inline{display: inline-block;vertical-align: top;}
+.ivu-form-item-label{text-align: left;}
+.item{position: relative;}
+.item .ivu-icon-ios-close-circle{position: absolute;left: 55%;top: 0;}
+.mgt10{margin-bottom: 10px;}
 </style>
