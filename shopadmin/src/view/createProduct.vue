@@ -29,19 +29,19 @@
                  </FormItem>
                   <FormItem label="规格值" prop="specName">
                     <div v-for="(item2,index2) in item.specAttr" :key='index2' class="mgt10">
-                        <Input v-model="item2.specVlaue" placeholder="请输入规格值" ></Input>
+                        <Input v-model="item2.specValue" placeholder="请输入规格值" ></Input>
                         <Icon type="md-add-circle" size='20' @click='addSpecAttrValue(index)' v-if="index2==item.specAttr.length-1"/>
-                        <Icon type="md-close-circle" size='20' v-if="index2>0" @click='reduceAttrValue(index,index2)'/>
+                        <Icon type="md-close-circle" size='20' v-if="item.specAttr.length>1" @click='reduceAttrValue(index,index2)'/>
                     </div>
                  </FormItem>
                 </Form> 
-               <Icon type="ios-close-circle" size='25' v-if="index>0" @click='reduceSpec(index)'/>
+               <Icon type="ios-close-circle" size='25' v-if="spec.length>0" @click='reduceSpec(index)'/>
             </div>
 
               <Button type="success" :style="{display:'block',margin:'10px 0 0 0'}" @click="addSpecNew">添加多规格</Button>
           </FormItem>
              <FormItem label="规格参数" prop="children">
-                <Table :columns="columns" :data="lastSpec" border height="500"></Table> 
+               
             </FormItem>
           <FormItem label="是否上架" prop="isForSale">
                <i-switch v-model="formValidate.isForSale" size="large">
@@ -116,18 +116,9 @@
           price:''
         },
         spec:[
-          {
-            specName:'',
-            specAttr:[
-              {
-                specValue:''
-              }
-            ]
-          }
+        
         ],//多规格
-        columns:[
-            
-        ],
+       
         lastSpec:[],
         
       };
@@ -172,11 +163,14 @@
           specName:'',
             specAttr:[
               {
-                specValue:''
+                specValue:'',
+                specName:''
               }
             ]
         })
+        
       },
+     
       // 删除规格值
       reduceSpec(index){
         this.spec.splice(index,1)
@@ -310,60 +304,60 @@
       },
       getID(){
       return  Number(Math.random().toString().substr(3) + Date.now()).toString(36)
-      }
+      }, 
+       getValuesByArray(arr1,arr2,specName){
+          var arr = [];
+      for(var i=0;i<arr1.length;i++){
+            var v1 = arr1[i]._id||''
+           
+          for(var j=0;j<arr2.length;j++){
+            var v2 = j;
+            let obj={
+              _id:`${v1?`${v1}#`:''}${v2}`,
+              specAttrKeyName:`${arr1[i].specAttrKeyName||''}${arr2[j].specValue}`,
+              price:'',
+              stock:'',
+              imgUrl:''
+            }
+            arr.push(obj);
+          };
+      };
+      return arr;
+      },
     },
 
     watch: {
       'spec':{
         handler(newval){
-          console.log(123)
+          console.log(newval)
             let that=this
             that.columns=[];
             let len=newval.length;
-            // 对数据进行组合
-            for(let i=0;i<newval[0].specAttr;i++)
+            if(len==0)
             {
-                for(let j=0;j<newval[j+1].specAttr.length;j++)
-                {
-                  
-                }
+              return
             }
-            newval.forEach((item,i)=>{
-              if(item.specName)//设置表头
+            let arr=[""]
+            // 对数据进行组合
+            if(len>0)
+            {
+                for(let i=0;i<newval.length;i++)
               {
-                that.columns.push({
-                  title:item.specName,
-                  align:'center',
-                })
+                //  console.log(newval[i].specAttr)
+                  arr = that.getValuesByArray(arr,newval[i].specAttr,newval[i].specName);
               }
-              if( newval[i+1].specAttr)//有两个以上
-              {
-                newval[i+1].specAttr.forEach((item2,j)=>{
-                  
-                })
-              }else//只有一个分类
-              {
-                
-              }
-              
-            })
-         
-          // 添加表头
-           that.columns.push({
-              title:'售价',
-              align:'center',
-              key:'price'
-            })
-            that.columns.push({
-              title:'库存',
-              align:'center',
-              key:'stock'
-            })
-            that.columns.push({
-              title:'图片',
-              align:'center',
-              key:'imgUrl'
-            })
+            }else{
+              arr[0]._id=0;
+              arr[0].attrName=newval[0].specName;
+              arr[0].attrKeyName=newval[0].specAttr[0].specValue;
+              arr[0].imgUrl='';
+              arr[0].price='';
+              arr[0].stock=''
+            }
+            
+            console.log(arr)
+            return
+           
         },
         deep:true
         
