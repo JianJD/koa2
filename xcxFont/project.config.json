@@ -64,10 +64,10 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 4,
 					"name": "产品",
 					"pathName": "pages/productDetail/productDetail",
-					"query": "productId=16"
+					"query": "productId=19"
 				}
 			]
 		}

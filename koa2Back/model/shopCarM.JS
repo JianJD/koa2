@@ -1,7 +1,7 @@
 var query=require('../mysqlLib/pool');
 // 加入购物车
 exports.addShopCar=function(value){
-    let sql = `INSERT INTO shopcar SET userId=?,num=?,productId=?, specId=? ,createAt=now();`;
+    let sql = `INSERT INTO shopcar SET userId=?,num=?,productId=?, specJson=? ,createAt=now();`;
     return query(sql,value)
 }
 // 删除购物车

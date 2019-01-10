@@ -1,7 +1,7 @@
 var shopCarModel=require('../model/shopCarM');
 var response=require('../utils/public');
 exports.addShopCar=async (ctx)=>{
-    let {userId,num,productId,specId}=ctx.request.body;
+    let {userId,num,productId,specJson}=ctx.request.body;
     if(!userId)
     {
         return ctx.body=response.reponseData(0,null,'userId不能为空');
@@ -14,14 +14,14 @@ exports.addShopCar=async (ctx)=>{
     {
         return ctx.body=response.reponseData(0,null,'产品id不能为空');
     }
-    if(!specId)
+    if(!specJson)
     {
-        return ctx.body=response.reponseData(0,null,'规格id不能为空');
+        return ctx.body=response.reponseData(0,null,'规格Json不能为空');
     }
     let data=[
         productId,
         userId,
-        specId
+        specJson
     ]
     let isHas=false;
     let shopCarId;
@@ -37,7 +37,7 @@ exports.addShopCar=async (ctx)=>{
     })
     if(isHas)
     {
-        await shopCarModel.changeShopCarNum([shopCarNum,specId,shopCarId],0).then(res=>{
+        await shopCarModel.changeShopCarNum([shopCarNum,specJson,shopCarId],0).then(res=>{
             return ctx.body=response.reponseData(1,null,'更新成功')
         })
     }else{
@@ -45,7 +45,7 @@ exports.addShopCar=async (ctx)=>{
             userId,
             parseInt(num),
             productId,
-            specId
+            specJson
         ];
         await shopCarModel.addShopCar(value).then(res=>{
             return ctx.body=response.reponseData(1,null,'成功')

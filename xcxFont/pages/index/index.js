@@ -78,23 +78,31 @@ Page({
     wx.showLoading({
       title: '',
     })
-    getApp().ajaxResetS('/findSpecByProductId', { productId: e.detail }, res => {
+    getApp().ajaxResetS('/findProductByProductId', { productId: e.detail }, res => {
       console.log(res)
       if (res.data.Code == 1) {
+        let Data = res.data.Data[0]
         that.setData({
-          specArr: res.data.Data,
-          isShowChoose:true
+          specArr: JSON.parse(Data.childrenProduct).spec,
+          detail: JSON.parse(Data.childrenProduct).detail,
+          stock:Data.stock,
+          memberPrice: Data.memberPrice,
+          price: Data.price,
+          url: JSON.parse(Data.swiperImg)[0].url,
+          isShowChoose:true,
+          productId:Data.productId
         })
         wx.hideLoading()
       }
     })
   },
   addShopCar(e){
+    console.log(e)
     getApp().ajaxResetS('/addShopCar', {
-      num: that.data.num,
+      num: e.detail.num,
       userId: getApp().globalData.userId,
-      productId: that.data.specArr[0].productId,
-      specId: that.data.specId
+      productId: e.detail.productId,
+      specJson: that.data.specId
     }, res => {
       if (res.data.Code == 1) {
         wx.showToast({

@@ -41,8 +41,15 @@
               <Button type="success" :style="{display:'block',margin:'10px 0 0 0'}" @click="addSpecNew">添加规格</Button>
           </FormItem>
              <FormItem label="规格参数" prop="children">
+               <div class="mgb20">
+                 <span style="margin-left:20px;font-size:12px;color:#999;margin-right:20px;">批量设置</span>
+                 <Input v-model="samePrice" placeholder="售价" style="width:100px !important" class="mgl20"/>
+                 <Input v-model="sameStock" placeholder="库存" style="width: 100px !important" class="mgl20"/>
+                  <upload :uploadList='sameImgurl' @success='sameImgurlFn' :one='true' class="inline mgl20"></upload>
+                 <Button type="success" @click="setSameSpec">应用</Button>
+               </div>
                 <Row type='flex'>
-                    <Col span="5" class-name='bor'>综合规格</Col>
+                    <Col span="5" class-name='bor'>规格总览</Col>
                     <Col span="7" class-name='bor'>售价</Col>
                      <Col span="7" class-name='bor'>库存</Col>
                       <Col span="5" class-name='bor'>图片</Col>
@@ -50,11 +57,12 @@
                   <Row type='flex' v-for="(item ,index) in lastSpec" :key='index'>
                     <Col span="5" class-name='bor hei74'>{{item.specAttrKeyName}}</Col>
                     <Col span="7" class-name='bor hei74'>
-                       <Input v-model="item.stock"  placeholder="请输入规格库存"></Input>
-                    </Col>
-                     <Col span="7" class-name='bor hei74'>
                        <Input v-model="item.price"  placeholder="请输入规格价格"></Input>
                      </Col>
+                    <Col span="7" class-name='bor hei74'>
+                       <Input v-model="item.stock"  placeholder="请输入规格库存"></Input>
+                    </Col>
+                     
                       <Col span="5" class-name='bor hei74'>
                          <upload :uploadList='item.imgUrl' @success='specuploadSuccess'  :index="index" :one='true'></upload>
                       </Col>
@@ -107,6 +115,7 @@
 <script>
   import upload from '../components/upload';
   import editor from '../components/editor';
+import { setTimeout } from 'timers';
   export default {
     data () {
       return {
@@ -124,6 +133,9 @@
           classId:0,
           childrenProduct:'123'
         },
+        samePrice:'',//同一设置规格价格
+        sameStock:'',//同一设置规格库存
+        sameImgurl:[],
         classList:[],
         specDialog:false,
         specData:{
@@ -156,6 +168,8 @@
           if(res.data.Code==1)
           {
             let data=res.data.Data[0]
+            let spec=JSON.parse(data.childrenProduct)
+            console.log(spec)
             this.$set(this.formValidate,'productTitle',data.productTitle)
             this.$set(this.formValidate,'memberPrice',data.memberPrice)
             this.$set(this.formValidate,'price',data.price)
@@ -168,6 +182,12 @@
             this.$set(this.formValidate,'productTitle',data.productTitle)
             this.$set(this.formValidate,'productId',data.productId)
             this.$set(this.formValidate,'Type',1)
+            this.spec=spec.spec
+            let that=this
+            setTimeout(()=>{
+              that.lastSpec=spec.detail
+            },1000)
+            
           }
         })
       }
@@ -183,7 +203,6 @@
             specAttr:[
               {
                 specValue:'',
-                specName:''
               }
             ]
         })
@@ -256,7 +275,11 @@
         let data= JSON.parse(JSON.stringify(this.formValidate));
         data.swiperImg=JSON.stringify(data.swiperImg)
         data.isForSale=data.isForSale?1:0
-        data.spec=JSON.stringify(this.spec)
+        let obj={
+          spec:this.spec,
+          detail:this.lastSpec
+        }
+        data.childrenProduct=JSON.stringify(obj)
         this.api.createProduct(data).then(res=>{
           console.log(res)
           if(res.data.Code==1)
@@ -321,6 +344,28 @@
       openSpecDialog(){
         this.specDialog=true
       },
+      // 批量设置
+      setSameSpec(){
+        console.log(123)
+        let samePrice=this.samePrice;
+        let sameStock=this.sameStock;
+        let sameImgurl=this.sameImgurl
+        for(let item of this.lastSpec)
+        {
+          if(samePrice!='')
+          {
+            item.price=samePrice
+          }
+          if(sameStock!='')
+          {
+            item.stock=sameStock
+          }
+          if(sameImgurl.length!=0)
+          {
+            item.imgUrl=sameImgurl
+          }
+        }
+      },
       getID(){
         return  Number(Math.random().toString().substr(3) + Date.now()).toString(36)
       }, 
@@ -344,8 +389,13 @@
           };
           return arr;
       },
+      // 详细规格上传图片
       specuploadSuccess(res){
-        this.lastSpec[res.index].specImg=res.url
+        this.lastSpec[res.index].imgUrl=res.url
+      },
+      // 设置相同的规格图片
+      sameImgurlFn(res){
+        this.sameImgurl=res
       }
     },
 
@@ -403,4 +453,5 @@
 .item{position: relative;}
 .item .ivu-icon-ios-close-circle{position: absolute;left: 55%;top: 0;}
 .mgt10{margin-bottom: 10px;}
+.mgl20{margin-right: 15px;}
 </style>

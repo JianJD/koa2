@@ -27,13 +27,15 @@ Page({
       {
         res.data.Data[0].swiperImg=JSON.parse(res.data.Data[0].swiperImg)
         that.setData({
-          productInfo: res.data.Data[0]
+          productInfo: res.data.Data[0],
+          specArr:JSON.parse(res.data.Data[0].childrenProduct).spec,
+          detail: JSON.parse(res.data.Data[0].childrenProduct).detail
         })
         let article = res.data.Data[0].productDetail
         WxParse.wxParse('article', 'html', article, that, 5);
       }
     })
-    
+    return
     getApp().ajaxResetS('/findSpecByProductId', { productId: options.productId }, res => {
       console.log(res)
       if (res.data.Code == 1) {

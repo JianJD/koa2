@@ -10,17 +10,17 @@
       </view>
       <view class='flexCls-1 mgl20 fz26' style='margin-top:50rpx;'>
         <view class='colf98700 fz34' wx:if="{{price}}">￥{{price}}</view>
-        <view wx:if="{{stock!=''}}">库存 {{stock}}件</view>
+        <view wx:if="{{stock!=''}}" class='col999'>库存 {{stock}}件</view>
         <!-- <view>选择 {{hasChoosed}}</view> -->
       </view>
       <van-icon name="close" size='18px' bind:click='close' />
     </view>
     <!-- 第一个盒子结束 -->
-    <view style='max-height:250rpx;overflow:auto;'>
+    <view style='max-height:250rpx;overflow:auto;' wx:for="{{listData}}">
       <view class='pd200 bor-b'>
-        <view class='fz30 col999'>颜色分类</view>
+        <view class='fz30 col999'>{{item.specName}}</view>
         <view class='mgt20 overAuto'>
-          <view class='item_new  {{item.isColorChoose?"actived":""}}' wx:for="{{listData}}" data-idx='{{index}}' data-specid='{{item.specId}}' catchtap='chooseColor'>{{item.color}}{{item.size}}</view>
+          <view class='item_new  {{item2.isChoose?"actived":""}}' wx:for="{{item.specAttr}}" wx:for-index='index2' wx:for-item='item2'  data-idx='{{index}}' catchtap='chooseColor' data-idx2='{{index2}}'>{{item2.specValue}}</view>
         </view>
       </view>
     </view>

@@ -19,6 +19,26 @@ Component({
     showBuy:{
       type: Boolean,
       value:true
+    },
+    detail:{
+      type:Array,
+      value:[]
+    },
+    img:{
+      type:String,
+      value:''
+    },
+    price:{
+      type:[String,Number],
+      value:'',
+    },
+    stock:{
+      type: [String, Number],
+      value:''
+    },
+    productInfo:{
+      type:String,
+      value:''
     }
   },
 
@@ -30,7 +50,9 @@ Component({
     img:'',
     colorIndex:null,
     num:1,
-    stock:''
+    stock:'',
+    _id:[],
+    returnData:{}
   },
 
   /**
@@ -45,60 +67,93 @@ Component({
     chooseColor(e){
       let that=this
       let idx = e.currentTarget.dataset.idx;
-      
-      if (that.data.colorIndex!=null)
+      let idx2 = e.currentTarget.dataset.idx2;
+      let arr=[]
+      // 点击一个就默认变成false
+      for (let item of that.data.listData[idx].specAttr)
       {
-        that.data.listData[that.data.colorIndex].isColorChoose=false
+        item.isChoose = false
       }
-      that.data.colorIndex = idx
-      that.data.listData[idx].isColorChoose = !that.data.listData[idx].isColorChoose
-      this.setData({
-        img: that.data.listData[idx].specImg,
-        listData:that.data.listData,
-        price: that.data.listData[idx].price,
-        stock: that.data.listData[idx].stock
-      })
-      let data={
-        specId: that.data.listData[idx].specId,
-        index: that.data.colorIndex
+      that.data.listData[idx].specAttr[idx2].isChoose = !that.data.listData[idx].specAttr[idx2].isChoose
+      for(let i=0;i<that.data.listData.length;i++)
+      {
+        for (let j = 0; j < that.data.listData[i].specAttr.length;j++)
+        {
+          if (that.data.listData[i].specAttr[j].isChoose)
+          {
+            arr.push(j)
+            break
+          }
+        }
       }
-      that.triggerEvent('chooseColor', data  )
-    },
-    chooseSize(e) {
-      let that = this
-      let idx = e.currentTarget.dataset.idx
-      that.data.listData[idx].isSizeChoose = !that.data.listData[idx].isSizeChoose
-      this.setData({
-        listData: that.data.listData
+      that.setData({
+        listData:that.data.listData
       })
-      that.triggerEvent('chooseSize', that.data.listData[idx].specId)
+      that.data._id=arr
+      let _ids =arr.join('#')
+      let chooseJosn=''
+      if(arr.length==that.data.listData.length)
+      {
+        for(let item of that.data.detail)
+        {
+          if (item._id == _ids)
+          {
+            chooseJosn=item
+            break
+          }
+        }
+      }
+      if (chooseJosn=='')
+      {
+        that.setData({
+          listData: that.data.listData
+        })
+      }else
+      {
+        that.setData({
+          listData: that.data.listData,
+          img:chooseJosn.imgUrl[0].url,
+          price:chooseJosn.price,
+          stock:chooseJosn.stock,
+          returnData: chooseJosn
+        })
+      }
+     
+      console.log(chooseJosn)
+    
+      // that.triggerEvent('chooseColor', data  )
     },
+  
     addCar(){
       let that=this
-      if (that.data.colorIndex==null)
+      if(that.data._id.length<that.data.listData.length)
       {
-        
-       wx.showToast({
-         title: '请先选择分类',
-       })
-        return
-      }
-      that.triggerEvent('addCar', that.data.listData[that.data.colorIndex].specId)
-    },
-    Buy() {
-      let that = this
-      if (that.data.colorIndex == null) {
         wx.showToast({
           title: '请先选择分类',
         })
         return
       }
-      that.triggerEvent('buy', that.data.listData[that.data.colorIndex].specId)
+      that.data.returnData.num=that.data.num
+      that.data.returnData.productId = that.data.productId
+      that.triggerEvent('addCar',that.data.returnData)
+    },
+    Buy() {
+      let that = this
+      if (that.data._id.length < that.data.listData.length) {
+        wx.showToast({
+          title: '请先选择分类',
+        })
+        return
+      }
+      that.data.returnData.num = that.data.num
+      that.data.returnData.productId = that.data.productId
+      that.triggerEvent('buy', that.data.returnData)
     },
     onChange(e){
       let that=this;
       that.data.num=e.detail
       that.triggerEvent('num', that.data.num)
-    }
+    },
+    
   }
 })

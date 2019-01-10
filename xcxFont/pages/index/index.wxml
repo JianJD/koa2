@@ -9,4 +9,4 @@
   </scroll-view>
 </view>
 <login />
-<sku  isShowChoose='{{isShowChoose}}' showBuy='{{showBuy}}' listData='{{specArr}}' bind:addCar='addShopCar' bind:chooseColor='chooseColor'  bind:num='num'/>
+<sku  isShowChoose='{{isShowChoose}}' showBuy='{{showBuy}}' listData='{{specArr}}' bind:addCar='addShopCar' bind:chooseColor='chooseColor'  bind:num='num' detail="{{detail}}" stock='{{stock}}' price='{{memberPrice}}-{{price}}' img='{{url}}' productId="{{productId}}"/>

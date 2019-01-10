@@ -1,5 +1,5 @@
 /* pages/sku/sku.wxss */
-.choosePop{position: fixed;bottom: 0;left: 0;width: 100%;background: #fff;height: 806rpx;border-top-left-radius: 20rpx;border-top-right-radius: 20rpx;}
+.choosePop{position: fixed;bottom: 0;left: 0;width: 100%;background: #fff;height: 950rpx;border-top-left-radius: 20rpx;border-top-right-radius: 20rpx;}
 .proDuctImg{width: 180rpx;height: 180rpx;overflow: hidden;}
 .proDuctImg image{width: 100%;height: 100%;}
 .colf98700{color: #f98700;}
