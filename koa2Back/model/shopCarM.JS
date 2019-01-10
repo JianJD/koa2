@@ -11,7 +11,7 @@ exports.delShopCar=function(value){
 }
 // 修改购物车数量
 exports.changeShopCarNum=function(value,Type){
-    let sql= `UPDATE shopcar SET num=? ,specId=? WHERE shopCarId=?;`;
+    let sql= `UPDATE shopcar SET num=? ,specJson=? WHERE shopCarId=?;`;
     
     return query(sql,value)
 }
@@ -26,21 +26,11 @@ exports.shopCarListForPage=function(value){
 	b.classId,
 	b.isForSale,
 	b.productTitle,
-	b.swiperImg,
-	b.memberPrice,
-	b.price,
-	b.productDetail,
-	b.saleNum,
-    b.stock,
-    b.sendMoney,
-    c.specId,
-    c.price as specPrice,
-    c.color,
-    c.size
+    b.sendMoney
+    
 FROM
 	shopcar AS a
     LEFT JOIN production AS b ON a.productId = b.productId 
-    LEFT JOIN productionspec AS c ON a.specId = c.specId
 WHERE
 	a.userId =? 
 ORDER BY
@@ -64,6 +54,6 @@ exports.findTotalItems=function(value){
 }
 // 根据商品id查数据
 exports.findByProductId=(value)=>{
-    let sql=`select shopCarId , num from shopcar where productId=? AND userId=? AND specId=?;`
+    let sql=`select shopCarId , num,specJson from shopcar where productId=? AND userId=?;`
     return query(sql,value)
 }

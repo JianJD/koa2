@@ -43,11 +43,12 @@ exports.getProductList=(value)=>{
 }
 // 查询商品总个数
 exports.totalItems=(value)=>{
-    let sql=''
+    let sql='';
+    //0表示查询全部
     if(value[0]==0)
     {
         sql=`SELECT a.*,b.className FROM production as a left join productClass as b on a.classId=b.classId where a.isForSale=${value[3]} order by a.productId desc ;`;
-    }else
+    }else//按照分组id查询商品
     {
         sql=`SELECT a.*,b.className FROM production as a left join productClass as b on a.classId=b.classId where a.isForSale=${value[3]} and a.classId=${value[0]} order by a.productId desc ;`;
 

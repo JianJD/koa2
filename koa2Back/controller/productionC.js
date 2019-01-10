@@ -79,7 +79,7 @@ exports.addOrEditProduct= async (ctx)=>{
 }
 exports.delProduction=async (ctx)=>{
     let {productId}=ctx.request.body;
-    if(!productId)
+    if(!productId||productId=='undefind')
     {
       return  ctx.body=response.reponseData(0,null,'商品id不能为空')
     }
@@ -158,7 +158,7 @@ exports.upAndDown=async(ctx)=>{
         ctx.body=response.reponseData(0,null,'异常啦')
     })
 }
-// 根据商品id查多规格
+// 根据商品id查多规格 暂时废弃
 exports.findSpecByProductId=async(ctx)=>{
     let {productId}=ctx.request.body;
     if(!productId)

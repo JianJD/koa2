@@ -108,6 +108,7 @@ Component({
         that.setData({
           listData: that.data.listData
         })
+        that.triggerEvent('chooseColor', false)
       }else
       {
         that.setData({
@@ -117,11 +118,12 @@ Component({
           stock:chooseJosn.stock,
           returnData: chooseJosn
         })
+        that.triggerEvent('chooseColor', true)
       }
      
       console.log(chooseJosn)
     
-      // that.triggerEvent('chooseColor', data  )
+     
     },
   
     addCar(){

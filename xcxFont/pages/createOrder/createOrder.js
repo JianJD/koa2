@@ -32,10 +32,24 @@ Page({
           list: res.data
         }, () => {
           for (let item of that.data.list) {
-            that.data.productMoney += item.specPrice * item.num
-            that.data.sendMoney = item.sendMoney
+            that.data.productMoney += item.price * item.num
+            that.data.sendMoney = item.sendMoney;
+            let arr=[]
+            // 拿出详细规格值
+           let attrKeyName=item.specAttrKeyName.split('#')
+            let  specName=item.specName.split('#')
+            specName.forEach((item1,i)=>{
+              let obj = {
+                name: item1,
+                value: attrKeyName[i]
+              }
+              arr.push(obj)
+            })
+            item.detailSpec=arr
           }
+          
           that.setData({
+            list:that.data.list,
             productMoney: that.data.productMoney,
             sendMoney: that.data.sendMoney,
             totalMoney: that.data.productMoney + that.data.sendMoney,

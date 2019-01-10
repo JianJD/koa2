@@ -12,7 +12,8 @@ Page({
     imgUrl: getApp().globalData.ajaxUrl,
     specArr:[],
     isShowChoose:false,
-    num:1
+    num:1,
+    specJson:''
   },
 
   /**
@@ -66,22 +67,23 @@ Page({
 
   chooseColor(e){
     console.log(e)
-    that.data.specId=e.detail.specId;
-    that.data.specPrice = that.data.specArr[e.detail.index].price
+    that.data.specJson=e.detail
   },
-  addShopCar(){
-    if (!that.data.specId)
+  addShopCar(e){
+    if(that.data.specJson=='')
     {
       that.setData({
         isShowChoose:true
       })
       return
     }
+    let data=e.detail
+    data.sendMoney=that.data.productInfo.sendMoney
     getApp().ajaxResetS('/addShopCar',{
-      num:that.data.num,
+      num: e.detail.num,
       userId:getApp().globalData.userId,
       productId:that.data.productInfo.productId,
-      specId:that.data.specId
+      specJson: JSON.stringify(data) 
     },res=>{
       if(res.data.Code==1)
       {
@@ -90,17 +92,16 @@ Page({
       }
     })
   },
-  createOrder(){
-    if (!that.data.specId) {
+  createOrder(e){
+    if (that.data.specJson=='') {
       that.setData({
         isShowChoose: true
       })
       return
     }
-    let data=JSON.parse(JSON.stringify(that.data.productInfo))
-    data.num=that.data.num;
-    data.specId=that.data.specId
-    data.specPrice = that.data.specPrice
+    let data=e.detail
+    data.productTitle=that.data.productInfo.productTitle
+    data.sendMoney=that.data.productInfo.sendMoney
     wx.setStorage({
       key: 'productInfo',
       data: [data],

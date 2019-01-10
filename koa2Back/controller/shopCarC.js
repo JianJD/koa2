@@ -28,7 +28,9 @@ exports.addShopCar=async (ctx)=>{
     let shopCarNum=new Number();
     // 判断商品是否已经存在购物车
     await shopCarModel.findByProductId(data).then(res=>{
-        if(res.length!=0)
+        console.log(res)
+        let data=JSON.parse(specJson)
+        if(res.length!=0&&JSON.parse(res[0].specJson)._id==data._id&&JSON.parse(res[0].specJson).specAttrKeyName==data.specAttrKeyName)
         {
             isHas=true;
             shopCarId=res[0].shopCarId;
