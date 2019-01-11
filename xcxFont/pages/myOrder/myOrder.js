@@ -122,11 +122,7 @@ Page({
         for(let item of data)
         {
           item.productInfo = JSON.parse(item.productInfo)
-          for(let item2 of item.productInfo)
-          {
-            console.log(item2.productInfo.swiperImg)
-            item2.productInfo.swiperImg = JSON.parse(item2.productInfo.swiperImg)
-          }
+          
         }
         switch (that.data.orderStatus){
           case 0:{

@@ -11,7 +11,13 @@ exports.delShopCar=function(value){
 }
 // 修改购物车数量
 exports.changeShopCarNum=function(value,Type){
-    let sql= `UPDATE shopcar SET num=? ,specJson=? WHERE shopCarId=?;`;
+    let sql= `UPDATE shopcar SET specJson=? WHERE shopCarId=?;`;
+    
+    return query(sql,value)
+}
+// 修改购物车数量
+exports.findShopCarById=function(value){
+    let sql= `SELECT specJson from shopcar where shopCarId=?`;
     
     return query(sql,value)
 }
@@ -22,6 +28,7 @@ exports.shopCarListForPage=function(value){
 	a.shopCarId,
 	a.userId,
     a.productId,
+    a.specJson,
     a.num,
 	b.classId,
 	b.isForSale,

@@ -23,6 +23,22 @@
           </FormItem>
           <FormItem label="商品规格" prop="spec">
             <div v-for="(item , index) in spec" :key='index' class="item">
+               
+                <Card >
+                      <Form  :model="item"  :label-width="80"  label-position="left">
+                  <FormItem label="规格名称" prop="specName" >
+                    <Input v-model="item.specName"  placeholder="请输入规格名称"></Input>
+                 </FormItem>
+                  <FormItem label="规格值" prop="specName">
+                    <div v-for="(item2,index2) in item.specAttr" :key='index2' class="mgt10" style="display:inline-block;margin-right:10px;">
+                        <Input v-model="item2.specValue" placeholder="请输入规格值" ></Input>
+                        <Button type="error" size='small' @click='reduceAttrValue(index,index2)'>删除</Button>
+                        <Button type="text"  @click='addSpecAttrValue(index)' v-if="index2==item.specAttr.length-1">添加规格值</Button>
+                    </div>
+                 </FormItem>
+                </Form> 
+              
+                </Card>
                 <Form  :model="item"  :label-width="80" >
                   <FormItem label="规格名称" prop="specName">
                     <Input v-model="item.specName"  placeholder="请输入规格名称"></Input>
@@ -41,6 +57,7 @@
               <Button type="success" :style="{display:'block',margin:'10px 0 0 0'}" @click="addSpecNew">添加规格</Button>
           </FormItem>
              <FormItem label="规格参数" prop="children">
+              
                <div class="mgb20">
                  <span style="margin-left:20px;font-size:12px;color:#999;margin-right:20px;">批量设置</span>
                  <Input v-model="samePrice" placeholder="售价" style="width:100px !important" class="mgl20"/>

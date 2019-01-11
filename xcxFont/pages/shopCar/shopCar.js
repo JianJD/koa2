@@ -48,7 +48,18 @@ onShow(){
       {
         for(let item of res.data.Data.List)
         {
-          item.swiperImg = JSON.parse(item.swiperImg)
+          let arr=[]
+          item.specJson = JSON.parse(item.specJson)
+          let attrKeyName = item.specJson.specAttrKeyName.split('#')
+          let specName = item.specJson.specName.split('#')
+          specName.forEach((item1, i) => {
+            let obj = {
+              name: item1,
+              value: attrKeyName[i]
+            }
+            arr.push(obj)
+          })
+          item.detailSpec = arr 
         }
         that.setData({
           list:that.data.list.concat(res.data.Data.List),
@@ -65,7 +76,7 @@ onShow(){
     },res=>{
       if(res.data.Code==1)
       {
-        that.data.list[e.currentTarget.dataset.idx].num=e.detail
+        that.data.list[e.currentTarget.dataset.idx].specJson.num=e.detail
         console.log(res)
         countMoney()
       }
@@ -103,20 +114,19 @@ onShow(){
     countMoney()
   },
   submit(){
-    let arr = []
-    for (let item of that.data.list) {
-      if (item.check) {
-        arr.push(item.shopCarId)
-      }
-    }
-    if(arr.length==0)
-    {
-      Toast('请先选择商品')
-      return
-    }
+    
     if(that.data.isDel)
     {
-      
+      let arr = []
+      for (let item of that.data.list) {
+        if (item.check) {
+          arr.push(item.shopCarId)
+        }
+      }
+      if (arr.length == 0) {
+        Toast('请先选择商品')
+        return
+      }
       getApp().ajaxResetS('/delShopCar',{shopCarId:arr.toString()},res=>{
         if(res.data.Code==1)
         {
@@ -136,7 +146,17 @@ onShow(){
       })
     }else
     {
-      let arr = that.data.list.filter(item => { return item.check })
+      let arr = new Array()
+      
+      for(let item of that.data.list)
+      {
+        if(item.check)
+        {
+          item.specJson.productId=item.productId
+          item.specJson.productTitle = item.productTitle
+          arr.push(item.specJson)
+        }
+      }
       if (arr.length == 0) {
         Toast('请先选择商品')
         return
@@ -158,7 +178,7 @@ function countMoney(){
   {
     if(item.check)
     {
-      money += item.specPrice*item.num
+      money += item.specJson.price * item.specJson.num
     }
   }
   that.setData({

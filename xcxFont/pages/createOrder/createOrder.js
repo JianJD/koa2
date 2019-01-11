@@ -88,20 +88,15 @@ submit(){
     return
   }
   let ids=[];
-  let proNum=[];
-  let specIds=[]
-  for (let item of that.data.list)
-  {
-    ids.push(item.productId)
-    proNum.push(item.num);
-    specIds.push(item.specId)
-  }
+ for(let item of that.data.list)
+ {
+   ids.push(item.productId)
+ }
   getApp().ajaxResetS('/createOrder', {
     userId: getApp().globalData.userId,
     productId: ids.toString(),
     addressId: that.data.addressData.addressId,
-    proNum: proNum.join(','),
-    specId: specIds.join(','),
+    productInfo: JSON.stringify(that.data.list),
     sendMoney:that.data.sendMoney,
     orderMoney:that.data.totalMoney-that.data.sendMoney,
     totalMoney:that.data.totalMoney

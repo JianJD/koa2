@@ -28,7 +28,7 @@
     <view class='col999 '>购物清单</view>
   </van-col>
 </van-row>
-<van-card num="{{item2.orderNum}}" price="{{item2.specInfo.price}}" title="{{item2.productInfo.productTitle}}" thumb="{{ imgUrl }}{{item2.productInfo.swiperImg[0].url}}" wx:for="{{list}}" wx:for-item='item2'/>
+<van-card num="{{item2.num}}" price="{{item2.price}}" title="{{item2.productTitle}}" thumb="{{ imgUrl }}{{item2.imgUrl[0].url}}" wx:for="{{list}}" wx:for-item='item2'/>
 <view class='mgt20'></view>
 <van-cell title="商品金额" value="￥{{allData.orderMoney}}" />
 <van-cell title="运费" value="￥{{allData.sendMoney}}" />

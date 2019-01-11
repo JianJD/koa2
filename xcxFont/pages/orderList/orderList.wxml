@@ -7,7 +7,7 @@
         <view class='fz22 coleb454f' wx:if="{{item.orderStatus==2}}">待收货</view>
         <view class='fz22 coleb454f' wx:if="{{item.orderStatus==3}}">已完成</view>
       </view>
-      <van-card num="{{item2.orderNum}}" price="{{item2.specInfo.price}}" title="{{item2.productInfo.productTitle}}" thumb="{{ imgUrl }}{{item2.productInfo.swiperImg[0].url}}" wx:for="{{item.productInfo}}" wx:for-item='item2' wx:key="{{item2.orderNum}}"></van-card>
+      <van-card num="{{item2.num}}" price="{{item2.price}}" title="{{item2.productTitle}}" thumb="{{ imgUrl }}{{item2.imgUrl[0].url}}" wx:for="{{item.productInfo}}" wx:for-item='item2' wx:key="{{item2.orderNum}}"></van-card>
       <view class='footer txt-right'>
         <view class='txt-right mgb20'>
 

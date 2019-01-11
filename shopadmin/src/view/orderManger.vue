@@ -6,7 +6,7 @@
             <span>{{item.name}}</span>
         </Radio>
     </RadioGroup>
-     <Table border  :columns="columns" :data="list">
+     <Table border  :columns="columns" :data="list" :stripe='true' size='small' >
        <template slot-scope="{ row }" slot="address">
           <div>{{JSON.parse(row.addressInfo).receiver}}
               {{JSON.parse(row.addressInfo).receiverPhone}}
@@ -17,12 +17,12 @@
           </div>
         </template>
         <template slot-scope="{ row }" slot="productInfo">
-          <div v-for='(item,index) in JSON.parse(row.productInfo) ' :key='index'>
-            <img :src="imgUrl+JSON.parse(item.productInfo.swiperImg)[0].url" alt="" class="img inline" />
-            <div class="inline">
-              {{item.productInfo.productTitle}}
-               <div><span class="col999">分类：</span>{{item.specInfo.color}}{{item.specInfo.size}}</div>
-               <div><span class="col999">数量：</span>{{item.orderNum}}</div>
+          <div v-for='(item,index) in JSON.parse(row.productInfo) ' :key='index' class="flexCls pro_box">
+            <img :src="imgUrl+item.imgUrl[0].url" alt="" class="img inline" />
+            <div class="inline flexCls-1">
+              <div class="title_pro">{{item.productTitle}}</div>
+               <div  v-for="item2 in item.detailSpec" :key="item2.name" class="specCls"><span class="col999">{{item2.name}}:</span>{{item2.value}}</div>
+               <div class="num">数量：X{{item.num}}</div>
             </div>
            
           </div>
@@ -38,6 +38,8 @@
            <Button type="primary" size='small' icon='md-create' @click="send(index)" v-if="row.orderStatus==1">发货</Button>
         </template>
        </Table>
+       <div class="mgt20 txt-center"><Page :total="total" /></div>
+        
          <Modal v-model="showSend" title="发货">
            <Form ref="formData" :model="formData" inline>
               <FormItem prop="company" label='快递公司'>
@@ -83,7 +85,7 @@
                 title: '商品信息',
                 key: 'productInfo',
                 slot:'productInfo',
-                  width:500,
+                width:400,
             },
            
             {
@@ -102,14 +104,19 @@
             },
             {
                 title: '操作',
-                slot:'edit'
+                slot:'edit',
+                 width:260,
             }
 
         ],
         orderStatus:[
           {
+            orderStatus:0,
+            name:'待付款'
+          },
+          {
             orderStatus:1,
-            name:'代发货'
+            name:'待发货'
           },
           {
             orderStatus:2,
@@ -126,7 +133,8 @@
           company:'',
           code:''
         },
-        sendIndex:null
+        sendIndex:null,
+        total:0
       };
     },
 
@@ -165,6 +173,7 @@
           if(res.data.Code==1)
           {
             this.list=res.data.Data.List
+            this.total=parseInt(res.data.Data.totalPage)*10
           }
         })
       },
@@ -201,5 +210,10 @@
 <style  scoped>
 .inline{display: inline-block;vertical-align: top;}
 .img{width: 50px;height: 50px;margin-right: 10px;}
-
+.title_pro{font-weight: bold;}
+.specCls{font-size: 10px;color: #999;background: #f1f1f1;margin-bottom: 2px;display: inline-block;margin-right: 20px;padding: 2px 5px;border-radius: 5px;}
+.flexCls{display: flex;}
+.flexCls-1{flex: 1;}
+.num{text-align: right;color: #999;}
+.pro_box{padding: 10px;background: #f1f1f1;margin-bottom: 10px;}
 </style>

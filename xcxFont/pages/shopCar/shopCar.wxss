@@ -49,4 +49,5 @@ page{
 .fz20{
   font-size: 20rpx;
 }
-.size{padding: 5rpx;background: #f1f1f1;display: inline-block;border-radius: 5rpx;font-size: 19rpx;}
+.size{padding: 2rpx;display: inline-block;border-radius: 5rpx;font-size: 19rpx;}
+.spec{font-size: 18rpx;}

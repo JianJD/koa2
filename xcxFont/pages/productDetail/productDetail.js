@@ -78,7 +78,9 @@ Page({
       return
     }
     let data=e.detail
+    data.productTitle = that.data.productInfo.productTitle
     data.sendMoney=that.data.productInfo.sendMoney
+    data.productId = that.data.productInfo.productId
     getApp().ajaxResetS('/addShopCar',{
       num: e.detail.num,
       userId:getApp().globalData.userId,
@@ -102,6 +104,7 @@ Page({
     let data=e.detail
     data.productTitle=that.data.productInfo.productTitle
     data.sendMoney=that.data.productInfo.sendMoney
+    data.productId = that.data.productInfo.productId
     wx.setStorage({
       key: 'productInfo',
       data: [data],

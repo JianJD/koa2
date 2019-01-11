@@ -87,32 +87,40 @@ Page({
           detail: JSON.parse(Data.childrenProduct).detail,
           stock:Data.stock,
           memberPrice: Data.memberPrice,
+          price:Data.price,
+          sendMoney:Data.sendMoney,
           price: Data.price,
           url: JSON.parse(Data.swiperImg)[0].url,
           isShowChoose:true,
-          productId:Data.productId
+          productId:Data.productId,
+          productTitle: Data.productTitle
         })
         wx.hideLoading()
       }
     })
   },
   addShopCar(e){
-    console.log(e)
+
+    let data = e.detail
+    data.productTitle = that.data.productTitle
+    data.sendMoney = that.data.sendMoney
+    data.productId = that.data.productId
     getApp().ajaxResetS('/addShopCar', {
       num: e.detail.num,
       userId: getApp().globalData.userId,
-      productId: e.detail.productId,
-      specJson: that.data.specId
+      productId: that.data.productId,
+      specJson: JSON.stringify(data)
     }, res => {
       if (res.data.Code == 1) {
         wx.showToast({
           title: '成功',
         })
         that.setData({
-          isShowChoose:false
+          isShowChoose: false
         })
       }
     })
+    
   },
   chooseColor(e) {
     that.data.specId = e.detail.specId;

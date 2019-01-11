@@ -71,7 +71,7 @@ exports.delShopCar=async(ctx)=>{
     })
 }
 exports.changeShopCarNum=async (ctx)=>{
-    let {shopCarId,num,specId}=ctx.request.body;
+    let {shopCarId,num}=ctx.request.body;
     if(!shopCarId)
     {
         return ctx.body=response.reponseData(0,null,'购物车id不能为空');
@@ -80,11 +80,12 @@ exports.changeShopCarNum=async (ctx)=>{
     {
         return ctx.body=response.reponseData(0,null,'商品数量不能为空');
     }
-    if(!specId)
-    {
-        return ctx.body=response.reponseData(0,null,'specId不能为空');
-    }
-    await shopCarModel.changeShopCarNum([num,specId,shopCarId]).then(res=>{
+    let specJson;
+   await shopCarModel.findShopCarById([shopCarId]).then(res=>{
+    specJson=JSON.parse(res[0].specJson) 
+    specJson.num=num
+   })
+    await shopCarModel.changeShopCarNum([JSON.stringify(specJson),shopCarId]).then(res=>{
         return ctx.body=response.reponseData(1,null,'成功');
     }).catch(()=>{
         ctx.body=response.reponseData(0,null,'存储过程异常');
