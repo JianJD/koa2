@@ -60,3 +60,8 @@ exports.upAndDown=(value)=>{
     let sql=`update production set isForSale=? where productId=?;`;
     return query(sql,value)
 }
+// 修改商品分类
+exports.changeClass=(value)=>{
+    let sql=`update production set classId=? where productId=?;`;
+    return query(sql,value)
+}

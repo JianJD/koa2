@@ -6,6 +6,10 @@ import createProduct from '@/view/createProduct'
 import productList from '@/view/productList'
 import addClass from '@/view/addClass'
 import orderManger from '@/view/orderManger'
+import shopManger from '@/view/shopManger'
+import aboutUs from '@/view/aboutUs'
+import addArticle from '@/view/addArticle'
+import articleList from '@/view/articleList'
 Vue.use(Router)
 
 export default new Router({
@@ -19,6 +23,7 @@ export default new Router({
       path: '/layout',
       name: 'layout',
       component: layout,
+      redirect:'/shopManger',
       children:[
         {
           path: '/productList',
@@ -50,6 +55,38 @@ export default new Router({
           component: orderManger,
           meta:{
             title:'订单管理'
+          }
+        },
+        {
+          path: '/shopManger',
+          name: 'shopManger',
+          component: shopManger,
+          meta:{
+            title:'店铺营销'
+          }
+        },
+        {
+          path: '/aboutUs',
+          name: 'aboutUs',
+          component: aboutUs,
+          meta:{
+            title:'关于我们'
+          }
+        },
+        {
+          path: '/addArticle',
+          name: 'addArticle',
+          component: addArticle,
+          meta:{
+            title:'文章管理'
+          }
+        },
+        {
+          path: '/articleList',
+          name: 'articleList',
+          component: articleList,
+          meta:{
+            title:'文章列表'
           }
         },
       ]

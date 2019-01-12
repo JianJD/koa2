@@ -48,6 +48,8 @@ exports.delClass=async (ctx)=>{
         await proClassModel.delClass(classId).then(res=>{
             return ctx.body=response.reponseData(1,null,'删除成功')
         })
+        proClassModel.changInitProductClass([classId]).then(res=>{
+        })
     }
 }
 exports.getClassList=async (ctx)=>{

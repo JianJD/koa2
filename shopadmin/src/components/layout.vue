@@ -4,7 +4,10 @@
        <Sider  ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed"> <Headernav  :menuitemClasses="menuitemClasses" />   </Sider>
         <Layout>
          <Header :style="{padding: 0}" class="layout-header-bar">
-                    <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
+             <div class="flexCls-align">
+                 <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
+                <div class="titleP">{{$route.meta.title}}</div>
+             </div>
                 </Header>
         <Content :style="{margin: '10px 10px 0', background: '#fff', minHeight: '500px',padding:'10px'}">
           <router-view></router-view>
@@ -44,13 +47,17 @@ export default {
             collapsedSider () {
                 this.$refs.side1.toggleCollapse();
             }
+        },
+        watch: {
+            $route(to,from){
+            }
         }
     }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.ivu-layout-sider{background: #fff;height: 100vh;}
+.ivu-layout-sider{background: #fff;height: 100vh;width: 150px !important;min-width: 150px !important;}
  .layout{
         border: 1px solid #d7dde4;
         background: #f5f7f9;

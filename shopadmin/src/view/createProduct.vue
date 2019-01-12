@@ -4,17 +4,17 @@
           <FormItem label="商品标题" prop="productTitle">
               <Input v-model="formValidate.productTitle" placeholder="请输入标题"></Input>
           </FormItem>
-          <FormItem label="商品会员价" prop="memberPrice">
-              <Input v-model="formValidate.memberPrice"  placeholder="请输入商品会员价格"></Input>
+          <FormItem label="商品最低价" prop="memberPrice">
+              <Input v-model="formValidate.memberPrice"  :number='true'   placeholder="请输入商品会员价格"></Input>
           </FormItem>
-          <FormItem label="商品原价" prop="price">
-              <Input v-model="formValidate.price" placeholder="请输入商品原价"></Input>
+          <FormItem label="商品最高价" prop="price">
+              <Input v-model="formValidate.price" :number='true' placeholder="请输入商品原价"></Input>
           </FormItem>
           <FormItem label="商品库存" prop="stock">
-              <Input v-model="formValidate.stock" placeholder="请输入商品原价"></Input>
+              <Input v-model="formValidate.stock" :number='true' placeholder="请输入商品原价"></Input>
           </FormItem>
           <FormItem label="商品运费" prop="sendMoney">
-              <Input v-model="formValidate.sendMoney" placeholder="请输入商品原价"></Input>
+              <Input v-model="formValidate.sendMoney" :number='true' placeholder="请输入商品原价"></Input>
           </FormItem>
           <FormItem label="商品分类" prop="classId">
               <Select v-model="formValidate.classId" style="width:200px">
@@ -23,76 +23,62 @@
           </FormItem>
           <FormItem label="商品规格" prop="spec">
             <div v-for="(item , index) in spec" :key='index' class="item">
-               
-                <Card >
+                <Card class="mgb20">
                       <Form  :model="item"  :label-width="80"  label-position="left">
-                  <FormItem label="规格名称" prop="specName" >
-                    <Input v-model="item.specName"  placeholder="请输入规格名称"></Input>
-                 </FormItem>
-                  <FormItem label="规格值" prop="specName">
-                    <div v-for="(item2,index2) in item.specAttr" :key='index2' class="mgt10" style="display:inline-block;margin-right:10px;">
-                        <Input v-model="item2.specValue" placeholder="请输入规格值" ></Input>
-                        <Button type="error" size='small' @click='reduceAttrValue(index,index2)'>删除</Button>
-                        <Button type="text"  @click='addSpecAttrValue(index)' v-if="index2==item.specAttr.length-1">添加规格值</Button>
-                    </div>
-                 </FormItem>
-                </Form> 
-              
+                        <FormItem label="规格名称" prop="specName" >
+                          <Input v-model="item.specName"  placeholder="请输入规格名称"></Input>
+                        </FormItem>
+                      <FormItem label="规格值" prop="specName">
+                        <div v-for="(item2,index2) in item.specAttr" :key='index2' class="mgt10" style="display:inline-block;margin-right:10px;">
+                            <Input v-model="item2.specValue" placeholder="请输入规格值" style="width:200px !important;"></Input>
+                            <Button type="error" class="mgl10" size='small' @click='reduceAttrValue(index,index2)'>删除</Button>
+                            <Button type="text"  @click='addSpecAttrValue(index)' v-if="index2==item.specAttr.length-1">添加规格值</Button>
+                        </div>
+                      </FormItem>
+                 </Form> 
+                 <Button type="error" size='small' v-if="spec.length>0" @click='reduceSpec(index)'>删除规格</Button>
                 </Card>
-                <Form  :model="item"  :label-width="80" >
-                  <FormItem label="规格名称" prop="specName">
-                    <Input v-model="item.specName"  placeholder="请输入规格名称"></Input>
-                 </FormItem>
-                  <FormItem label="规格值" prop="specName">
-                    <div v-for="(item2,index2) in item.specAttr" :key='index2' class="mgt10">
-                        <Input v-model="item2.specValue" placeholder="请输入规格值" ></Input>
-                        <Icon type="md-add-circle" size='20' @click='addSpecAttrValue(index)' v-if="index2==item.specAttr.length-1"/>
-                        <Icon type="md-close-circle" size='20' v-if="item.specAttr.length>1" @click='reduceAttrValue(index,index2)'/>
-                    </div>
-                 </FormItem>
-                </Form> 
-               <Icon type="ios-close-circle" size='25' v-if="spec.length>0" @click='reduceSpec(index)'/>
             </div>
 
               <Button type="success" :style="{display:'block',margin:'10px 0 0 0'}" @click="addSpecNew">添加规格</Button>
           </FormItem>
-             <FormItem label="规格参数" prop="children">
-              
-               <div class="mgb20">
-                 <span style="margin-left:20px;font-size:12px;color:#999;margin-right:20px;">批量设置</span>
-                 <Input v-model="samePrice" placeholder="售价" style="width:100px !important" class="mgl20"/>
-                 <Input v-model="sameStock" placeholder="库存" style="width: 100px !important" class="mgl20"/>
-                  <upload :uploadList='sameImgurl' @success='sameImgurlFn' :one='true' class="inline mgl20"></upload>
-                 <Button type="success" @click="setSameSpec">应用</Button>
-               </div>
-                <Row type='flex'>
-                    <Col span="5" class-name='bor'>规格总览</Col>
-                    <Col span="7" class-name='bor'>售价</Col>
-                     <Col span="7" class-name='bor'>库存</Col>
-                      <Col span="5" class-name='bor'>图片</Col>
-                </Row>
-                  <Row type='flex' v-for="(item ,index) in lastSpec" :key='index'>
-                    <Col span="5" class-name='bor hei74'>{{item.specAttrKeyName}}</Col>
-                    <Col span="7" class-name='bor hei74'>
-                       <Input v-model="item.price"  placeholder="请输入规格价格"></Input>
-                     </Col>
-                    <Col span="7" class-name='bor hei74'>
-                       <Input v-model="item.stock"  placeholder="请输入规格库存"></Input>
+          <FormItem label="规格参数" prop="children">
+            
+              <div class="mgb20 flexCls-align" >
+                <span style="margin-left:20px;font-size:12px;color:#999;margin-right:20px;">批量设置</span>
+                <Input v-model="samePrice" placeholder="售价" style="width:100px !important" class="mgl20"/>
+                <Input v-model="sameStock" placeholder="库存" style="width: 100px !important" class="mgl20"/>
+                <upload :uploadList='sameImgurl' @success='sameImgurlFn' :one='true' class="inline mgl20"></upload>
+                <Button type="success" @click="setSameSpec">应用</Button>
+              </div>
+              <Row type='flex'>
+                  <Col span="5" class-name='bor'>规格总览</Col>
+                  <Col span="7" class-name='bor'>售价</Col>
+                    <Col span="7" class-name='bor'>库存</Col>
+                    <Col span="5" class-name='bor'>图片</Col>
+              </Row>
+                <Row type='flex' v-for="(item ,index) in lastSpec" :key='index'>
+                  <Col span="5" class-name='bor hei74'>{{item.specAttrKeyName}}</Col>
+                  <Col span="7" class-name='bor hei74'>
+                      <Input v-model="item.price"  placeholder="请输入规格价格"></Input>
                     </Col>
-                     
-                      <Col span="5" class-name='bor hei74'>
-                         <upload :uploadList='item.imgUrl' @success='specuploadSuccess'  :index="index" :one='true'></upload>
-                      </Col>
-                </Row>
+                  <Col span="7" class-name='bor hei74'>
+                      <Input v-model="item.stock"  placeholder="请输入规格库存"></Input>
+                  </Col>
+                    
+                    <Col span="5" class-name='bor hei74'>
+                        <upload :uploadList='item.imgUrl' @success='specuploadSuccess'  :index="index" :one='true'></upload>
+                    </Col>
+              </Row>
 
-            </FormItem>
+          </FormItem>
           <FormItem label="是否上架" prop="isForSale">
                <i-switch v-model="formValidate.isForSale" size="large">
                   <span slot="open">是</span>
                   <span slot="close">否</span>
                </i-switch>
           </FormItem>
-            <FormItem label="商品轮播图" prop="isForSale">
+          <FormItem label="商品轮播图" prop="isForSale">
                 <upload :uploadList='formValidate.swiperImg' @success='uploadSuccess'></upload>
           </FormItem>
           <FormItem label="商品详情" prop="productDetail">
@@ -100,32 +86,29 @@
           </FormItem>
              <Button type="success" :style="{display:'block',margin:'0 auto'}" @click="save">保存</Button>
         </Form>
-       <Modal
-        v-model="specDialog"
-        title="新增规格">
-        <Form  ref="specData" :model="specData" label-position="top" >
-            <FormItem label="规格图片" prop="isForSale">
-                <upload :uploadList='specData.specImg' @success='specImg' :one='true'></upload>
-            </FormItem>
-            <FormItem label="规格价格" prop="price">
-              <Input v-model="specData.price" placeholder="请输入规格价格"></Input>
-            </FormItem>
-            <FormItem label="规格库存" prop="stock">
-              <Input v-model="specData.stock" placeholder="请输入规格库存"></Input>
-            </FormItem>
-             <FormItem label="规格颜色" prop="color">
-              <Input v-model="specData.color" placeholder="请输入规格颜色"></Input>
-            </FormItem>
-            <FormItem label="规格大小" prop="size">
-              <Input v-model="specData.size" placeholder="请输入规格大小"></Input>
-            </FormItem>
-          </Form>
-        <div slot="footer">
-          <Button type="text" size="large" @click="close">取消</Button>
-          <Button type="primary" size="large" @click="addSpec">确定</Button>
-        </div>
-
-    </Modal>
+       <Modal v-model="specDialog" title="新增规格">
+          <Form  ref="specData" :model="specData" label-position="top" >
+              <FormItem label="规格图片" prop="isForSale">
+                  <upload :uploadList='specData.specImg' @success='specImg' :one='true'></upload>
+              </FormItem>
+              <FormItem label="规格价格" prop="price">
+                <Input v-model="specData.price" placeholder="请输入规格价格"></Input>
+              </FormItem>
+              <FormItem label="规格库存" prop="stock">
+                <Input v-model="specData.stock" placeholder="请输入规格库存"></Input>
+              </FormItem>
+              <FormItem label="规格颜色" prop="color">
+                <Input v-model="specData.color" placeholder="请输入规格颜色"></Input>
+              </FormItem>
+              <FormItem label="规格大小" prop="size">
+                <Input v-model="specData.size" placeholder="请输入规格大小"></Input>
+              </FormItem>
+            </Form>
+          <div slot="footer">
+            <Button type="text" size="large" @click="close">取消</Button>
+            <Button type="primary" size="large" @click="addSpec">确定</Button>
+          </div>
+      </Modal>
   </div>
 </template>
 
@@ -463,7 +446,7 @@ import { setTimeout } from 'timers';
 .ivu-form-inline .ivu-form-item{
   width: 300px;
 }
-.ivu-input-wrapper{width: 50% !important;}
+.ivu-input-wrapper{width: 30% !important;}
 .specImg{width: 50px;height: 50px;}
 .inline{display: inline-block;vertical-align: top;}
 .ivu-form-item-label{text-align: left;}

@@ -30,6 +30,7 @@
             <Button type="warning" size='small' icon='md-arrow-down' v-if="row.isForSale==1" @click="upAndDow(index,0)">下架</Button>
         </template>
        </Table>
+       <div class="mgt20 txt-center"><Page :total="total" :page-size="10" @on-change='changePage'/></div>
   </div>
 </template>
 
@@ -42,7 +43,12 @@ export default {
             {
                 title: '产品名称',
                 key: 'productTitle',
-                width:200
+                width:150
+            },
+             {
+                title: '产品类别',
+                key: 'className',
+                width:100
             },
             {
                 title: '产品库存',
@@ -93,7 +99,8 @@ export default {
             pageIndex:1,
             pageSize:10,
             isForSale:1
-        }
+        },
+        total:0
     };
   },
   created() {
@@ -102,6 +109,10 @@ export default {
   },
 
   methods: {
+      changePage(res){
+          this.formData.pageIndex=res;
+          this.getProductList()
+      },
     //   删除商品
     delProduct(idx){
         this.api.delProduct({productId:this.list[idx].productId}).then(res=>{
@@ -121,7 +132,8 @@ export default {
         this.api.getProductList(this.formData).then(res=>{
             if(res.data.Code==1)
             {
-                this.list=res.data.Data.List
+                this.list=res.data.Data.List;
+                this.total=res.data.Data.totalPages*10
             }
         })
     },

@@ -53,14 +53,16 @@
         this.api.adminLogin(this.formInline).then(res=>{
           if(res.data.Code==1)
           {
+             window.sessionStorage.setItem('isLogin',1)
             this.$router.push({
               path:'/layout'
             })
-            window.sessionStorage.setItem('isLogin',1)
+           
           }else
           {
-             this.$Message.error(res.data.msg);
             window.sessionStorage.setItem('isLogin',0)
+             this.$Message.error(res.data.msg);
+            
           }
         })
       }

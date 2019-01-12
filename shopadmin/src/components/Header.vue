@@ -1,14 +1,14 @@
 <template>
   <div>
-   <Menu mode="vertical" theme="light" active-name="1" width="auto" :class="menuitemClasses">
+   <Menu mode="vertical" theme="light" :active-name="$route.path" width="auto" :class="menuitemClasses">
         <div class="layout-nav" v-for="(item,index) in list" :key='index'>
             <MenuItem :name="item.path" v-if="item.children=='undefind'" :to='item.path'>
-              <Icon type="ios-paper" />
+              <Icon :type='item.icon' />
                 <span>{{item.txt}}</span>
             </MenuItem>
-               <Submenu name="2"  v-if="item.children!='undefind'">
+               <Submenu :name="item.title"  v-if="item.children!='undefind'">
                     <template slot="title">
-                        <Icon type="ios-keypad"></Icon>
+                        <Icon :type='item.icon' ></Icon>
                        <span>{{item.title}}</span>
                     </template>
                    <MenuItem :name="item2.path" :to='item2.path'  v-for='(item2,index2) in item.children' :key='index2'>
@@ -32,11 +32,32 @@ export default {
   data() {
     return {
         list:[
+             {
+                path:'/shopManger',
+                title:'店铺营销',
+                txt:'店铺营销',
+                icon:'ios-home',  
+                children:'undefind' 
+            },
+            {
+                path:'/aboutUs',
+                title:'关于我们',
+                txt:'关于我们',
+                icon:'ios-contacts',  
+                children:'undefind' 
+            },
+            {
+                path:'/orderManger',
+                title:'订单管理',
+                txt:'订单管理',
+                icon:'md-bookmarks',  
+                children:'undefind' 
+            },
             {
                 path:'/',
                 title:'商品管理',
-                txt:'发布商品1',
-                icon:'ios-keypad',
+                txt:'发布商品',
+                icon:'md-cart',
                 children:[
                     {
                         txt:'发布商品',
@@ -53,14 +74,25 @@ export default {
                    
                 ]
             },
-            
-             {
-             path:'/orderManger',
-            title:'订单管理',
-            txt:'订单管理',
-            icon:'ios-keypad',  
-            children:'undefind' 
-            }
+              {
+                path:'/createProduct',
+                title:'文章管理',
+                txt:'文章管理',
+                icon:'ios-book',
+                children:[
+                    {
+                        txt:'发布文章',
+                        path:'/addArticle',
+                    },
+                    {
+                        txt:'文章列表',
+                        path:'/articleList',
+                    },
+                    
+                   
+                ]
+            },
+             
         ]
     };
   },
@@ -72,7 +104,7 @@ export default {
 
   methods: {},
 
-  watch: {}
+  
 };
 </script>
 <style>

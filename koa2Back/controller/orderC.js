@@ -173,4 +173,44 @@ exports.orderListAdmin=async(ctx)=>{
         return ctx.body=response.reponseData(1,Data,'成功');
     })
 }
+// 卖家查看店铺实际情况
+exports.checkOrderAndMoney=async (ctx)=>{
+    let todayMoney=0;
+    let todayOrder=0;
+    let historyMoney=0;
+    let historyOrder=0
+    await orderM.findOrderMoneyToday().then(res=>{
+        todayMoney=res[0].toDayMoney
+    })
+    await orderM.findOrderNumToday().then(res=>{
+        todayOrder=res[0].toDayOrderNum
+    })
+    await orderM.findOrderMoneyHistory().then(res=>{
+        historyMoney=res[0].historyMoney
+    })
+    await orderM.findOrderNumHistory().then(res=>{
+        historyOrder=res[0].historyOrderNum
+    })
+    let obj=[
+        {
+            name:'今日收益',
+            value:todayMoney
+        },
+        {
+            name:'今日订单数',
+            value:todayOrder
+        },
+        {
+            name:'历史收益',
+            value:historyMoney
+        },
+        {
+            name:'历史订单数',
+            value:historyOrder
+        },
+    ]
+        
+    
+    ctx.body=response.reponseData(1,obj,'success')
+}
 

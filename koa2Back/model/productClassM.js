@@ -25,3 +25,8 @@ exports.getClassList=function(name){
     let sql=`SELECT * FROM productClass;`
     return query(sql) 
 }
+// 删除分类的时候把原来分类的商品归到全部下面
+exports.changInitProductClass=(value)=>{
+    let sql=`update production set classId=0 where classId=?;`
+    return query(sql,value)
+}

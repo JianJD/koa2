@@ -95,11 +95,9 @@ export default {
   },
   watch: {
       content(newVal){
-          console.log(newVal)
           this.$emit('success',this.content)
       },
       contentp(newVal){
-        console.log(newVal)
         this.content=newVal
       }
   },

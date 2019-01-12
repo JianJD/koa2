@@ -15,7 +15,6 @@ Vue.config.productionTip = false
 Vue.use(iView);
 /* eslint-disable no-new */
 router.beforeEach((to,form,next)=>{
-  console.log(to)
   let isLogin=sessionStorage.getItem('isLogin')||0
   if(to.path!='/'&&isLogin==0)
   {
@@ -29,6 +28,8 @@ router.beforeEach((to,form,next)=>{
     next()
   }
 })
+
+
 new Vue({
   el: '#app',
   router,

@@ -32,7 +32,8 @@ exports.addOrEditProduct= async (ctx)=>{
     {
         return  ctx.body=response.reponseData(0,null,'产品详情不能为空')
     }
-    if(!sendMoney)
+    console.log(sendMoney)
+    if(sendMoney!=0&&(sendMoney==undefined||sendMoney==''||sendMoney==null))
     {
         return   ctx.body=response.reponseData(0,null,'运费不能为空')
     }

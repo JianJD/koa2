@@ -47,5 +47,29 @@ export default{
     // 管理员登录
     adminLogin(data){
         return axios.post(`${api}/adminLogin`, data)
+    },
+     // 管理员登录
+     shopManger(data){
+        return axios.post(`${api}/checkOrderAndMoney`, data)
+    },
+    // 有关文章
+    getAboutUs(data){
+        return axios.post(`${api}/findAboutUs`, data)
+    },
+    addOrEditAboutUs(data){
+        return axios.post(`${api}/addOrEditAboutUs`, data)
+    },
+    addOrEditArticle(data){
+        return axios.post(`${api}/addOrEditArticle`, data)
+    },
+    findArticleForPage(data){
+        return axios.post(`${api}/findArticleForPage`, data)
+    },
+    delArticle(data){
+        return axios.post(`${api}/delArticle`, data)
+    },
+    findArticleById(data){
+        return axios.post(`${api}/findArticleById`, data)
     }
+    
 }

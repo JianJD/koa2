@@ -11,3 +11,8 @@
 .hei74{height: 74px;line-height: 74px}
 .mgt20{margin-top: 20px;}
 .txt-center{text-align: center;}
+.mgl10{margin-left: 10px;}
+.flexCls-align{display:flex;align-items: center;}
+.disib{display: inline-block;margin-left: 200px;}
+.flexCls-1{flex: 1}
+.titleP{text-align: center;flex: 1;color: #999;font-size: 28px;}

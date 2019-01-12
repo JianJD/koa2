@@ -108,6 +108,18 @@ let order =
     loginTime datetime NOT NULL COMMENT '最后的登录时间',
     PRIMARY KEY (adminId)
   );`;
+  let article=
+  `
+  create table if not exists article(
+    articleId INT NOT NULL AUTO_INCREMENT COMMENT '文章id',
+    content TEXT NOT NULL COMMENT '文章内容',
+    title varchar(255) NOT NULL COMMENT '文章标题',
+    isAboutUs INT DEFAULT 0 COMMENT '是否是关于我们',
+    createAt datetime NOT NULL COMMENT '创建时间',
+    updateAt datetime NOT NULL COMMENT '更新时间',
+    PRIMARY KEY (articleId)
+  );
+  `;
 let createTable = (sql) => {
   return query(sql, []).then(res => {
   }).catch(err => {
@@ -124,3 +136,4 @@ createTable(classTable)
 createTable(shopCar)
 createTable(productionSpec)
 createTable(admin)
+createTable(article)

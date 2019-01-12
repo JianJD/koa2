@@ -83,3 +83,54 @@ exports.orderListAdmin=(value)=>{
                     orderId DESC limit ?,?;`;
     return query(sql,value)
 }
+// 获取今日订单数
+exports.findOrderNumToday=()=>{
+    let sql=`SELECT
+        count(orderId) as toDayOrderNum
+    FROM
+        ordertable 
+    WHERE
+        TO_DAYS( creatAt ) = TO_DAYS( now( ) )
+        AND (orderStatus = 1 
+            OR orderStatus = 2 
+            OR orderStatus = 3);`
+        return query(sql,[])
+}
+// 获取历史订单数
+exports.findOrderNumHistory=()=>{
+    let sql=`SELECT
+        count(orderId) as historyOrderNum
+    FROM
+        ordertable 
+    WHERE
+         orderStatus = 1 
+            OR orderStatus = 2 
+            OR orderStatus = 3;`
+        return query(sql,[])
+}
+// 获取今日盈利的钱数
+exports.findOrderMoneyToday=()=>{
+    let sql=`SELECT
+            SUM( totalMoney ) AS toDayMoney 
+        FROM
+            ordertable 
+        WHERE
+            TO_DAYS( creatAt ) = TO_DAYS( now( ) ) 
+            AND (orderStatus = 1 
+            OR orderStatus = 2 
+            OR orderStatus = 3);`
+        return query(sql,[])
+}
+// 获取历史金额
+exports.findOrderMoneyHistory=()=>{
+    let sql=`SELECT
+            SUM( totalMoney ) AS historyMoney 
+        FROM
+            ordertable 
+        WHERE
+            orderStatus = 1 
+            OR orderStatus = 2 
+            OR orderStatus = 3;`
+        return query(sql,[])
+}
+

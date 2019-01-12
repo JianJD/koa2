@@ -38,7 +38,7 @@
            <Button type="primary" size='small' icon='md-create' @click="send(index)" v-if="row.orderStatus==1">发货</Button>
         </template>
        </Table>
-       <div class="mgt20 txt-center"><Page :total="total" /></div>
+       <div class="mgt20 txt-center"><Page :total="total" @on-change='changePage' :page-size='10'/></div>
         
          <Modal v-model="showSend" title="发货">
            <Form ref="formData" :model="formData" inline>
@@ -146,6 +146,10 @@
     },
 
     methods: {
+      changePage(res){
+        this.pageIndex=res;
+        this.getOrderList()
+      },
       confirm(){
         this.api.sendForOrder({
           orderId:this.list[this.sendIndex].orderId 
