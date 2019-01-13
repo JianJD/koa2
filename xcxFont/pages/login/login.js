@@ -32,7 +32,8 @@ Component({
    */
   methods: {
     getUserInfo(e){
-      console.log(e)
+      getApp().wxLogin()
+      this.setData({ showPop:false})
     }
   }
 })

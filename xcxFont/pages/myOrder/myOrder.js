@@ -1,21 +1,17 @@
 // pages/myOrder/myOrder.js
 var that;
-var index0=1 ,index1=1,index2=1,index3=1;
-var pages0 = 0, pages1 = 0, pages2 = 0, pages3 = 0
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    list0: [],
-    list1: [],
-    list2: [],
-    list3: [],
+    list: [],
     imgUrl: getApp().globalData.ajaxUrl,
     orderStatus: 0,
     pageIndex: 1,
-    scrollTop: 0
+    totalPages:0
   },
 
   /**
@@ -23,37 +19,25 @@ Page({
    */
   onLoad: function (options) {
     that=this;
-    that.getOrderList()
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    that.data.list=[]
+    that.getOrderList()
   },
 
   tab(e) {
-    that.data.orderStatus=e.detail.index
-    that.data.pageIndex=1
-    switch (that.data.orderStatus){
-      case 0:{
-        that.data.list0=[]
-        break
-      }
-      case 1: {
-        that.data.list1 = []
-        break
-      }
-      case 2: {
-        that.data.list2 = []
-        break
-      }
-      case 3: {
-        that.data.list3 = []
-        break
-      }
+    if (that.data.orderStatus == e.currentTarget.dataset.index)
+    {
+      return
     }
+    that.data.orderStatus=e.currentTarget.dataset.index
+    that.data.pageIndex=1
+    that.data.list=[]
     that.getOrderList()
   },
   /**
@@ -62,51 +46,17 @@ Page({
   onPullDownRefresh: function () {
 
   },
-  onPageScroll(event) {
-    this.setData({
-      scrollTop: event.scrollTop
-    });
-  },
+ 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-      switch (that.data.orderStatus)
+  loadMore: function () {
+    if (that.data.pageIndex < that.data.totalPages)
       {
-        case 0:{
-          if(index0<pages0)
-          {
-            index0++;
-            that.data.pageIndex=index0
-            that.getOrderList()
-          }
-          break
-        }
-        case 1: {
-          if (index1 < pages1) {
-            index1++;
-            that.data.pageIndex = index1
-            that.getOrderList()
-          }
-          break
-        }
-        case 2: {
-          if (index2 < pages2) {
-            index2++;
-            that.data.pageIndex = index2
-            that.getOrderList()
-          }
-          break
-        }
-        case 3: {
-          if (index3< pages3) {
-            index3++;
-            that.data.pageIndex = index3
-            that.getOrderList()
-          }
-          break
-        }
+        that.data.pageIndex++;
+        that.getOrderList()
       }
+    
   },
   getOrderList() {
     getApp().ajaxResetS('/orderList', {
@@ -124,36 +74,10 @@ Page({
           item.productInfo = JSON.parse(item.productInfo)
           
         }
-        switch (that.data.orderStatus){
-          case 0:{
-            that.setData({
-              list0: that.data.list0.concat(data),
-            })
-            pages0 = totalPages
-            break
-          }
-          case 1: {
-            that.setData({
-              list1: that.data.list1.concat(data)
-            })
-            pages1 = totalPages
-            break
-          }
-          case 2: {
-            that.setData({
-              list2: that.data.list2.concat(data)
-            })
-            pages2 = totalPages
-            break
-          }
-          case 3: {
-            that.setData({
-              list3: that.data.list3.concat(data)
-            })
-            pages3 = totalPages
-            break
-          }
-        }
+       that.setData({
+         list:that.data.list.concat(data),
+         totalPages: totalPages
+       })
         
       }
     })
@@ -166,58 +90,17 @@ Page({
       console.log(res)
       if(res.data.Code==1)
       {
-        switch (that.data.orderStatus)
+        that.data.list.splice(e.detail.index, 1)
+        if(that.data.list.length==0)
         {
-          case 0:{
-            that.data.list0.splice(e.detail.index, 1)
-            if (that.data.list0.length == 0) {
-              that.data.pageIndex = 1;
-              that.getOrderList()
-            }else{
-              that.setData({
-                list0:that.data.list0
-              })
-            }
-            break
-          }
-          case 1: {
-            that.data.list1.splice(e.detail.index, 1)
-            if (that.data.list1.length == 0) {
-              that.data.pageIndex = 1;
-              that.getOrderList()
-            } else {
-              that.setData({
-                list1: that.data.list1
-              })
-            }
-            break
-          }
-          case 2: {
-            that.data.list2.splice(e.detail.index, 1)
-            if (that.data.list2.length == 0) {
-              that.data.pageIndex = 1;
-              that.getOrderList()
-            } else {
-              that.setData({
-                list2: that.data.list2
-              })
-            }
-            break
-          }
-          case 3: {
-            that.data.list3.splice(e.detail.index, 1)
-            if (that.data.list3.length == 0) {
-              that.data.pageIndex = 1;
-              that.getOrderList()
-            } else {
-              that.setData({
-                list3: that.data.list3
-              })
-            }
-            break
-          }
+          that.data.pageIndex=1;
+          that.getOrderList()
+        }else
+        {
+          that.setData({
+            list:that.data.list
+          })
         }
-       
       }
     })
   },
@@ -233,13 +116,12 @@ Page({
     },res=>{
       if(res.data.Code==1)
       {
-        that.data.list2.splice(e.detail.index,1)
+        that.data.list.splice(e.detail.index,1)
         that.setData({
-          list2:that.data.list2
+          list:that.data.list
         })
         if(that.data.list2.length==0)
         {
-          index2=1
           that.data.pageIndex=1;
           that.getOrderList()
         }
@@ -250,25 +132,8 @@ Page({
     let idx = e.detail.index;
     let orderId = e.detail.orderId;
     let money=new Number()
-    switch (that.data.orderStatus)
-    {
-      case 0:{
-        money=that.data.list0[idx].totalMoney;
-        break
-      }
-      case 1: {
-        money = that.data.list1[idx].totalMoney;
-        break
-      }
-      case 2: {
-        money = that.data.list2[idx].totalMoney;
-        break
-      }
-      case 3: {
-        money = that.data.list3[idx].totalMoney;
-        break
-      }
-    }
+    money = that.data.list[idx].totalMoney;
+   
     getApp().pay(money, orderId,function(res){
       console.log(res)
     })

@@ -15,7 +15,13 @@ Page({
     num:1,
     specJson:''
   },
-
+onShareAppMessage(){
+  return{
+    title:`${that.data.productInfo.productTitle}`,
+    imageUrl: `${that.data.imgUrl}${that.data.productInfo.swiperImg[0].url}`,
+    path: `/pages/productDetail/productDetail?productId=${that.data.productInfo.productId}`
+  }
+},
   /**
    * 生命周期函数--监听页面加载
    */

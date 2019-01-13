@@ -1,0 +1,11 @@
+<!--pages/loginPage/loginPage.wxml-->
+<view class='pop' >
+    <view class='logo'>
+    <image mode='aspectFill' src='../../images/logo.png'></image>
+  </view>
+  <view class='fz26  line'>个人商城</view>
+
+  <view class='fz34 txt-left mgt20'>该小程序将允许您的授权</view>
+  <view class='txt-left mgt20 mgl20 col999 fz24'>获得您的公开信息 （昵称、头像等）</view>
+  <button open-type='getUserInfo' bindgetuserinfo='getUserInfo' class='aloow'>允许</button>
+</view>

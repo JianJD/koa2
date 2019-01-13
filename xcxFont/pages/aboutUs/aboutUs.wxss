@@ -1,0 +1,3 @@
+/* pages/aboutUs/aboutUs.wxss */
+@import '../../wxParse/wxParse.wxss';
+.wxParse-img{width: 100% !important;}

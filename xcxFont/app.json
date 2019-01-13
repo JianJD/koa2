@@ -9,6 +9,8 @@
     "pages/createAddress/createAddress",
     "pages/createOrder/createOrder",
     "pages/myOrder/myOrder",
+    "pages/aboutUs/aboutUs",
+    "pages/loginPage/loginPage",
     "pages/orderDetail/orderDetail"
   ],
   "window": {
@@ -25,15 +27,21 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "images/sj.png",
-        "selectedIconPath": "images/sjV.png",
-        "text": "商城"
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/homeA.png",
+        "text": "首页"
       },
       {
         "pagePath": "pages/shopCar/shopCar",
-        "iconPath": "images/gwc.png",
-        "selectedIconPath": "images/gwc.png",
+        "iconPath": "images/car.png",
+        "selectedIconPath": "images/carA.png",
         "text": "购物车"
+      },
+      {
+        "pagePath": "pages/aboutUs/aboutUs",
+        "iconPath": "images/about.png",
+        "selectedIconPath": "images/aboutA.png",
+        "text": "关于我们"
       },
       {
         "pagePath": "pages/my/my",

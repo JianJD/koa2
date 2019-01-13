@@ -42,3 +42,4 @@
 </van-goods-action>
 <van-toast id="van-toast" />
 <sku listData='{{specArr}}' isShowChoose='{{isShowChoose}}' bind:addCar='addShopCar'bind:chooseColor='chooseColor' bind:buy='createOrder' bind:num='num' detail="{{detail}}" stock='{{productInfo.stock}}' price='{{productInfo.memberPrice}}-{{productInfo.price}}' img='{{productInfo.swiperImg[0].url}}' productId='{{productInfo.productId}}'/>
+<login />

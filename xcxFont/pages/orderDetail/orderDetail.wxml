@@ -10,11 +10,11 @@
       <view>{{addressData.receiverPhone}}</view>
     </view>
     <view class='mgt20 col999 pdb10'  wx:if="{{addressData!=''}}">{{addressData.receiverProvince}}{{addressData.receiverCity}}{{addressData.receiverArea}}{{addressData.receiverAddress}}</view>
-    <navigator url='/pages/createAddress/createAddress'  wx:if="{{addressData==''}}">请先添加地址</navigator>
+ 
   </van-col>
-  <van-col span="1" offset='1'>
+  <!-- <van-col span="1" offset='1'>
     <van-icon name="arrow" size='16px' color='#999' />
-  </van-col>
+  </van-col> -->
 </van-row>
 <view class=' bor-t'>
 
@@ -28,7 +28,12 @@
     <view class='col999 '>购物清单</view>
   </van-col>
 </van-row>
-<van-card num="{{item2.num}}" price="{{item2.price}}" title="{{item2.productTitle}}" thumb="{{ imgUrl }}{{item2.imgUrl[0].url}}" wx:for="{{list}}" wx:for-item='item2'/>
+<van-card num="{{item2.num}}" price="{{item2.price}}" title="{{item2.productTitle}}" thumb="{{ imgUrl }}{{item2.imgUrl[0].url}}" wx:for="{{list}}" wx:for-item='item2'>
+<view slot="tags">
+      <view class='col999 fz20' wx:for="{{item2.detailSpec}}" wx:for-item='item1'>{{item1.name}}: {{item1.value}}
+      </view>
+    </view>
+</van-card>
 <view class='mgt20'></view>
 <van-cell title="商品金额" value="￥{{allData.orderMoney}}" />
 <van-cell title="运费" value="￥{{allData.sendMoney}}" />
@@ -38,3 +43,12 @@
 <van-cell title="发货时间" value="{{info.sendAt}}" />
 <van-cell title="收货时间" value="{{info.completeAt}}" />
 <van-toast id="van-toast" />
+<view class='btnBox'>
+<view class='pd20 flexCls-align'>
+<view class='flexCls-1'>
+</view>
+  <van-button size="small" type='danger' class='custom-class' wx:if="{{allData.orderStatus==0}}" bind:click='pay'>支付</van-button>
+   <van-button size="small" type='danger' class='custom-class' wx:if="{{allData.orderStatus==2}}">确认收货</van-button>
+</view>
+
+</view>

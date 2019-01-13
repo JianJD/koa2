@@ -24,3 +24,4 @@ page {
 .van-cell__title{color: #666;}
 .van-cell__value{color: #333;}
 .van-row{padding-top: 20rpx;padding-bottom: 20rpx;}
+.btnBox{position: fixed;width: 100%;left: 0;bottom: 0;background:#fff;}

@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "商品详情",
   "usingComponents":{
+    "login": "../login/login",
     "van-goods-action": "../compoents/goods-action/index",
     "van-goods-action-icon": "../compoents/goods-action-icon/index",
     "van-goods-action-button": "../compoents/goods-action-button/index",

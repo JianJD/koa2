@@ -1,9 +1,18 @@
 <!--pages/myOrder/myOrder.wxml-->
-<van-tabs active="{{ active }}" bind:change="tab" sticky scroll-top="{{ scrollTop }}">
-  <van-tab title="待支付">
+<!-- <van-tabs active="{{ active }}" bind:change="tab" sticky >
+  <van-tab title="">
     <orderlist list="{{list0}}" bind:pay='pay' bind:del="del" bind:go='go'/>
   </van-tab>
-  <van-tab title="待发货"><orderlist list="{{list1}}" bind:pay='pay' bind:del="del" bind:go='go' /></van-tab>
-  <van-tab title="待收货"><orderlist list="{{list2}}" bind:pay='pay' bind:del="del" bind:go='go' bind:ordercompelete='done'/></van-tab>
-  <van-tab title="已完成"><orderlist list="{{list3}}" bind:pay='pay' bind:del="del" bind:go='go' /></van-tab>
-</van-tabs>
+  <van-tab title=""><orderlist list="{{list1}}" bind:pay='pay' bind:del="del" bind:go='go' /></van-tab>
+  <van-tab title=""><orderlist list="{{list2}}" bind:pay='pay' bind:del="del" bind:go='go' bind:ordercompelete='done'/></van-tab>
+  <van-tab title=""></van-tab>
+</van-tabs> -->
+<view class='flexCls-align tabItems'>
+  <view class='flexCls-1 active ' data-index='0' catchtap='tab'>待支付</view>
+  <view class='flexCls-1' data-index='1' catchtap='tab'>待发货</view>
+  <view class='flexCls-1' data-index='2' catchtap='tab'>待收货</view>
+  <view class='flexCls-1' data-index='3' catchtap='tab'>已完成</view>
+</view>
+<scroll-view scroll-y bindscrolltolower='loadMore' class='bottom'>
+  <orderlist list="{{list}}" bind:pay='pay' bind:del="del" bind:go='go' />
+</scroll-view>

@@ -27,6 +27,7 @@ Page({
         this.setData({
           classList:res.data.Data
         })
+        wx.stopPullDownRefresh()
       }
     })
     that.getPro()
@@ -56,7 +57,7 @@ Page({
           list:that.data.list.concat(res.data.Data.List),
           totalPages:res.data.Data.totalPages
         })
-        console.lo
+        
       }
     }) 
   },
@@ -66,7 +67,11 @@ Page({
       url: `/pages/productDetail/productDetail?productId=${that.data.list[e.detail.index].productId}`,
     })
   },
- 
+ onPullDownRefresh(){
+   that.data.list=[]
+   that.data.formData.pageIndex=1
+   that.onLoad()
+ },
   loadMore(){
     if (that.data.formData.pageIndex < that.data.totalPages) {
       that.data.formData.pageIndex += 1;

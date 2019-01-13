@@ -1,7 +1,52 @@
 /* pages/myOrder/myOrder.wxss */
-page{background: #f1f1f1;}
-.bg-fff{background: #fff;margin-bottom: 20rpx;}
-.footer{border-top: 1px solid #e8e8e8;padding-top: 10rpx;color: #666;}
-.mgb20{margin-bottom: 20rpx;}
-.footerone{background: #eb454f;color: #fff;}
-.pdl0{padding-left: 0}
+
+page {
+  background: #f1f1f1;
+}
+
+.bg-fff {
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.footer {
+  border-top: 1px solid #e8e8e8;
+  padding-top: 10rpx;
+  color: #666;
+}
+
+.mgb20 {
+  margin-bottom: 20rpx;
+}
+
+.footerone {
+  background: #eb454f;
+  color: #fff;
+}
+
+.pdl0 {
+  padding-left: 0;
+}
+
+.tabItems .flexCls-1 {
+  padding: 20rpx;
+  background: #fff;
+  position: relative;
+  text-align: center;
+  color: #999;
+}
+.active{
+  color: #eb454f !important;
+}
+.active::after {
+  content: "";
+  display: block;
+  width: 60%;
+  background: #eb454f;
+  height: 4rpx;
+  position: absolute;
+  bottom: -2rpx;
+  left: 50%;
+  margin-left: -30%;
+}
+.bottom{height: calc(100vh - 72rpx);}

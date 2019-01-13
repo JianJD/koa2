@@ -6,6 +6,7 @@ page {
   height: 300rpx;
   position: relative;
   justify-content: center;
+  background: linear-gradient(to right,#42f50d,#248906)
 }
 
 .bg {

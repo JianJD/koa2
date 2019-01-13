@@ -1,0 +1,72 @@
+/* pages/loginPage/loginPage.wxss */
+
+.logo {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.logo image {
+  width: 100%;
+  height: 100%;
+}
+
+.mgt55 {
+  margin-top: 55rpx;
+}
+
+.inputBox {
+  margin-top: 55rpx;
+  padding-bottom: 26rpx;
+  border-bottom: 1px solid #e9e9e9;
+  padding-left: 20rpx;
+}
+
+.col78797d {
+  color: #78797d;
+}
+
+.likeBtn {
+  margin: 0 auto;
+  width: 600rpx;
+  line-height: 80rpx;
+  background: #509efd;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  color: #fff;
+  margin-top: 80rpx;
+  text-align: center;
+}
+
+.pop {
+  text-align: center;
+  background: #fff;
+  z-index: 999999;
+  padding: 35rpx 30rpx;
+  border-radius: 10rpx;
+  margin-top: 107rpx;
+}
+
+.aloow {
+  width: 400rpx;
+  line-height: 68rpx;
+  background: #42f50d;
+  border-radius: 50rpx;
+  border: none;
+  font-size: 30rpx;
+  color: #fff;
+  margin-top: 40rpx;
+
+}
+
+.aloow::after {
+  border: none;
+}
+
+.fz34{font-size: 30rpx}
+.line{
+  padding: 20rpx 0 35rpx 0;
+  border-bottom: 1px solid #e8e8e8;
+}

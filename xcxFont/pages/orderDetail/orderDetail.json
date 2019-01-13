@@ -7,6 +7,7 @@
       "van-card": "../compoents/card/index",
       "van-cell": "../compoents/cell/index",
       "van-submit-bar": "../compoents/submit-bar/index",
-      "van-notify": "../compoents/notify/index"
+      "van-notify": "../compoents/notify/index",
+      "van-button": "../compoents/button/index"
     }
 }
