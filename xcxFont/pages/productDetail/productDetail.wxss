@@ -24,3 +24,4 @@ page{
   top: 40rpx;
 }
 .fz20{font-size: 20rpx;margin-top: 5rpx;}
+.wxParse-img{width: 100% !important;}

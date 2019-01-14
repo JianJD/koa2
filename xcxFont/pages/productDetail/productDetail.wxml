@@ -14,8 +14,11 @@
   </view>
 </view>
 <view class='pd20 fz30 col999 txt-center line'>商品详情</view>
+<view class='pd20'>
   <import src="/wxParse/wxParse.wxml" />
   <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+</view>
+  
 <van-goods-action>
   <van-goods-action-icon
     icon="chat-o"

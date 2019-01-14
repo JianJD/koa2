@@ -1,6 +1,6 @@
 <!--pages/sku/sku.wxml-->
 <!-- 多规格弹窗 -->
-<view class='mask' wx:if="{{isShowChoose}}"></view>
+<view class='mask' wx:if="{{isShowChoose}}" catchtap='close'></view>
 <view class='choosePop' wx:if="{{isShowChoose}}">
   <view class='pd20'>
     <!-- 第一个盒子 -->

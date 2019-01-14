@@ -3,6 +3,7 @@
   "enablePullDownRefresh": true,
   "navigationBarTextStyle": "black",
   "usingComponents":{
-    "van-cell": "../compoents/cell/index"
+    "van-cell": "../compoents/cell/index",
+    "van-icon": "../compoents/icon/index"
   }
 }

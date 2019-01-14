@@ -19,7 +19,7 @@
       </view>
     </van-checkbox>
 </view>
-<van-submit-bar price="{{isDel?'':money}}" button-text='{{isDel?"删除":"提交订单"}}' bind:submit="submit">
+<van-submit-bar price="{{isDel?'':money}}" button-text='{{isDel?"删除":"结算"}}' bind:submit="submit">
   <view class='pdl20'>
     <van-checkbox value="{{ checked }}" bind:change="isCheck" checked-color="{{checkColor}}">全选</van-checkbox>
   </view>

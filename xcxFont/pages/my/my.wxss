@@ -6,7 +6,7 @@ page {
   height: 300rpx;
   position: relative;
   justify-content: center;
-  background: linear-gradient(to right,#42f50d,#248906)
+  background: linear-gradient(to right, #f08080, #eb454f);
 }
 
 .bg {
@@ -51,4 +51,30 @@ page {
   width: 28rpx;
   height: 28rpx;
   margin-right: 20rpx;
+}
+
+.contact {
+  width: 80rpx;
+  line-height: 80rpx;
+  height: 80rpx;
+  text-align: center;
+  border-radius: 50%;
+  position: fixed;
+  right: 56rpx;
+  bottom:71rpx;
+  overflow: hidden;
+  animation: a linear 1s infinite;
+  background: #fff;
+}
+button::after{
+ border: none
+}
+.van-icon-service{margin-left: -4rpx;}
+@keyframes a{
+  from{
+    box-shadow: 0 0 10rpx #999
+  }
+  to{
+    box-shadow: 0 0 10rpx #ff5101;  
+  }
 }

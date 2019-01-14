@@ -10,11 +10,25 @@ Page({
   },
   onShow: function () {
 
-    that = this;
+    
     //获取收货地址列表
     that.getAddress()
   },
-  
+  onLoad(options){
+    that = this;
+
+    that.data.where = options.where?options.where:0
+    that.setData({
+      where:that.data.where
+    })
+  },
+  goEdit(e){
+    let idx=e.currentTarget.dataset.idx;
+    let data=that.data.callbackData[idx]
+    wx.navigateTo({
+      url: `/pages/createAddress/createAddress?where=edit&info=${data.addressId},${data.receiver},${data.receiverPhone},${data.receiverProvince},${data.receiverCity},${data.receiverArea},${data.receiverAddress},${data.isDefault}`,
+    })
+  },
   //选择微信地址
   chooseAddress: function () {
     wx.getSetting({
@@ -104,11 +118,11 @@ Page({
       }
     })
   },
-  click(){
-    wx.navigateTo({
-      url: '/pages/createAddress/createAddress',
-    })
-  },
+  // click(){
+  //   wx.navigateTo({
+  //     url: '/pages/createAddress/createAddress',
+  //   })
+  // },
   setDefaultY(e){
     getApp().ajaxResetS('/changeDefaultTrue', {
       addressId:e.currentTarget.dataset.id
@@ -118,6 +132,21 @@ Page({
         that.getAddress()
       }
     })
-  }
+  },
+  choose(e){
+    if(that.data.where==1)
+      {
+        wx.setStorage({
+          key: 'addressData',
+          data: that.data.callbackData[e.currentTarget.dataset.index],
+          success() {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        })
+      }
+    
+    }
 })
 

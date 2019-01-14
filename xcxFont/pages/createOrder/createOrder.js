@@ -15,7 +15,9 @@ Page({
     productMoney: 0,
     sendMoney: 0,
     totalMoney: 0,
-    totalMoneyA: 0
+    totalMoneyA: 0,
+    isChoose:false,
+    shopCarIds:[]
   },
 
   /**
@@ -31,9 +33,10 @@ Page({
         that.setData({
           list: res.data
         }, () => {
+          let sendMoney=0
           for (let item of that.data.list) {
             that.data.productMoney += item.price * item.num
-            that.data.sendMoney = item.sendMoney;
+            sendMoney = sendMoney-item.sendMoney>0 ? sendMoney:item.sendMoney;
             let arr=[]
             // 拿出详细规格值
            let attrKeyName=item.specAttrKeyName.split('#')
@@ -51,9 +54,9 @@ Page({
           that.setData({
             list:that.data.list,
             productMoney: that.data.productMoney,
-            sendMoney: that.data.sendMoney,
-            totalMoney: that.data.productMoney + that.data.sendMoney,
-            totalMoneyA: (that.data.productMoney + that.data.sendMoney) * 100
+            sendMoney: sendMoney,
+            totalMoney: that.data.productMoney + sendMoney,
+            totalMoneyA: (that.data.productMoney + sendMoney) * 100
           })
         })
 
@@ -61,14 +64,48 @@ Page({
           key: 'productInfo',
         })
       },
+    });
+    wx.getStorage({
+      key: 'shopCarIds',
+      success: function(res) {
+        that.data.shopCarIds=res.data
+        wx.removeStorage({
+          key: 'shopCarIds',
+          success: function(res) {},
+        })
+      },
     })
   },
-
+  go(){
+    wx.navigateTo({
+      url: '/pages/address/address?where=1',
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    that.getAddress()
+    wx.getStorage({
+      key: 'addressData',
+      success: function(res) {
+        that.setData({
+          addressData:res.data
+        })
+        that.data.isChoose=true
+        wx.removeStorage({
+          key: 'addressData',
+          success: function(res) {},
+        })
+      },
+      fail(){
+        if (!that.data.isChoose)
+        {
+          that.getAddress()
+        }
+       
+      }
+    })
+   
   },
   getAddress() {
     getApp().ajaxResetS('/findAddressByUserId', { userId: getApp().globalData.userId }, res => {
@@ -102,8 +139,16 @@ submit(){
     totalMoney:that.data.totalMoney
   }, res => {
     if (res.data.Code == 1) {
+      if (that.data.shopCarIds.length != 0) {
+        getApp().ajaxResetS('/delShopCar', { shopCarId: that.data.shopCarIds.toString() }, res => {
+          if (res.data.Code == 1) {
+            // Toast('删除成功')
+
+          }
+        })
+      }
       getApp().pay(that.data.totalMoney,res.data.Data.orderId,function(msg){
-        
+       
       })
     }
   })

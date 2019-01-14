@@ -1,12 +1,23 @@
 /* pages/public/address/address.wxss */
-Page{padding-bottom: 40rpx;background: #fff;height: 100%;}
-.add{position:fixed;
-right:20rpx;
-bottom:57rpx;
-width:80rpx;
-height:80rpx;
-border-radius:50%;
-text-align:center;
-line-height:80rpx}
 
+Page {
+  padding-bottom: 80rpx;
+  background: #fff;
+}
 
+.add {
+  position: fixed;
+  right: 20rpx;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80rpx;
+  text-align: center;
+  color: #fff;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  background: linear-gradient(to right,#f08080,#eb454f)
+}
+.col-orange{
+  color: #eb454f
+}

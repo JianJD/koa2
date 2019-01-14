@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "新增地址",
+  "navigationBarTitleText": " ",
   "usingComponents": {
     "van-field": "../compoents/field/index",
     "van-area": "../compoents/area/index",

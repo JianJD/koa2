@@ -1,6 +1,6 @@
 <radio-group bindchange="addressIdFn">
   
-  <label class="flexCls addressCls {{item.isDefault==1?'clickCls':''}}" wx:for="{{callbackData}}">
+  <label class="flexCls addressCls {{item.isDefault==1?'clickCls':''}}" wx:for="{{callbackData}}" catchtap='choose' data-index='{{index}}'>
     <view class="flexCls-1">
       <view class="fz26 flexCls">
           <text class="name flexCls-1" style="margin-right:40rpx;">{{item.receiver}}</text>
@@ -8,11 +8,6 @@
         </view>
       <view class="fz28 col999">
           <text>{{item.receiverProvince}}{{item.receiverCity}}{{item.receiverArea}}{{item.receiverAddress}}</text>
-      </view>
-      <view class="fz28 col999">
-          <block wx:if="{{item.PostCode!=null}}">
-            邮政编码<text class="mgl20">{{item.PostCode}}</text>
-          </block>
       </view>
       <view class="flexCls">
         <block wx:if="{{item.isDefault==0}}">
@@ -23,18 +18,18 @@
           <view class="col-orange fz22 col90"><text class="iconfont icon-danxuanxuanzhong col-orange mgr10 "></text>默认地址</view>
         </block>
         <view class="flexCls-1 txt-right col666 fz22">
-          <text  data-id="{{item.addressId}}" data-idx='{{index}}' bindtap="delAddress">删除</text>
-          <navigator url="/pages/createAddress/createAddress?where=edit&info={{item.addressId}},{{item.receiver}},{{item.receiverPhone}},{{item.receiverProvince}},{{item.receiverCity}},{{item.receiverArea}},{{item.receiverAddress}},{{item.isDefault}}" style="display:inline-block" class="mgl20 fz22">编辑</navigator>
+          <text  data-id="{{item.addressId}}" data-idx='{{index}}' catchtap="delAddress" style="display:inline-block;color:#eb454f;">删除</text>
+          <view data-url="/pages/createAddress/createAddress?where=edit&info={{item.addressId}},{{item.receiver}},{{item.receiverPhone}},{{item.receiverProvince}},{{item.receiverCity}},{{item.receiverArea}},{{item.receiverAddress}},{{item.isDefault}}" style="display:inline-block;" class="mgl20 fz22"  catchtap='goEdit' data-idx='{{index}}'>编辑</view>
         </view>
       </view>
     </view>
-    <block wx:if="{{pageWhere=='order'}}">
-      <radio  bindtap="addressValCB" value="{{item.addressId}},{{item.receiver}},{{item.receiverProvince}},{{item.ReceivePhone}},{{item.receiverCity}},{{item.receiverArea}},{{item.receiverAddress}}" color="#f90" checked="{{item.ID==checkedId?true:false}}" />
+    <block wx:if="{{where==222}}">
+      <radio  bindtap="addressValCB" value="{{index}}" color="#f90" checked="{{item.isDefault==1?true:false}}" />
     </block>
   </label>
 </radio-group>
 <block wx:if="{{callbackData!=''}}">
-  <block wx:if="{{pageWhere=='order'}}">
+  <block wx:if="{{where==888}}">
     <view class="mg40">
       <button class="btnCls" bindtap="addressValCB">确认选择</button>
     </view>
@@ -46,6 +41,7 @@
     <navigator url="/pages/my/createAddress/createAddress?where=add&isFirst=1" class="col-blue disinlineB">快去添加吧!</navigator>
   </view>
 </block>
-<view class='add'>
+<!-- <view class='add'>
  <van-icon name="add" size='40px' color='#f90' bind:click='click'/>
-</view>
+</view> -->
+<navigator url='/pages/createAddress/createAddress' class='add'>新增地址</navigator>

@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import axios from 'axios'
 let api = process.env.NODE_ENV == 'development' ? '/api' : '';
-let imgUrl = process.env.NODE_ENV == 'development' ? 'http://127.0.0.1:3001' : '';
+// let imgUrl = process.env.NODE_ENV == 'development' ? 'http://127.0.0.1:3001' : '';
+let imgUrl = process.env.NODE_ENV == 'development' ? 'http://192.168.2.89:3001' : '';
 let upLoadUrl = process.env.NODE_ENV == 'development' ? '/api/uploadfiles' : '/uploadfiles';
 Vue.prototype.upLoadUrl = upLoadUrl; //上传接口
 Vue.prototype.imgUrl = imgUrl; //上传接口

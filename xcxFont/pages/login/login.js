@@ -10,13 +10,24 @@ Component({
 
   },
   attached() {
-    let that=this
-    getApp().wxGetSetting(function(){
+    let that = this
+    getApp().wxGetSetting().then((res) => {
+      console.log(res)
+      if (res) {
+        wx.showTabBar({})
         getApp().wxLogin()
-    },function(){
-      that.setData({
-        showPop:true
-      })
+        that.setData({
+          showPop: false
+        })
+      } else {
+        wx.hideTabBar()
+        that.setData({
+          showPop: true
+        })
+      }
+
+    }).catch((err) => {
+
     })
 
   },
@@ -24,16 +35,38 @@ Component({
    * 组件的初始数据
    */
   data: {
-    showPop:false
+    showPop: false
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-    getUserInfo(e){
-      getApp().wxLogin()
-      this.setData({ showPop:false})
+    getUserInfo(e) {
+      let that = this
+      // getApp().wxGetSetting(function () {
+
+      // }, function () {
+
+      // })
+      getApp().wxGetSetting().then((res) => {
+        console.log(res)
+        if (res) {
+          wx.showTabBar({})
+          getApp().wxLogin()
+          that.setData({
+            showPop: false
+          })
+        } else {
+          wx.hideTabBar()
+          that.setData({
+            showPop: true
+          })
+        }
+
+      }).catch((err) => {
+
+      })
     }
   }
 })

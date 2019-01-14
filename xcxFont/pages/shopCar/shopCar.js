@@ -88,6 +88,7 @@ onShow(){
     that.setData({
       list:that.data.list
     })
+    checkAll()
     countMoney()
   },
   isCheck(e){
@@ -133,8 +134,9 @@ onShow(){
           Toast('删除成功')
           let arr1=that.data.list.filter(item=>{return item.check==false})
           that.setData({
-            list:arr1
+            list:arr1,
           })
+          checkAll()
           if(that.data.list.length==0)
           {
             that.data.pageIndex=1;
@@ -147,7 +149,7 @@ onShow(){
     }else
     {
       let arr = new Array()
-      
+      let ids=[];
       for(let item of that.data.list)
       {
         if(item.check)
@@ -155,6 +157,7 @@ onShow(){
           item.specJson.productId=item.productId
           item.specJson.productTitle = item.productTitle
           arr.push(item.specJson)
+          ids.push(item.shopCarId)
         }
       }
       if (arr.length == 0) {
@@ -164,6 +167,10 @@ onShow(){
       wx.setStorage({
         key: 'productInfo',
         data: arr,
+      })
+      wx.setStorage({
+        key: 'shopCarIds',
+        data: ids,
       })
       wx.navigateTo({
         url: '/pages/createOrder/createOrder',
@@ -183,5 +190,18 @@ function countMoney(){
   }
   that.setData({
     money:money*100
+  })
+}
+function checkAll(){
+  let check=true
+  for(let item of that.data.list)
+  {
+    if (!item.check)
+    {
+      check=false
+    }
+  }
+  that.setData({
+    checked: check
   })
 }

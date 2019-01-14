@@ -24,6 +24,7 @@ Page({
       console.log(res)
       if(res.data.Code==1)
       {
+        res.data.Data.splice(0,1,{classId:0,className:'全部'})
         this.setData({
           classList:res.data.Data
         })
@@ -80,6 +81,7 @@ Page({
   },
   // 点击购物车图片
   car(e){
+    wx.hideTabBar()
     wx.showLoading({
       title: '',
     })
@@ -123,6 +125,7 @@ Page({
         that.setData({
           isShowChoose: false
         })
+        wx.showTabBar()
       }
     })
     

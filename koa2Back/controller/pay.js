@@ -22,7 +22,7 @@ exports.wxPay = async (ctx) => {
         return ctx.body=responseR.reponseData(0, null, 'orderNum不能为空')
     }
     let wxurl='http://wxpay.wxutil.com/pub_v2/pay/notify.v2.php';
-console.log( ctx.req.connection.remoteAddress)
+// console.log( ctx.req.connection.remoteAddress)
     let mch_id = congfig.wxConfig.mch_id;//商户号
     let mchkey=congfig.wxConfig.mchkey//商户号秘钥
     let nonce_str = wxpay.createNonceStr();
@@ -84,7 +84,7 @@ var formData  = "<xml>";
 }
 exports.wxPayNotify=async(ctx)=>{
     xmlreader.read(ctx.request.body.toString("utf-8"),async function (errors, res) {
-        console.log(ctx)
+        // console.log(ctx)
         if(!errors){
             if(res.xml.return_code.text()=='SUCCESS')
             {

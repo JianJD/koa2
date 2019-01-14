@@ -26,6 +26,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    that.data.pageIndex=1
     that.data.list=[]
     that.getOrderList()
   },
@@ -35,7 +36,10 @@ Page({
     {
       return
     }
-    that.data.orderStatus=e.currentTarget.dataset.index
+    // that.data.orderStatus=e.currentTarget.dataset.index
+    that.setData({
+      orderStatus: e.currentTarget.dataset.index
+    })
     that.data.pageIndex=1
     that.data.list=[]
     that.getOrderList()
@@ -44,7 +48,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    that.onShow()
+    wx.stopPullDownRefresh()
+   
   },
  
   /**
@@ -55,6 +61,11 @@ Page({
       {
         that.data.pageIndex++;
         that.getOrderList()
+      }else
+      {
+        // wx.showToast({
+        //   title: '没有了哦',
+        // })
       }
     
   },
@@ -65,9 +76,10 @@ Page({
       pageIndex: that.data.pageIndex,
       pageSize: 10
     },res=>{
+      wx.stopPullDownRefresh()
       if(res.data.Code==1)
       {
-        let totalPages=res.data.Data.totalPages
+        let totalPages = res.data.Data.totalPage
         let data=res.data.Data.List;
         for(let item of data)
         {

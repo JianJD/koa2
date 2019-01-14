@@ -37,6 +37,14 @@ Page({
         addressId: data[0],
         isDefault:data[7]==1?true:false
       })
+      wx.setNavigationBarTitle({
+        title: '编辑地址',
+      })
+    }else
+    {
+      wx.setNavigationBarTitle({
+        title: '新增地址',
+      })
     }
   },
 

@@ -72,6 +72,7 @@ export default {
             if(res.data.Code==1)
             {
                 this.getClassList()
+                this.className=''
             }
         })
     },

@@ -5,20 +5,28 @@ App({
   onLaunch: function () {
 
     // 获取用户信息
+    wx.hideTabBar({})
   },
 
-  wxGetSetting(success=function(){},fail=function(){}) {
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          success()
-        } else {
-         
-          fail()
+  wxGetSetting() {
+    return new Promise(function(resolve,reject){
+      wx.getSetting({
+        success: res => {
+          console.log(res)
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+            resolve(1)
+          } else {
+            console.log('失败')
+            resolve(0)
+          }
+        },
+        fail(){
+          reject('失败')
         }
-      }
+      })
     })
+    
   },
   onShow(){
 
@@ -26,7 +34,8 @@ App({
   },
   globalData: {
     isCanGetUserInfo: 0,
-    ajaxUrl: 'http://192.168.1.105:3001',
+    // ajaxUrl: 'http://192.168.1.105:3001',
+    ajaxUrl: 'http://192.168.2.89:3001',
     // ajaxUrl: 'http://127.0.0.1:3001',
     userInfo: '',
     userId:'',
@@ -72,6 +81,8 @@ App({
                 {
                   getApp().globalData.isLogin=1
                   getApp().globalData.userId = res.data.Data[0].openId
+                  console.log(getApp().globalData.userId)
+                  console.log(res)
                 }
                 
               }

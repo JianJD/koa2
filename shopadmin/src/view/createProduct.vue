@@ -161,37 +161,39 @@ import { setTimeout } from 'timers';
 
     computed: {},
     mounted() {
-      console.log(this.$route.query)
-      if(this.$route.query.productId)
+      let that=this;
+      this.getClassList().then(res=>{
+         if(that.$route.query.productId)
       {
-        this.api.getProductInfo({productId:this.$route.query.productId}).then(res=>{
+        that.api.getProductInfo({productId:that.$route.query.productId}).then(res=>{
           if(res.data.Code==1)
           {
             let data=res.data.Data[0]
             let spec=JSON.parse(data.childrenProduct)
-            console.log(spec)
-            this.$set(this.formValidate,'productTitle',data.productTitle)
-            this.$set(this.formValidate,'memberPrice',data.memberPrice)
-            this.$set(this.formValidate,'price',data.price)
-            this.$set(this.formValidate,'stock',data.stock)
-            this.$set(this.formValidate,'sendMoney',data.sendMoney)
-            this.$set(this.formValidate,'isForSale',data.isForSale==1?true:false)
-            this.$set(this.formValidate,'productDetail',data.productDetail)
-            this.$set(this.formValidate,'swiperImg',JSON.parse(data.swiperImg))
-            this.$set(this.formValidate,'classId',data.classId)
-            this.$set(this.formValidate,'productTitle',data.productTitle)
-            this.$set(this.formValidate,'productId',data.productId)
-            this.$set(this.formValidate,'Type',1)
-            this.spec=spec.spec
-            let that=this
+            that.$set(that.formValidate,'productTitle',data.productTitle)
+            that.$set(that.formValidate,'memberPrice',data.memberPrice)
+            that.$set(that.formValidate,'price',data.price)
+            that.$set(that.formValidate,'stock',data.stock)
+            that.$set(that.formValidate,'sendMoney',data.sendMoney)
+            that.$set(that.formValidate,'isForSale',data.isForSale==1?true:false)
+            that.$set(that.formValidate,'productDetail',data.productDetail)
+            that.$set(that.formValidate,'swiperImg',JSON.parse(data.swiperImg))
+            that.$set(that.formValidate,'classId',parseInt(data.classId))
+            that.$set(that.formValidate,'productTitle',data.productTitle)
+            that.$set(that.formValidate,'productId',data.productId)
+            that.$set(that.formValidate,'Type',1)
+            that.spec=spec.spec
             setTimeout(()=>{
               that.lastSpec=spec.detail
             },1000)
-            
+            console.log(that.formValidate)
           }
         })
       }
-      this.getClassList()
+      })
+      console.log(this.$route.query)
+     
+      
     },
 
     methods: {
@@ -231,14 +233,18 @@ import { setTimeout } from 'timers';
         this.swiperImg=res
       },
       // 获取商品分类
-      getClassList(){
-        this.api.getClassList('').then(res=>{
+       getClassList(){
+         let that=this;
+      return new Promise(function(resolve,reject){
+        that.api.getClassList('').then(res=>{
           console.log(res)
           if(res.data.Code==1)
           {
-            this.classList=res.data.Data
+            resolve('1')
+            that.classList=res.data.Data
           }
         })
+      })  
       },
       // 保存
       save(){
@@ -249,12 +255,12 @@ import { setTimeout } from 'timers';
         }
         if(!this.formValidate.memberPrice)
         {
-         this.$Message.error('请输入商品会员价')
+         this.$Message.error('请输入商品最低价')
          return 
         }
         if(!this.formValidate.price)
         {
-         this.$Message.error('请输入商品原价')
+         this.$Message.error('请输入商品最高价')
          return 
         }
         if(!this.formValidate.stock)
@@ -267,12 +273,50 @@ import { setTimeout } from 'timers';
          this.$Message.error('请先上传商品轮播图')
          return 
         }
+       
           if(!this.spec.length)
         {
          this.$Message.error('请先新增产品规格')
          return 
         }
+        let isFillAll=true
+        for(let item of this.spec)
+        {
+          for(let item2 of item.specAttr)
+          {
+            if(item2.specValue=='')
+            {
+              isFillAll=false
+              break
+            }
+          }
+        }
+        if(!isFillAll)
+        {
+          this.$Message.error('请完善商品规格')
+         return 
+        }
+        let isFillAllSpec=true
+        for(let item of this.lastSpec)
+        {
+          if(item.stock==''||item.price==''||item.imgUrl.length==0)
+          {
+            isFillAllSpec=false
+            
+          }
+        }
+        if(!isFillAllSpec)
+        {
+            this.$Message.error('请完善商品规格')
+            return
+        }
+        if(this.formValidate.productDetail=='')
+        {
+            this.$Message.error('您还未填写商品详情哦')
+            return
+        }
         let data= JSON.parse(JSON.stringify(this.formValidate));
+        data.sendMoney=data.sendMoney==''||data.sendMoney==0?0:data.sendMoney
         data.swiperImg=JSON.stringify(data.swiperImg)
         data.isForSale=data.isForSale?1:0
         let obj={
@@ -346,7 +390,6 @@ import { setTimeout } from 'timers';
       },
       // 批量设置
       setSameSpec(){
-        console.log(123)
         let samePrice=this.samePrice;
         let sameStock=this.sameStock;
         let sameImgurl=this.sameImgurl
@@ -436,7 +479,8 @@ import { setTimeout } from 'timers';
         },
         deep:true
         
-      }
+      },
+      
     },
 
   }

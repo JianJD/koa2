@@ -30,7 +30,7 @@ Page({
    */
   onShow: function () {
     getApp().ajaxResetS('/findAboutUs','',res=>{
-      if(res.data.Code==1)
+      if(res.data.Code==1&&res.data.Data.length>0)
       {
         let article = res.data.Data[0].content
         WxParse.wxParse('article', 'html', article, that, 5);

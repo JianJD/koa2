@@ -4,11 +4,13 @@
     <van-icon name="location-o" size='16px' color='#999' />
   </van-col>
   <van-col span="18" offset='1'>
+    <view catchtap='go'>
     <view class='flexCls-align' wx:if="{{addressData!=''}}">
       <view class='flexCls-1'>{{addressData.receiver}}</view>
       <view>{{addressData.receiverPhone}}</view>
     </view>
     <view class='mgt20 col999 pdb10'  wx:if="{{addressData!=''}}">{{addressData.receiverProvince}}{{addressData.receiverCity}}{{addressData.receiverArea}}{{addressData.receiverAddress}}</view>
+    </view>
     <navigator url='/pages/createAddress/createAddress'  wx:if="{{addressData==''}}">请先添加地址</navigator>
   </van-col>
   <van-col span="1" offset='1'>

@@ -8,10 +8,10 @@
   <van-tab title=""></van-tab>
 </van-tabs> -->
 <view class='flexCls-align tabItems'>
-  <view class='flexCls-1 active ' data-index='0' catchtap='tab'>待支付</view>
-  <view class='flexCls-1' data-index='1' catchtap='tab'>待发货</view>
-  <view class='flexCls-1' data-index='2' catchtap='tab'>待收货</view>
-  <view class='flexCls-1' data-index='3' catchtap='tab'>已完成</view>
+  <view class='flexCls-1  {{orderStatus==0?"active":""}}' data-index='0' catchtap='tab'>待支付</view>
+  <view class='flexCls-1 {{orderStatus==1?"active":""}}' data-index='1' catchtap='tab'>待发货</view>
+  <view class='flexCls-1 {{orderStatus==2?"active":""}}' data-index='2' catchtap='tab'>待收货</view>
+  <view class='flexCls-1 {{orderStatus==3?"active":""}}' data-index='3' catchtap='tab'>已完成</view>
 </view>
 <scroll-view scroll-y bindscrolltolower='loadMore' class='bottom'>
   <orderlist list="{{list}}" bind:pay='pay' bind:del="del" bind:go='go' />

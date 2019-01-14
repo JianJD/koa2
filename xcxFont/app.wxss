@@ -74,9 +74,16 @@ view{font-size: 24rpx;}
 }
 
 .addressCls.clickCls {
-  border: 1px solid #f90;
+  animation: bor linear 1.5s infinite
 }
-
+@keyframes bor{
+  from{
+    border: 1px solid rgb(248, 221, 69);
+  }
+  to{
+    border: 1px solid #f11826;
+  }
+}
 .addressCls:after, .addressCls:before {
   content: '';
   height: 20rpx;

@@ -45,6 +45,7 @@ page{
   color: #fff;
   background: rgb(228, 103, 65);
   font-size: 20rpx;
+  margin-top: 20rpx;
 }
 .fz20{
   font-size: 20rpx;

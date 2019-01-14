@@ -63,6 +63,9 @@ Component({
       this.setData({
         isShowChoose:false
       })
+      wx.showTabBar({
+        
+      })
     },
     chooseColor(e){
       let that=this

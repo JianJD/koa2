@@ -8,11 +8,11 @@
   </van-field>
   <van-field value="{{ receiverAddress }}" bind:change='receiverAddress'  required clearable label="详细地址" placeholder="请输入详细地址" />
 </van-cell-group>
-<van-switch-cell title="设为默认地址" checked="{{ isDefault }}" bind:change="isDefault" size='20px'/>
+<van-switch-cell title="设为默认地址" checked="{{ isDefault }}" bind:change="isDefault" active-color="#07c160" inactive-color="#f44" size='20px'/>
 <van-popup show="{{ show }}" bind:close="onClose" position="bottom">
   <van-area area-list="{{ areaList }}" bind:cancel='cancel' bind:confirm='confirm' />
 </van-popup>
-<view class='pd20 txt-center'>
-  <van-button size="small" block  round type='danger' bind:click='save'>保存</van-button>
+<view class='pd20 txt-center' style='margin-top:30rpx;'>
+  <van-button size="default" block  round type='danger' bind:click='save'>保存</van-button>
 </view>
 <van-notify id="van-notify" />

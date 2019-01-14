@@ -7,3 +7,6 @@
 </view>
 <van-cell   icon="location-o" title="收货地址" is-link url='/pages/address/address' />
 <van-cell   icon="bag-o" title="我的订单" is-link url='/pages/myOrder/myOrder'/>
+<button open-type='contact' class='contact'>
+  <van-icon name="service" color='#ff973b'/>
+</button>
