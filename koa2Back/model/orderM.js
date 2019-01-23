@@ -75,7 +75,7 @@ exports.orderListAdmin=(value)=>{
 	                a.*,b.userName,b.header 
                 FROM
                     orderTable as a
-                    left join usersshop as b
+                    left join usersShop as b
                     on a.userId=b.openId
                 WHERE
                     orderStatus =? 
@@ -88,7 +88,7 @@ exports.findOrderNumToday=()=>{
     let sql=`SELECT
         count(orderId) as toDayOrderNum
     FROM
-        ordertable 
+        orderTable 
     WHERE
         TO_DAYS( creatAt ) = TO_DAYS( now( ) )
         AND (orderStatus = 1 
@@ -101,7 +101,7 @@ exports.findOrderNumHistory=()=>{
     let sql=`SELECT
         count(orderId) as historyOrderNum
     FROM
-        ordertable 
+        orderTable 
     WHERE
          orderStatus = 1 
             OR orderStatus = 2 
@@ -113,7 +113,7 @@ exports.findOrderMoneyToday=()=>{
     let sql=`SELECT
             SUM( totalMoney ) AS toDayMoney 
         FROM
-            ordertable 
+            orderTable 
         WHERE
             TO_DAYS( creatAt ) = TO_DAYS( now( ) ) 
             AND (orderStatus = 1 
@@ -126,7 +126,7 @@ exports.findOrderMoneyHistory=()=>{
     let sql=`SELECT
             SUM( totalMoney ) AS historyMoney 
         FROM
-            ordertable 
+            orderTable 
         WHERE
             orderStatus = 1 
             OR orderStatus = 2 

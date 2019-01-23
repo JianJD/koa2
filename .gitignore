@@ -2,3 +2,4 @@
 /shopadmin/node_modules/*
 /koa2Back/static/upload/*
 .lock
+*project.config.json

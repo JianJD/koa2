@@ -34,8 +34,8 @@ App({
   },
   globalData: {
     isCanGetUserInfo: 0,
-    // ajaxUrl: 'http://192.168.1.105:3001',
-    ajaxUrl: 'http://192.168.2.89:3001',
+    ajaxUrl: 'http://47.102.118.154:3000',
+    // ajaxUrl: 'http://192.168.2.98:3001',
     // ajaxUrl: 'http://127.0.0.1:3001',
     userInfo: '',
     userId:'',

@@ -7,6 +7,9 @@ const koaBody = require('koa-body');
 var path=require('path')
 // koa静态资源托管
 const static = require('koa-static')
+
+
+// 路由
 var user=require('./routers/userR')
 var product=require('./routers/productionR')
 var upload=require('./controller/upload')
@@ -19,6 +22,7 @@ var wxpay=require('./routers/pay')
 var sql=require('./mysqlLib/mysql')
 // 访问的时候不需要加static文件夹名称
 var staticPath='./static'
+// app.use(bodyParser.xml())
 app.use(static(path.join(__dirname, staticPath)))
     //   文件上传中间件
     app.use(koaBody({
@@ -28,6 +32,7 @@ app.use(static(path.join(__dirname, staticPath)))
     }
 }));
 app.use(bodyParser())
+
 // 使用路由
 app.use(upload.routes())
 app.use(wxpay.routes())
@@ -38,9 +43,9 @@ app.use(addressR.routes())
 app.use(shopCarR.routes())
 app.use(orderR.routes())
 app.use(articleR.routes())
-app.listen('3001','192.168.2.89',function(){
+// app.listen('3000','47.102.118.154',function(){
+//     console.log('this server is running at 192.168.2.89:3001')
+// })
+app.listen(3000,function(){
     console.log('this server is running at localhost:3001')
 })
-// app.listen(3001,function(){
-//     console.log('this server is running at localhost:3001')
-// })

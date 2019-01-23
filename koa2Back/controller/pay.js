@@ -4,6 +4,7 @@ var request = require('request');
 var congfig=require('../config/config')
 var xmlreader = require("xmlreader");
 var orderM=require('../model/orderM')
+const getRawBody = require('raw-body')
 exports.wxPay = async (ctx) => {
     let {
         code,
@@ -21,7 +22,7 @@ exports.wxPay = async (ctx) => {
     if (!orderNum) {
         return ctx.body=responseR.reponseData(0, null, 'orderNum不能为空')
     }
-    let wxurl='http://wxpay.wxutil.com/pub_v2/pay/notify.v2.php';
+    let wxurl='http://47.102.118.154:3000/wxPayNotify';
 // console.log( ctx.req.connection.remoteAddress)
     let mch_id = congfig.wxConfig.mch_id;//商户号
     let mchkey=congfig.wxConfig.mchkey//商户号秘钥
@@ -83,18 +84,24 @@ var formData  = "<xml>";
  
 }
 exports.wxPayNotify=async(ctx)=>{
-    xmlreader.read(ctx.request.body.toString("utf-8"),async function (errors, res) {
-        // console.log(ctx)
+   let data= await getRawBody(ctx.req,{ length: ctx.request.length, limit: '2mb', encoding: ctx.request.charset || 'utf-8'})
+    xmlreader.read(data.toString("utf-8"), async function (errors, res) {
         if(!errors){
             if(res.xml.return_code.text()=='SUCCESS')
             {
                 let value=[
                     1,
-                    res.xml.attach.text(),
-                    res.xml.transaction_id.text()
+                    res.xml.transaction_id.text(),
+                    res.xml.attach.text()
                 ]
+
               await  orderM.payOrder(value).then(msg=>{
-                return  ctx.body=responseR.reponseData(1,msg,'SUCCESS')
+                  let xml=`<xml> 
+                  <return_code><![CDATA[SUCCESS]]></return_code>
+                   <return_msg><![CDATA[OK]]></return_msg>
+                 </xml> 
+                `
+                return  ctx.body=xml
               })
             }
         }

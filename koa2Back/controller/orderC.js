@@ -179,17 +179,34 @@ exports.checkOrderAndMoney=async (ctx)=>{
     let todayOrder=0;
     let historyMoney=0;
     let historyOrder=0
+    console.log(6666)
     await orderM.findOrderMoneyToday().then(res=>{
-        todayMoney=res[0].toDayMoney
+        if(res.length>0)
+        {
+            todayMoney=res[0].toDayMoney
+        }
+        
     })
     await orderM.findOrderNumToday().then(res=>{
-        todayOrder=res[0].toDayOrderNum
+        if(res.length>0)
+        {
+            todayOrder=res[0].toDayOrderNum
+        }
+        
     })
     await orderM.findOrderMoneyHistory().then(res=>{
-        historyMoney=res[0].historyMoney
+        if(res.length>0)
+        {
+            historyMoney=res[0].historyMoney
+        }
+        
     })
     await orderM.findOrderNumHistory().then(res=>{
-        historyOrder=res[0].historyOrderNum
+        if(res.length>0)
+        {
+            historyOrder=res[0].historyOrderNum
+        }
+       
     })
     let obj=[
         {

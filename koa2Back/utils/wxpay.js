@@ -35,7 +35,7 @@ var wxpay = {
             openid:openid,
             trade_type: trade_type //一般是JSAPI -JSAPI
         };
-        console.log(ret)
+        // console.log(ret)
         var string = raw(ret);
         var key = mchkey; //商户秘钥
         string = string + '&key=' + key;
@@ -58,12 +58,12 @@ var wxpay = {
         }
        
 
-        console.log('retretret==', ret);
+        // console.log('retretret==', ret);
         var string = raw(ret);
 
         var key = mchkey;
         string = string + '&key=' + key;
-        console.log(string);
+        // console.log(string);
         var crypto = require('crypto');
         return crypto.createHash('md5').update(string, 'utf8').digest('hex').toUpperCase();
     },
